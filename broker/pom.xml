@@ -18,17 +18,43 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/Application.class</exclude>
-                        <exclude>**/RemoteAccessException.class</exclude>
-                        <exclude>**/**State.class</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/Application.class</exclude>
+						<exclude>**/RemoteAccessException.class</exclude>
+						<exclude>**/**State.class</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>pt.ulisboa.tecnico.softeng.broker.Application</mainClass>
+					<!--<arguments>
+						<argument>argument1</argument>
+						...
+					</arguments>
+					<systemProperties>
+						<systemProperty>
+							<key>myproperty</key>
+							<value>myvalue</value>
+						</systemProperty>
+						...
+					</systemProperties> -->
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
