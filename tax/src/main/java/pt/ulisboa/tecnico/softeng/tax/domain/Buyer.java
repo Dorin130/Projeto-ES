@@ -1,8 +1,8 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
-public class Seller extends TaxPayer {
+public class Buyer extends TaxPayer {
 
-	public Seller(String NIF, String name, String address) {
+	public Buyer(String NIF, String name, String address) {
 		super(NIF, name, address);
 		// TODO Auto-generated constructor stub
 	}

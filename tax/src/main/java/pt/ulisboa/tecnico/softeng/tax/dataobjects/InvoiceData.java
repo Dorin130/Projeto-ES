@@ -11,12 +11,12 @@ public class InvoiceData {
 	
 	public InvoiceData () {}
 	
-	public InvoiceData(String _sellerNIF, String _buyerNIF, String _itemType, float _value, LocalDate _date) {
-		sellerNIF = _sellerNIF;
-		buyerNIF = _buyerNIF;
-		itemType = _itemType;
-		value = _value;
-		date = _date;
+	public InvoiceData(String sellerNIF, String buyerNIF, String itemType, float value, LocalDate date) {
+		this.sellerNIF = sellerNIF;
+		this.buyerNIF = buyerNIF;
+		this.itemType = itemType;
+		this.value = value;
+		this.date = date;
 	}
 
 	public String getSellerNIF() {
