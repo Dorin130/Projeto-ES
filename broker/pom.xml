@@ -24,8 +24,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<configuration>
 					<excludes>
 						<exclude>**/Application.class</exclude>
-						<exclude>**/RemoteAccessException.class</exclude>
 						<exclude>**/**State.class</exclude>
+						<exclude>**/dataobjects/**</exclude>
+						<exclude>**/exception/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
