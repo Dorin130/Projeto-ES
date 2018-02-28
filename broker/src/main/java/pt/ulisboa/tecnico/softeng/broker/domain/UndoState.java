@@ -49,15 +49,16 @@ public class UndoState extends AdventureState {
 	}
 
 	public boolean requiresCancelRoom(Adventure adventure) {
-		return adventure.getRoomConfirmation() != null && adventure.getRoomCancellation() == null;
+		return adventure.cancelRoom();
 	}
 
 	public boolean requiresCancelActivity(Adventure adventure) {
-		return adventure.getActivityConfirmation() != null && adventure.getActivityCancellation() == null;
+		return adventure.cancelActivity();
 	}
 
 	public boolean requiresCancelPayment(Adventure adventure) {
-		return adventure.getPaymentConfirmation() != null && adventure.getPaymentCancellation() == null;
+		return adventure.cancelPayment();
+		
 	}
 
 }

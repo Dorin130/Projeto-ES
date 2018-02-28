@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -14,6 +15,7 @@ import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider;
 import pt.ulisboa.tecnico.softeng.bank.domain.Account;
 import pt.ulisboa.tecnico.softeng.bank.domain.Bank;
 import pt.ulisboa.tecnico.softeng.bank.domain.Client;
+import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
@@ -67,6 +69,26 @@ public class AdventureProcessMethodTest {
 		assertEquals(Adventure.State.CONFIRMED, adventure.getState());
 		assertNotNull(adventure.getPaymentConfirmation());
 		assertNotNull(adventure.getActivityConfirmation());
+	}
+	
+	@Test
+	public void undoAll() {
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, 20, this.IBAN, 300);
+
+		adventure.process();
+		adventure.process();
+		adventure.process();
+		
+		adventure.setState(State.UNDO);
+		assertEquals(Adventure.State.UNDO, adventure.getState());
+		
+		adventure.process();
+
+		assertEquals(Adventure.State.CANCELLED, adventure.getState());
+		assertNotNull(adventure.getPaymentCancellation());
+		assertNotNull(adventure.getActivityCancellation());
+		assertNotNull(adventure.getRoomCancellation());
+
 	}
 
 	@After
