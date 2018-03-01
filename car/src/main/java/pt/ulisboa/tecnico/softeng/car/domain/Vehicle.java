@@ -25,11 +25,7 @@ public class Vehicle {
 			throw new VehicleException();
 		}
 		
-		//^[A-Z0-9]{2}\-[A-Z0-9]{2}\-[A-Z0-9]{2}$
-		
-		
 		if(! plate.matches("^[A-Z0-9]{2}\\-[A-Z0-9]{2}\\-[A-Z0-9]{2}$")){
-			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 			throw new VehicleException();
 		}
 
