@@ -182,8 +182,8 @@
 		<module>bank</module>
 		<module>hotel</module>
 		<module>activity</module>
+		<module>broker</module>
 		<module>tax</module>
 		<module>car</module>
-		<module>broker</module>
   </modules>
 </project>
