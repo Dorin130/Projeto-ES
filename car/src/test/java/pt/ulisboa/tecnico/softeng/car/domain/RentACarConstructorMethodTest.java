@@ -16,24 +16,6 @@ public class RentACarConstructorMethodTest
 {
 	private static final String RENTACAR_NAME = "CompanyName";
 	
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public RentACarConstructorMethodTest( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite(RentACarConstructorMethodTest.class);
-    }
-    
     @Test
     public void success() {
 		RentACar rentacar = new RentACar(RENTACAR_NAME);
