@@ -2,18 +2,11 @@ package pt.ulisboa.tecnico.softeng.car.domain;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
-
-/**
- * Unit test for simple App.
- */
-public class RentACarConstructorMethodTest 
-    extends TestCase
-{
+public class RentACarConstructorMethodTest {
 	private static final String RENTACAR_NAME = "CompanyName";
 	
     @Test
@@ -24,12 +17,12 @@ public class RentACarConstructorMethodTest
 		Assert.assertEquals(1, RentACar.rentacars.size());
 	}
 
-	@Test(expected = RentACarException.class)
+	@Test(expected = CarException.class)
 	public void nullName() {
 		new RentACar(null);
 	}
 
-	@Test(expected = RentACarException.class)
+	@Test(expected = CarException.class)
 	public void emptyName() {
 		new RentACar("");
 	}

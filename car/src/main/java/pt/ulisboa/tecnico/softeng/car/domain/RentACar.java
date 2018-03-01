@@ -1,13 +1,20 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-/**
- * Hello world!
- *
- */
+import java.util.HashSet;
+import java.util.Set;
+
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
+
 public class RentACar 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+    public static Set<RentACar> rentacars = new HashSet<>();
+
+	public RentACar(String rentacarName) {
+		//Constructor 
+	}
+
+	public String getName() {
+		//get Name
+		return "";
+	}
 }
