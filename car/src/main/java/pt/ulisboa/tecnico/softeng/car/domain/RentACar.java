@@ -17,4 +17,8 @@ public class RentACar
 		//get Name
 		return "";
 	}
+	
+	public String getCode() {
+		return "";
+	}
 }

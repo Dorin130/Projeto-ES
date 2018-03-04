@@ -4,7 +4,8 @@ package pt.ulisboa.tecnico.softeng.car.domain;
 
 import org.joda.time.LocalDate;
 
-import pt.ulisboa.tecnico.softeng.car.exception.VehicleException;
+import pt.ulisboa.tecnico.softeng.car.domain.RentACar;
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
 public class Renting {
 	private static int counter = 0;
@@ -14,13 +15,14 @@ public class Renting {
 	private String cancellation;
 	private LocalDate cancellationDate;
 	private final LocalDate begin;
-	private final LocalDate end;
-	private int kilometers;
+	private LocalDate end;
+	private int kilometers = 0;
 
 	Renting(RentACar rentacar, String drivingLicense, LocalDate begin, LocalDate end) {
 		checkArguments(rentacar, drivingLicense, begin, end);
 
 		this.reference = rentacar.getCode() + Integer.toString(++Renting.counter);
+		this.drivingLicense = drivingLicense;
 		this.begin = begin;
 		this.end = end;
 	}
@@ -73,7 +75,7 @@ public class Renting {
 		}
 
 		if (end.isBefore(begin)) {
-			throw new VehicleException();
+			throw new CarException();
 		}
 
 		if ((begin.equals(this.begin) || begin.isAfter(this.begin)) && begin.isBefore(this.end)) {
@@ -91,7 +93,16 @@ public class Renting {
 
 		return false;
 	}
-
+	
+	public void checkout(int kilometers) {
+		if (kilometers < 0) {
+			throw new CarException();
+		}
+		
+		this.kilometers = kilometers;
+		this.end = new LocalDate();
+	}
+	
 	public String cancel() {
 		this.cancellation = this.reference + "CANCEL";
 		this.cancellationDate = new LocalDate();

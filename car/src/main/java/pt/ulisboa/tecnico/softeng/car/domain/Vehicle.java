@@ -2,7 +2,7 @@ package pt.ulisboa.tecnico.softeng.car.domain;
 
 import java.util.ArrayList;
 
-import pt.ulisboa.tecnico.softeng.car.exception.VehicleException;
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
 public class Vehicle {
 	
@@ -22,19 +22,19 @@ public class Vehicle {
 	
 	private void checkArguments(String plate, int kilometers, RentACar rentAcar) {
 		if (plate == null) {
-			throw new VehicleException();
+			throw new CarException();
 		}
 		
 		if(! plate.matches("^[A-Z0-9]{2}\\-[A-Z0-9]{2}\\-[A-Z0-9]{2}$")){
-			throw new VehicleException();
+			throw new CarException();
 		}
 
 		if (kilometers < 0) {
-			throw new VehicleException();
+			throw new CarException();
 		}
 
 		if (rentAcar == null) {
-			throw new VehicleException();
+			throw new CarException();
 			
 		}
 	}
