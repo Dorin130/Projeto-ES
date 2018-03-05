@@ -1,0 +1,76 @@
+package pt.ulisboa.tecnico.softeng.car.domain;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
+import org.joda.time.LocalDate;
+import org.junit.After;
+import org.junit.Test;
+import org.junit.Before;
+
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
+
+public class RentingCheckoutMethodTest {
+	private final LocalDate begin = new LocalDate(2018, 01, 01);
+	private final LocalDate end = new LocalDate(2018, 01, 03);
+	private RentACar rentacar;
+	private Renting renting;
+	
+	@Before
+	public void setUp() {
+		rentacar = new RentACar("CompanyName");
+		renting = new Renting(this.rentacar, "123456", this.begin, this.end);
+	}
+	
+	@Test
+	public void sucess() {
+		renting.checkout(50);
+		
+		assertEquals(50, renting.getKilometers());
+		assertTrue(renting.isCancelled()); //check specification with teacher
+		assertFalse(renting.conflict(begin, end)); //check specification with teacher
+	}
+	
+	@Test
+	public void sucessWhenValueZero() {
+		renting.checkout(0);
+		
+		assertEquals(0, renting.getKilometers());
+		assertTrue(renting.isCancelled()); //check specification with teacher
+		assertFalse(renting.conflict(begin, end)); //check specification with teacher
+	}
+	
+	@Test(expected = CarException.class)
+	public void failureBecauseNegativeValue() {
+		this.renting.cancel();
+		this.renting.checkout(-1);
+	}
+	
+	@Test(expected = CarException.class)
+	public void failureBecauseAlreadyCancelled() {
+		this.renting.cancel();
+		this.renting.checkout(50);
+	}
+	
+	@Test(expected = CarException.class)
+	public void failureOnDoubleCheckout() {
+		this.renting.checkout(50);
+		LocalDate cancelDate = this.renting.getCancellationDate();
+		try {
+			this.renting.checkout(50);
+			fail();
+		} catch (CarException c) {
+			assertTrue(renting.isCancelled());
+			assertFalse(renting.conflict(begin, end));
+			assertEquals(cancelDate, this.renting.getCancellationDate());
+		}
+	}
+
+	@After
+	public void tearDown() {
+		RentACar.rentacars.clear();
+	}
+	
+}
