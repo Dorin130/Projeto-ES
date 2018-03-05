@@ -1,13 +1,10 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -33,7 +30,7 @@ public class RentingConflictMethodTest {
 	@Test
 	public void noConflictBecauseItIsCancelled() {
 		this.renting.cancel();
-		Assert.assertFalse(this.renting.conflict(this.renting.getBegin() , this.renting.getEnd()));
+		assertFalse(this.renting.conflict(this.renting.getBegin() , this.renting.getEnd()));
 	}
 	
 	@Test(expected = CarException.class)
@@ -43,52 +40,52 @@ public class RentingConflictMethodTest {
 	
 	@Test
 	public void argumentsSameDay() {
-		Assert.assertTrue(this.renting.conflict(new LocalDate(2016, 12, 9), new LocalDate(2016, 12, 9)));
+		assertTrue(this.renting.conflict(new LocalDate(2016, 12, 9), new LocalDate(2016, 12, 9)));
 	}
 	
 	@Test
-	public void arrivalAndDepartureAreBeforeBooked() {
-		Assert.assertFalse(this.renting.conflict(this.begin.minusDays(10), this.begin.minusDays(4)));
+	public void beginAndEndAreBeforeRentedInterval() {
+		assertFalse(this.renting.conflict(this.begin.minusDays(10), this.begin.minusDays(4)));
 	}
 
 	@Test
-	public void arrivalAndDepartureAreBeforeBookedButDepartureIsEqualToBookedArrival() {
-		Assert.assertFalse(this.renting.conflict(this.begin.minusDays(10), this.begin));
+	public void beginAndEndAreBeforeRentedIntervalButEndIsEqualToRentedIntervalBegin() {
+		assertFalse(this.renting.conflict(this.begin.minusDays(10), this.begin));
 	}
 
 	@Test
-	public void arrivalAndDepartureAreAfterBooked() {
-		Assert.assertFalse(this.renting.conflict(this.end.plusDays(4), this.end.plusDays(10)));
+	public void beginAndEndAreAfterRentedInterval() {
+		assertFalse(this.renting.conflict(this.end.plusDays(4), this.end.plusDays(10)));
 	}
 
 	@Test
-	public void arrivalAndDepartureAreAfterBookedButArrivalIsEqualToBookedDeparture() {
-		Assert.assertFalse(this.renting.conflict(this.end, this.end.plusDays(10)));
+	public void beginAndEndAreAfterRentedIntervalButBeginIsEqualToRentedIntervalEnd() {
+		assertFalse(this.renting.conflict(this.end, this.end.plusDays(10)));
 	}
 
 	@Test
-	public void arrivalIsBeforeBookedArrivalAndDepartureIsAfterBookedDeparture() {
-		Assert.assertTrue(this.renting.conflict(this.begin.minusDays(4), this.end.plusDays(4)));
+	public void beginIsBeforeRentedIntervalArrivalAndEndIsAfterRentedIntervalEnd() {
+		assertTrue(this.renting.conflict(this.begin.minusDays(4), this.end.plusDays(4)));
 	}
 
 	@Test
-	public void arrivalIsEqualBookedArrivalAndDepartureIsAfterBookedDeparture() {
-		Assert.assertTrue(this.renting.conflict(this.begin, this.end.plusDays(4)));
+	public void beginIsEqualRentedIntervalArrivalAndEndIsAfterRentedIntervalEnd() {
+		assertTrue(this.renting.conflict(this.begin, this.end.plusDays(4)));
 	}
 
 	@Test
-	public void arrivalIsBeforeBookedArrivalAndDepartureIsEqualBookedDeparture() {
-		Assert.assertTrue(this.renting.conflict(this.begin.minusDays(4), this.end));
+	public void beginIsBeforeRentedIntervalArrivalAndEndIsEqualRentedIntervalEnd() {
+		assertTrue(this.renting.conflict(this.begin.minusDays(4), this.end));
 	}
 
 	@Test
-	public void arrivalIsBeforeBookedArrivalAndDepartureIsBetweenBooked() {
-		Assert.assertTrue(this.renting.conflict(this.begin.minusDays(4), this.end.minusDays(3)));
+	public void beginIsBeforeRentedIntervalArrivalAndEndIsBetweenRentedInterval() {
+		assertTrue(this.renting.conflict(this.begin.minusDays(4), this.end.minusDays(3)));
 	}
 
 	@Test
-	public void arrivalIsBetweenBookedAndDepartureIsAfterBookedDeparture() {
-		Assert.assertTrue(this.renting.conflict(this.begin.plusDays(3), this.end.plusDays(6)));
+	public void beginIsBetweenRentedIntervalAndEndIsAfterRentedIntervalEnd() {
+		assertTrue(this.renting.conflict(this.begin.plusDays(3), this.end.plusDays(6)));
 	}
 
 

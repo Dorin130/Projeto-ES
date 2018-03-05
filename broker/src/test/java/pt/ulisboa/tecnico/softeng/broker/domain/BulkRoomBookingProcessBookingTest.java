@@ -22,7 +22,7 @@ public class BulkRoomBookingProcessBookingTest {
 
 	@Before
 	public void setUp() {
-		hotel = new Hotel("XPTO123", "Paris");
+		this.hotel = new Hotel("XPTO123", "Paris");
 		new Room(hotel, "01", Type.SINGLE);
 	}
 
