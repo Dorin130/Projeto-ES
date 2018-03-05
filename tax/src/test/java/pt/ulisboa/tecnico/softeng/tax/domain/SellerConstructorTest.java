@@ -45,23 +45,33 @@ public class SellerConstructorTest {
 	}
 	
 	@Test(expected = TaxException.class)
-	public void nullname() {
+	public void nullName() {
 		new Seller(NIF_1,null,ADDRESS_1);
 	}
 	
 	@Test(expected = TaxException.class)
-	public void emptyname() {
+	public void emptyName() {
 		new Seller(NIF_1,"",ADDRESS_1);
+	}
+	
+	@Test(expected = TaxException.class)
+	public void blankName() {
+		new Seller(NIF_1, "   ", ADDRESS_1);
 	}
 
 	@Test(expected = TaxException.class)
-	public void nulladdress() {
+	public void nullAddress() {
 		new Seller(NIF_1, NAME_1,null);
 	}
 	
 	@Test(expected = TaxException.class)
-	public void emptyaddress() {
+	public void emptyAddress() {
 		new Seller(NIF_1, NAME_1,"");
+	}
+	
+	@Test(expected = TaxException.class)
+	public void blankAddress() {
+		new Seller(NIF_1, NAME_1,"   ");
 	}
 	
 	@Test
