@@ -36,11 +36,43 @@ public class IRSSubmitInvoiceMethodTest {
 
     @Test
     public void success() {
-        irs.submitInvoice(new InvoiceData(this.seller.getName(), this.buyer.getName(), this.vinho.getName(), 10.5f, date));
+        irs.submitInvoice(new InvoiceData(this.seller.getNIF(), this.buyer.getNIF(), this.vinho.getName(), 10.5f, this.date));
     }
 
     @Test(expected = TaxException.class)
     public void dateException() {
-        irs.submitInvoice(new InvoiceData(this.seller.getName(), this.buyer.getName(), this.vinho.getName(), 10.5f, new LocalDate(1969, 12, 21)));
+        irs.submitInvoice(new InvoiceData(this.seller.getNIF(), this.buyer.getNIF(), this.vinho.getName(), 10.5f, new LocalDate(1969, 12, 21)));
     }
+
+    @Test(expected = TaxException.class)
+    public void nullSellerException() {
+        irs.submitInvoice(new InvoiceData(null, this.buyer.getNIF(), this.vinho.getName(), 10.5f, this.date));
+    }
+
+    @Test(expected = TaxException.class)
+    public void emptySellerException() {
+        irs.submitInvoice(new InvoiceData("", this.buyer.getNIF(), this.vinho.getName(), 10.5f, this.date));
+    }
+
+    @Test(expected = TaxException.class)
+    public void nullBuyerException() {
+        irs.submitInvoice(new InvoiceData(this.seller.getNIF(), null, this.vinho.getName(), 10.5f, this.date));
+    }
+
+    @Test(expected = TaxException.class)
+    public void emptyBuyerException() {
+        irs.submitInvoice(new InvoiceData(this.seller.getNIF(), "", this.vinho.getName(), 10.5f, this.date));
+    }
+
+
+    @Test(expected = TaxException.class)
+    public void nullItemTypeException() {
+        irs.submitInvoice(new InvoiceData(this.seller.getNIF(), this.buyer.getNIF(), null, 10.5f, this.date));
+    }
+
+    @Test(expected = TaxException.class)
+    public void emptyItemTypeException() {
+        irs.submitInvoice(new InvoiceData(this.seller.getNIF(), this.buyer.getNIF(), "", 10.5f, this.date));
+    }
+
 }

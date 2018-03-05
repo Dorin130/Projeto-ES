@@ -11,8 +11,8 @@ public class InvoiceConstructorMethodTest {
     private static final float VALUE = 10.5f;
     private static final LocalDate DATE = new LocalDate(2010, 10, 1);
     private static final String ITEM_TYPE = "vinho";
-    private static final String SELLER = "123";
-    private static final String BUYER = "456";
+    private static final String SELLER = "123456789";
+    private static final String BUYER = "456123789";
 
     private IRS irs;
 
@@ -20,9 +20,10 @@ public class InvoiceConstructorMethodTest {
     @Before
     public void setUp() {
         irs = IRS.getInstance();
-        new Buyer(BUYER, "Marco", "Faro");
-        new Seller(SELLER, "Nadia", "Lisboa");
+
         this.irs.addItemType(new ItemType(ITEM_TYPE, 50));
+        this.irs.addTaxPayer(new Buyer(BUYER, "Marco", "Faro"));
+        this.irs.addTaxPayer(new Seller(SELLER, "Nadia", "Lisboa"));
     }
 
     @Test
