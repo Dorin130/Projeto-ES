@@ -3,8 +3,8 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ulisboa.tecnico.softeng.tax.domain.ItemType;
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
+import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class IRS {
 	private static IRS irs = null;
@@ -43,13 +43,22 @@ public class IRS {
 	}
 
 	public ItemType getItemTypeByName(String ITEM_TYPE) {
-		return new ItemType("comida", 12);
+		for(ItemType itemType : this.itemTypes) {
+			if (itemType.getName().equals(ITEM_TYPE))
+				return itemType;
+		}
+		throw new TaxException();
 	}
 
 	public TaxPayer getTaxPayerByNIF(String ITEM_TYPE) {
-		return new Seller("123", "Zé", "Rua tantas");
+		for(TaxPayer taxPayer : this.taxPayers) {
+			if (taxPayer.getNIF().equals(ITEM_TYPE))
+				return taxPayer;
+		}
+		throw new TaxException();
 	}
 
 	public void submitInvoice(InvoiceData invoiceData) {
+        new Invoice(invoiceData.getValue(), invoiceData.getDate(), invoiceData.getItemType(), invoiceData.getSellerNIF(), invoiceData.getBuyerNIF());
 	}
 }

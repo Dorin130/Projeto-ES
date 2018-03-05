@@ -16,13 +16,7 @@ public class Invoice {
     private ItemType itemType;
 
     public Invoice(float VALUE, LocalDate DATE, String ITEM_TYPE, String SELLER,String BUYER) {
-
-        //Checks
-        if(ITEM_TYPE == null || ITEM_TYPE.equals("") ||
-                SELLER == null || SELLER.equals("") ||
-                BUYER == null || BUYER.equals("") || DATE.getYear() < 1970)
-            throw new TaxException();
-
+        checkArguments(VALUE,DATE,ITEM_TYPE,SELLER,BUYER);
 
         IRS irs = IRS.getInstance();
         this.reference = Integer.toString(count++);
@@ -33,6 +27,22 @@ public class Invoice {
         this.seller = (Seller) irs.getTaxPayerByNIF(SELLER);
         this.buyer = (Buyer) irs.getTaxPayerByNIF(BUYER);
 
+        this.itemType.addInvoice(this);
+
+    }
+
+    private void checkArguments(float VALUE, LocalDate DATE, String ITEM_TYPE, String SELLER,String BUYER) {
+        if(ITEM_TYPE == null || ITEM_TYPE.trim().equals("") ||
+                SELLER == null || SELLER.trim().equals("") || SELLER.length() != 9 ||
+                BUYER == null || BUYER.trim().equals("") || BUYER.length() != 9 || DATE.getYear() < 1970)
+            throw new TaxException();
+        try {
+            int num;
+            num = Integer.parseInt(SELLER);
+            num = Integer.parseInt(BUYER);
+        } catch (NumberFormatException nfe) {
+            throw new TaxException();
+        }
     }
 
     public String getReference() {

@@ -19,8 +19,8 @@ public class IRSSubmitInvoiceMethodTest {
     public void setUp() {
         this.irs = IRS.getInstance();
 
-        this.buyer = new Buyer("12343", "Manel", "Lisboa");
-        this.seller = new Seller("1337", "Hugo", "Albufeira");
+        this.buyer = new Buyer("123123123", "Manel", "Lisboa");
+        this.seller = new Seller("133713378", "Hugo", "Albufeira");
 
         this.irs.addTaxPayer(buyer);
         this.irs.addTaxPayer(seller);
