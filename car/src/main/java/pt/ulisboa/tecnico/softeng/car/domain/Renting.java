@@ -95,12 +95,16 @@ public class Renting {
 	}
 	
 	public void checkout(int kilometers) {
+		if (isCancelled()) {
+			return;
+		}
+		
 		if (kilometers < 0) {
 			throw new CarException();
 		}
 		
 		this.kilometers = kilometers;
-		this.end = new LocalDate();
+		this.cancel();
 	}
 	
 	public String cancel() {
