@@ -19,9 +19,9 @@ public class BuyerTaxReturnMethodTest {
         irs = IRS.getInstance();
         irs.clearTaxPayers();
         irs.clearItemTypes();
-        irs.addItemType(new ItemType("comida",1));
-        irs.addItemType(new ItemType("bebida",0.5));
-        irs.addItemType(new ItemType("void",0));
+        new ItemType("comida",1);
+        new ItemType("bebida",0.5);
+        new ItemType("void",0);
     }
     @Test
     public void taxReturnWithNoInvoice() {

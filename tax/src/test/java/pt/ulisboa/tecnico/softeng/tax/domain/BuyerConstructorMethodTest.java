@@ -20,10 +20,6 @@ public class BuyerConstructorMethodTest {
 	private static final String ADDRESS_1 = "Albufeira";
 	private static final String ADDRESS_2 = "Lisboa";
 
-	@Before
-	public void setUp(){
-        IRS.getInstance().clearTaxPayers();
-	}
 	
 	@Test(expected = TaxException.class)
 	public void wrongNIFSize() {

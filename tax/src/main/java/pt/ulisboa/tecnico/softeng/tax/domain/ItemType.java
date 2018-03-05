@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
+import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
+
 public class ItemType {
 
 
@@ -7,8 +9,16 @@ public class ItemType {
 	private double tax;
 	
 	public ItemType(String name, double tax) {
-		this.name = name;
-		this.tax = tax;
+		if(name.equals("") || name == null ||  tax < 0 )
+			throw new TaxException();
+		try {
+			IRS.getInstance().getItemTypeByName(name);
+		}catch(TaxException te) {
+			this.name = name;
+			this.tax = tax;
+			IRS.getInstance().addItemType(this);
+		}
+
 	}
 
 	public String getName() {
@@ -27,4 +37,5 @@ public class ItemType {
 	public void setTax(double tax) {
 		this.tax = tax;
 	}
+
 }
