@@ -1,9 +1,6 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -15,7 +12,7 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 
-public class BulkRoomBookingProcessBookingTest {
+public class BulkRoomBookingProcessBookingMethodTest {
 	private final LocalDate begin = new LocalDate(2016, 12, 19);
 	private final LocalDate end = new LocalDate(2016, 12, 21);
 	private Hotel hotel;
@@ -121,12 +118,6 @@ public class BulkRoomBookingProcessBookingTest {
 
 		assertEquals(2, bulkRoomBooking.getReferences().size());
 	}
-	
-
-	//assertEquals(Adventure.State.CONFIRMED, adventure.getState());
-	//assertNotNull(adventure.getPaymentConfirmation());
-	//assertNotNull(adventure.getActivityConfirmation());
-
 
 	@After
 	public void tearDown() {
