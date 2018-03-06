@@ -47,7 +47,7 @@ public class IRS {
 			if (itemType.getName().equals(ITEM_TYPE))
 				return itemType;
 		}
-		throw new TaxException();
+		return null;
 	}
 
 	public TaxPayer getTaxPayerByNIF(String ITEM_TYPE) {
@@ -55,7 +55,7 @@ public class IRS {
 			if (taxPayer.getNIF().equals(ITEM_TYPE))
 				return taxPayer;
 		}
-		throw new TaxException();
+		return null;
 	}
 
 	public void submitInvoice(InvoiceData invoiceData) {

@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 
 import java.util.HashSet;
 
+import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
+
 public class ItemType {
 
 
@@ -10,9 +12,14 @@ public class ItemType {
 	private HashSet<Invoice> invoices = new HashSet<Invoice>();
 	
 	public ItemType(String name, double tax) {
+
+		if(name == null || name.trim().equals("") ||   tax < 0 || IRS.getInstance().getItemTypeByName(name) != null)
+			throw new TaxException();
+
 		this.name = name;
 		this.tax = tax;
 	}
+
 
 	public void addInvoice(Invoice invoice) {
 		invoices.add(invoice);

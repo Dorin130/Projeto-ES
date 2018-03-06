@@ -9,19 +9,34 @@ abstract public class TaxPayer {
 	private String NIF;
 	private String name;
 	private String address;
-
+	
+	private IRS irs = IRS.getInstance();
+	
 	private Set<Invoice> invoices = new HashSet<>();
 
 	public TaxPayer(String NIF, String name, String address) {
-		
-		//Check arguments
-		if(NIF.length() != 9 || IRS.getInstance().getTaxPayerByNIF(NIF) != null || name == null || name.equals("") || address == null || address.equals("")) {
-			throw new TaxException();
-		}
+		checkArguments(NIF, name, address);
 		
 		this.setNIF(NIF);
 		this.setName(name);
 		this.setAddress(address);
+		
+		irs.addTaxPayer(this);
+	}
+	
+	private void checkArguments(String NIF, String name, String address) {
+		if(NIF.length() != 9 || irs.getTaxPayerByNIF(NIF) != null ||
+				name == null || name.trim().equals("") ||
+				address == null || address.trim().equals("")) {
+			throw new TaxException();
+		}
+		try {
+			int nif;
+			nif = Integer.parseInt(NIF);
+		}
+		catch (NumberFormatException nfe) {
+			throw new TaxException();
+		}
 	}
 
 
