@@ -9,7 +9,7 @@ public class ItemType {
 	private double tax;
 	
 	public ItemType(String name, double tax) {
-		if(name.equals("") || name == null ||  tax < 0 )
+		if(name.trim().equals("") || name == null ||  tax < 0 )
 			throw new TaxException();
 		try {
 			IRS.getInstance().getItemTypeByName(name);

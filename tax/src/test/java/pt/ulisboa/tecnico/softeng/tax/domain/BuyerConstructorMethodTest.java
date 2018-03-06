@@ -23,7 +23,7 @@ public class BuyerConstructorMethodTest {
 	
 	@Test(expected = TaxException.class)
 	public void wrongNIFSize() {
-		new Buyer(NIF_1,NAME_1,ADDRESS_1);
+		new Buyer("123",NAME_1,ADDRESS_1);
 	}
 	
 	@Test
