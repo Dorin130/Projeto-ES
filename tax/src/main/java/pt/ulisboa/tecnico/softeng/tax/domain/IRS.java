@@ -43,6 +43,7 @@ public class IRS {
 	}
 
 	public ItemType getItemTypeByName(String ITEM_TYPE) {
+		checkItemType(ITEM_TYPE);
 		for(ItemType itemType : this.itemTypes) {
 			if (itemType.getName().equals(ITEM_TYPE))
 				return itemType;
@@ -50,12 +51,30 @@ public class IRS {
 		return null;
 	}
 
-	public TaxPayer getTaxPayerByNIF(String ITEM_TYPE) {
+	public TaxPayer getTaxPayerByNIF(String NIF) {
+		checkNIF(NIF);
 		for(TaxPayer taxPayer : this.taxPayers) {
-			if (taxPayer.getNIF().equals(ITEM_TYPE))
+			if (taxPayer.getNIF().equals(NIF))
 				return taxPayer;
 		}
 		return null;
+	}
+
+	private void checkItemType(String s) {
+		if(s == null || s.trim().equals(""))
+			throw new TaxException();
+	}
+
+	private void checkNIF(String s) {
+		if( s == null || s.length() != 9 || s.trim().equals(""))
+			throw new TaxException();
+		try {
+			int nif;
+			nif = Integer.parseInt(s);
+		}
+		catch (NumberFormatException nfe) {
+			throw new TaxException();
+		}
 	}
 
 	public void submitInvoice(InvoiceData invoiceData) {

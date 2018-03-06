@@ -13,12 +13,14 @@ public class RentACarGetRentingTest {
 	private final LocalDate begin = new LocalDate(2018, 01, 01);
 	private final LocalDate end = new LocalDate(2018, 01, 03);
 	private RentACar rentacar;
+	private Vehicle vehicle;
 	private Renting renting;
 	
 	@Before
 	public void setUp() {
 		this.rentacar = new RentACar("CompanyName");
-		this.renting = this.rentacar.rent(this.rentacar, DRIVING_LICENSE, this.begin, this.end);
+		this.vehicle = new Vehicle("AA-01-BB", 100, this.rentacar);
+		this.renting = this.vehicle.rent(DRIVING_LICENSE, this.begin, this.end);
 	}
 	
 	@Test
@@ -27,14 +29,20 @@ public class RentACarGetRentingTest {
 	}
 	
 	@Test
-	public void successCancelled() {
-		this.renting.cancel();
-		assertEquals(this.renting, this.rentacar.getRenting(this.renting.getCancellation()));
+	public void referenceDoesNotExist() {
+		//TODO verify with teacher
+		assertNull(this.rentacar.getRenting("123a"));
 	}
 	
 	@Test
-	public void doesNotExist() {
-		assertNull(this.rentacar.getRenting("123a"));
+	public void nullReference() {
+		//TODO verify with teacher
+		assertNull(this.rentacar.getRenting(null));
+	}
+	
+	public void emptyReference() {
+		//TODO verify with teacher
+		assertNull(this.rentacar.getRenting(""));
 	}
 
 	@After

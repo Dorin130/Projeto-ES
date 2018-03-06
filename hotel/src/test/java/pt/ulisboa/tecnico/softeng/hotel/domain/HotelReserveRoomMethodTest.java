@@ -29,6 +29,7 @@ public class HotelReserveRoomMethodTest {
     @Test
     public void success() {
         Hotel.hotels.clear();
+        this.hotel = new Hotel(HOTEL_CODE, HOTEL_NAME);
         Room room = new Room(this.hotel, "01", Room.Type.SINGLE);
         String reference = Hotel.reserveRoom(Room.Type.SINGLE, arrival, departure);
         RoomBookingData data = Hotel.getRoomBookingData(reference);
@@ -66,11 +67,6 @@ public class HotelReserveRoomMethodTest {
     @Test(expected = HotelException.class)
     public void arrivalAfterDeparture() {
         Hotel.reserveRoom(Room.Type.SINGLE, departure, arrival);
-    }
-
-    @Test(expected = HotelException.class)
-    public void arrivalEqualsDeparture() {
-        Hotel.reserveRoom(Room.Type.SINGLE, arrival, arrival);
     }
 
     @After

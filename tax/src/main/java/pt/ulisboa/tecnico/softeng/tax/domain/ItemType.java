@@ -18,8 +18,8 @@ public class ItemType {
 
 		this.name = name;
 		this.tax = tax;
+		IRS.getInstance().addItemType(this);
 	}
-
 
 	public void addInvoice(Invoice invoice) {
 		invoices.add(invoice);

@@ -23,3 +23,10 @@ Sub-group car+broker:
  	* class BulkRoomBookingProcessBookingMethodTest;
  	
 Sub-group tax+others:
+ - (83448) Dorin Gujuman (Dorin130):
+ 	* class Invoice;
+ 	* class InvoiceData;
+ 	* class IRSGetItemTypeByNameMethodTest;
+ 	* class IRSGetTaxPayerByNIFMethodTest;
+ 	* class IRSSubmitInvoiceMethodTest;
+ 	* class InvoiceConstructorMethodTest;
