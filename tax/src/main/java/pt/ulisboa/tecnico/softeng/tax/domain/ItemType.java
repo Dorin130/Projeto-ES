@@ -21,7 +21,6 @@ public class ItemType {
 		IRS.getInstance().addItemType(this);
 	}
 
-
 	public void addInvoice(Invoice invoice) {
 		invoices.add(invoice);
 	}
