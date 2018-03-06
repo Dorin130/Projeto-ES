@@ -16,6 +16,7 @@ public class SellerConstructorMethodTest {
 	private static final String NIF_2 = "123456788";
 	private static final String SMALLER_NIF = "12345";
 	private static final String BIGGER_NIF = "12345678987654321";
+	private static final String NIF_LETTERS = "abcdefghi";
 	private static final String NAME_1 = "Marco";
 	private static final String NAME_2 = "Manuel";
 	private static final String ADDRESS_1 = "Parchal";
@@ -45,6 +46,11 @@ public class SellerConstructorMethodTest {
 	}
 	
 	@Test(expected = TaxException.class)
+	public void lettersNIF() {
+		new Seller(NIF_LETTERS, NAME_1, ADDRESS_1);
+	}
+	
+	@Test(expected = TaxException.class)
 	public void nullName() {
 		new Seller(NIF_1,null,ADDRESS_1);
 	}
@@ -52,6 +58,11 @@ public class SellerConstructorMethodTest {
 	@Test(expected = TaxException.class)
 	public void emptyName() {
 		new Seller(NIF_1,"",ADDRESS_1);
+	}
+	
+	@Test(expected = TaxException.class)
+	public void blankName() {
+		new Seller(NIF_1,"   ",ADDRESS_1);
 	}
 
 	@Test(expected = TaxException.class)
@@ -62,6 +73,11 @@ public class SellerConstructorMethodTest {
 	@Test(expected = TaxException.class)
 	public void emptyAddress() {
 		new Seller(NIF_1, NAME_1,"");
+	}
+	
+	@Test(expected = TaxException.class)
+	public void blankAddress() {
+		new Seller(NIF_1, NAME_1,"   ");
 	}
 	
 	@Test
