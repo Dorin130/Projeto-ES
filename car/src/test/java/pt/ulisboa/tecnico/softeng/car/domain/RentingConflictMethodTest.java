@@ -28,8 +28,8 @@ public class RentingConflictMethodTest {
 	}
 	
 	@Test
-	public void noConflictBecauseItIsCancelled() {
-		this.renting.cancel();
+	public void noConflictBecauseItIsCheckedOut() {
+		this.renting.checkout(1);
 		assertFalse(this.renting.conflict(this.renting.getBegin() , this.renting.getEnd()));
 	}
 	
