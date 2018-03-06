@@ -1,6 +1,8 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
@@ -9,16 +11,14 @@ public class Vehicle {
 	private String plate;
 	private int kilometers;
 	private RentACar rentAcar;
-	private ArrayList rentings =  new ArrayList();
+	private Set<Renting> rentings = new HashSet<>();
 	
 	public Vehicle(String plate, int kilometers, RentACar rentAcar) {
 		checkArguments(plate, kilometers, rentAcar);
-		this.setPlate(plate);
-		this.setKilometers(kilometers);	
-		this.setRentAcar(rentAcar);
-		
+		this.plate = plate;
+		this.kilometers= kilometers;	
+		this.rentAcar = rentAcar;
 	}
-	
 	
 	private void checkArguments(String plate, int kilometers, RentACar rentAcar) {
 		if (plate == null) {
@@ -35,7 +35,6 @@ public class Vehicle {
 
 		if (rentAcar == null) {
 			throw new CarException();
-			
 		}
 	}
 
@@ -61,6 +60,10 @@ public class Vehicle {
 
 	public void setRentAcar(RentACar rentAcar) {
 		this.rentAcar = rentAcar;
+	}
+	
+	public void addRenting(Renting renting){
+		this.rentings.add(renting);
 	}
 	
 	

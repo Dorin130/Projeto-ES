@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import pt.ulisboa.tecnico.softeng.car.exception.VehicleException;
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 public class VehicleConstructorMethodTest{
 	private String plate = "AA-09-BB";
 	private int kilometers = 0;
@@ -15,7 +15,7 @@ public class VehicleConstructorMethodTest{
 	
 	@Before
 	public void setUp() {
-		this.rentACar = new RentACar("um nome" ,"um codigo");
+		this.rentACar = new RentACar("um nome");
 	}
 	
 	@Test
@@ -26,22 +26,22 @@ public class VehicleConstructorMethodTest{
 		Assert.assertEquals(this.rentACar, car.getRentAcar())	;
 	}
 	
-	@Test(expected = VehicleException.class)
+	@Test(expected = CarException.class)
 	public void nullPlate() {
 		Car car = new Car(null, this.kilometers , this.rentACar);
 	}
 
-	@Test(expected = VehicleException.class)
+	@Test(expected = CarException.class)
 	public void nullRentACar() {
 		Car car = new Car(this.plate, this.kilometers , null);
 	}
 	
-	@Test(expected = VehicleException.class)
+	@Test(expected = CarException.class)
 	public void badPlate() {
 		Car car = new Car("AAAAA", this.kilometers , this.rentACar);
 	}
 	
-	@Test(expected = VehicleException.class)
+	@Test(expected = CarException.class)
 	public void badKilometers() {
 		Car car = new Car(this.plate, -10, this.rentACar);
 	}
