@@ -26,7 +26,7 @@ public class BuyerTaxReturnMethodTest {
     @Test
     public void taxReturnWithNoInvoice() {
         Buyer buyer = new Buyer("123456789", "Hugo", "Albufeira");
-        Assert.assertEquals(buyer.taxReturn(this.localDate.getYear()),0, delta);
+        Assert.assertEquals(0, buyer.taxReturn(this.localDate.getYear()), delta);
 
     }
 
@@ -37,7 +37,7 @@ public class BuyerTaxReturnMethodTest {
         Invoice invoice = new Invoice(100, this.localDate, "comida", "123456788",  "123456789");
         seller.addInvoice(invoice);
         buyer.addInvoice(invoice);
-        Assert.assertEquals(buyer.taxReturn(this.localDate.getYear()),5,delta);
+        Assert.assertEquals(5, buyer.taxReturn(this.localDate.getYear()), delta);
 
     }
 
@@ -51,13 +51,7 @@ public class BuyerTaxReturnMethodTest {
         seller.addInvoice(invoice2);
         buyer.addInvoice(invoice);
         buyer.addInvoice(invoice2);
-        Assert.assertEquals(buyer.taxReturn(this.localDate.getYear()),7.5, delta);
-    }
-
-    @Test(expected = TaxException.class)
-    public void nullYear() {
-        Buyer buyer = new Buyer("123456789", "Hugo", "Albufeira");
-        buyer.taxReturn(this.localDate.getYear());
+        Assert.assertEquals(7.5, buyer.taxReturn(this.localDate.getYear()), delta);
     }
 
     @Test(expected = TaxException.class)
@@ -70,10 +64,10 @@ public class BuyerTaxReturnMethodTest {
     public void noTaxApplied() {
         Buyer buyer = new Buyer("123456789", "Hugo", "Albufeira");
         Seller seller = new Seller("123456788", "Manel", "Lisboa");
-        Invoice invoice = new Invoice(100, this.localDate, "comida", "123456788",  "123456789");
+        Invoice invoice = new Invoice(100,this.localDate, "void", "123456788", "123456789");
         seller.addInvoice(invoice);
         buyer.addInvoice(invoice);
-        Assert.assertEquals(buyer.taxReturn(this.localDate.getYear()),0,delta);
+        Assert.assertEquals(0, buyer.taxReturn(this.localDate.getYear()),delta);
 
     }
 
@@ -85,7 +79,7 @@ public class BuyerTaxReturnMethodTest {
         Invoice invoice = new Invoice(100, this.localDate, "comida", "123456788",  "123456789");
         seller.addInvoice(invoice);
         buyer.addInvoice(invoice);
-        Assert.assertEquals(buyer.taxReturn(2017),0,delta);
+        Assert.assertEquals(0, buyer.taxReturn(2017),delta);
 
     }
 
