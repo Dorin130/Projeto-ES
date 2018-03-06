@@ -18,6 +18,7 @@ public class ItemType {
 
 		this.name = name;
 		this.tax = tax;
+		IRS.getInstance().addItemType(this);
 	}
 
 
