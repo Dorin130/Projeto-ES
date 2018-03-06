@@ -35,6 +35,8 @@ abstract public class TaxPayer {
 		}
 	}
 
+
+
 	public String getNIF() {
 		return NIF;
 	}
