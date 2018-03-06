@@ -1,6 +1,9 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
@@ -9,16 +12,14 @@ public class Vehicle {
 	private String plate;
 	private int kilometers;
 	private RentACar rentAcar;
-	private ArrayList rentings =  new ArrayList();
+	private Set<Renting> rentings = new HashSet<>();
 	
 	public Vehicle(String plate, int kilometers, RentACar rentAcar) {
 		checkArguments(plate, kilometers, rentAcar);
-		this.setPlate(plate);
-		this.setKilometers(kilometers);	
-		this.setRentAcar(rentAcar);
-		
+		this.plate = plate;
+		this.kilometers= kilometers;	
+		this.rentAcar = rentAcar;
 	}
-	
 	
 	private void checkArguments(String plate, int kilometers, RentACar rentAcar) {
 		if (plate == null) {
@@ -35,7 +36,6 @@ public class Vehicle {
 
 		if (rentAcar == null) {
 			throw new CarException();
-			
 		}
 	}
 
@@ -63,5 +63,36 @@ public class Vehicle {
 		this.rentAcar = rentAcar;
 	}
 	
+	int getNumberOfRentings() {
+		return this.rentings.size();
+	}
 	
+	public void addRenting(Renting renting){
+		this.rentings.add(renting);
+	}
+	
+	public boolean isFree(LocalDate begin, LocalDate end) {
+		for(Renting r : rentings) {
+			if(r.getCancellation() != null) {
+				continue;
+			}
+			if(r.conflict(begin, end)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public Renting rent(String drivingLicense, LocalDate begin, LocalDate end){
+		if(drivingLicense == null || begin == null || end == null) {
+			throw new CarException();
+		}
+		if(!this.isFree(begin, end)) {
+			throw new CarException();
+		}
+		
+		Renting renting = new Renting(this.getRentAcar(), drivingLicense, begin, end);
+		this.addRenting(renting);
+		return renting;
+	}	
 }

@@ -14,7 +14,8 @@ public class Buyer extends TaxPayer {
     		throw new TaxException();
     	float taxReturn = 0;
     	for(Invoice i : this.getInvoices()) {
-    		taxReturn += i.getIVA()*0.05;
+    		if(i.getDate().getYear() == YEAR)
+    			taxReturn += i.getIVA()*0.05;
 		}
 		return taxReturn;
 	}

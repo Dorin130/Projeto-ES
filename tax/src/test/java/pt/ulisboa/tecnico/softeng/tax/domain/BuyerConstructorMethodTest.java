@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 
@@ -20,14 +19,10 @@ public class BuyerConstructorMethodTest {
 	private static final String ADDRESS_1 = "Albufeira";
 	private static final String ADDRESS_2 = "Lisboa";
 
-	@Before
-	public void setUp(){
-        IRS.getInstance().clearTaxPayers();
-	}
 	
 	@Test(expected = TaxException.class)
 	public void wrongNIFSize() {
-		new Buyer(NIF_1,NAME_1,ADDRESS_1);
+		new Buyer("123",NAME_1,ADDRESS_1);
 	}
 	
 	@Test

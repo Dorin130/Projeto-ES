@@ -3,7 +3,7 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public class ItemTypeConstructerMethodTest {
+public class ItemTypeConstructorMethodTest {
     private static final int TAX = 10;
     private static final String BATATA = "Batata";
 
