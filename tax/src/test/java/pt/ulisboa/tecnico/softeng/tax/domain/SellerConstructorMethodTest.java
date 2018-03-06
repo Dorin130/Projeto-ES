@@ -11,7 +11,7 @@ import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 
-public class SellerConstructorTest {
+public class SellerConstructorMethodTest {
 	private static final String NIF_1 = "123456789";
 	private static final String NIF_2 = "123456788";
 	private static final String SMALLER_NIF = "12345";
@@ -53,11 +53,6 @@ public class SellerConstructorTest {
 	public void emptyName() {
 		new Seller(NIF_1,"",ADDRESS_1);
 	}
-	
-	@Test(expected = TaxException.class)
-	public void blankName() {
-		new Seller(NIF_1, "   ", ADDRESS_1);
-	}
 
 	@Test(expected = TaxException.class)
 	public void nullAddress() {
@@ -67,11 +62,6 @@ public class SellerConstructorTest {
 	@Test(expected = TaxException.class)
 	public void emptyAddress() {
 		new Seller(NIF_1, NAME_1,"");
-	}
-	
-	@Test(expected = TaxException.class)
-	public void blankAddress() {
-		new Seller(NIF_1, NAME_1,"   ");
 	}
 	
 	@Test
