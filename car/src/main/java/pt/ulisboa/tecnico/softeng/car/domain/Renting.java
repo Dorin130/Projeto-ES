@@ -29,7 +29,7 @@ public class Renting {
 			throw new CarException();
 		}
 		
-		if(! drivingLicense.matches("^[a-zA-Z]+\\[0-9]+$")){
+		if(! drivingLicense.matches("^[a-zA-Z]+[0-9]+$")){
 			throw new CarException();
 		}
 
