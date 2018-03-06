@@ -19,7 +19,6 @@ public class BuyerConstructorMethodTest {
 	private static final String ADDRESS_1 = "Albufeira";
 	private static final String ADDRESS_2 = "Lisboa";
 
-	
 	@Test(expected = TaxException.class)
 	public void wrongNIFSize() {
 		new Buyer("123",NAME_1,ADDRESS_1);
@@ -78,7 +77,7 @@ public class BuyerConstructorMethodTest {
 			Assert.assertEquals(NAME_1, IRS.getInstance().getTaxPayerByNIF(NIF_1).getName());
 		}
 	}
-	
+
 	@After
 	public void tearDown() {
 		IRS.getInstance().clearTaxPayers();
