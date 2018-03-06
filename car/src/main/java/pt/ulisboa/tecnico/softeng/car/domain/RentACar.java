@@ -5,38 +5,129 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
+import pt.ulisboa.tecnico.softeng.car.dataobjects.RentingData;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
-public class RentACar 
-{
+public class RentACar {
     public static Set<RentACar> rentacars = new HashSet<>();
 
-	public RentACar(String rentacarName) {
-		//Constructor 
+	private static int counter = 0;
+    
+    // TODO static final int CODE_SIZE = 6;
+    
+    private final String name;
+    private final String code;
+    private final Set<Vehicle> vehicles = new HashSet<>();
+
+	public RentACar(String name) {
+		checkArguments(name);
+		
+		this.name = name;
+		this.code = Integer.toString(++RentACar.counter);
+		RentACar.rentacars.add(this);
+	}
+
+	private void checkArguments(String name) {
+		if(name == null || name == "") {
+			throw new CarException();
+		}
 	}
 
 	public String getName() {
-		//get Name
-		return "";
+		return this.name;
 	}
 	
 	public String getCode() {
-		return "";
+		return this.code;
+	}
+	
+	public void addVehicle(Vehicle vehicle) {
+		if (hasVehicle(vehicle.getPlate())) {
+			throw new CarException();
+		}
+		this.vehicles.add(vehicle);
 	}
 
-	public Object getNumberOfVehicles() {
-		// TODO Auto-generated method stub
+	public boolean hasVehicle(String plate) {
+		for (Vehicle vehicle : this.vehicles) {
+			if(vehicle.getPlate().equals(plate)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int getNumberOfVehicles() {
+		return this.vehicles.size();
+	}
+
+	public Renting getRenting(String reference) {
+		for (Vehicle vehicle : this.vehicles) {
+			Renting renting = vehicle.getRenting(reference);
+			if(renting != null) {
+				return renting;
+			}
+		}
 		return null;
 	}
 
-	public Object getRenting(String string) {
-		// TODO Auto-generated method stub
+	public static String rentVehicle(String drivingLicense, LocalDate begin, LocalDate end) {
+		for (RentACar rentacar : rentacars) {
+			Vehicle vehicle = rentacar.freeVehicle(begin, end);
+			if(vehicle != null) {
+				return vehicle.rent(drivingLicense, begin, end).getReference();
+			}
+		}
+		throw new CarException();
+	}
+
+	public Vehicle freeVehicle(LocalDate begin, LocalDate end) {
+		if (begin == null || end == null) {
+			throw new CarException();
+		}
+		
+		for (Vehicle vehicle : this.vehicles) {
+			if (vehicle.isFree(begin, end)) {
+				return vehicle;
+			}
+		}
 		return null;
 	}
 
-	public Renting rent(RentACar rentacar, String drivingLicense, LocalDate begin, LocalDate end) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Set<Car> getAllAvailableCars(LocalDate begin, LocalDate end) {
+		Set<Car> cars = new HashSet<>();
+		for (RentACar rentacar : rentacars) {
+			for (Vehicle vehicle : rentacar.vehicles) {
+				if ((vehicle instanceof Car) && vehicle.isFree(begin, end)) {
+					cars.add((Car) vehicle);
+				}
+			}
+		}
+		return cars;
+	}
+
+	public static Set<Motorcycle> getAllAvailableMotorcycles(LocalDate begin, LocalDate end) {
+		Set<Motorcycle> motorcycles = new HashSet<>();
+		for (RentACar rentacar : rentacars) {
+			for (Vehicle vehicle : rentacar.vehicles) {
+				if ((vehicle instanceof Motorcycle) && vehicle.isFree(begin, end)) {
+					motorcycles.add((Motorcycle) vehicle);
+				}
+			}
+		}
+		return motorcycles;
+	}
+
+	public static RentingData getRentingData(String reference) {
+		for (RentACar rentacar : rentacars) {
+			for (Vehicle vehicle : rentacar.vehicles) {
+				Renting renting = vehicle.getRenting(reference);
+				if (renting != null) {
+					return new RentingData(reference, vehicle.getPlate(), renting.getDrivingLicense(), rentacar.getCode(), renting.getBegin(), renting.getEnd());
+				}
+			}
+		}
+		throw new CarException();
 	}
 
 }
