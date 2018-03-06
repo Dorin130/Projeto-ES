@@ -24,6 +24,8 @@ abstract public class TaxPayer {
 		this.setAddress(address);
 	}
 
+
+
 	public String getNIF() {
 		return NIF;
 	}
