@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
 import org.joda.time.LocalDate;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
@@ -73,6 +74,11 @@ public class IRSSubmitInvoiceMethodTest {
     @Test(expected = TaxException.class)
     public void emptyItemTypeException() {
         irs.submitInvoice(new InvoiceData(this.seller.getNIF(), this.buyer.getNIF(), "", 10.5f, this.date));
+    }
+    @After
+    public void tearDown() {
+        this.irs.clearItemTypes();
+        this.irs.clearTaxPayers();
     }
 
 }

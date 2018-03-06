@@ -14,8 +14,8 @@ public class IRSGetTaxPayerByNIFMethodTest {
     @Before
     public void setUp() {
         this.irs = IRS.getInstance();
-        this.buyer = new Buyer("12343", "Manel", "Lisboa");
-        this.seller = new Seller("1337", "Hugo", "Albufeira");
+        this.buyer = new Buyer("123456789", "Manel", "Lisboa");
+        this.seller = new Seller("123456456", "Hugo", "Albufeira");
 
         this.irs.addTaxPayer(buyer);
         this.irs.addTaxPayer(seller);
@@ -23,7 +23,7 @@ public class IRSGetTaxPayerByNIFMethodTest {
 
     @Test
     public void success() {
-        TaxPayer ret = this.irs.getTaxPayerByNIF("1337");
+        TaxPayer ret = this.irs.getTaxPayerByNIF("123456456");
         assertEquals(ret, this.seller);
     }
 
@@ -43,11 +43,9 @@ public class IRSGetTaxPayerByNIFMethodTest {
     }
 
     @Test(expected = TaxException.class)
-    public void emptySetOfItemType() {
-        this.irs.getTaxPayerByNIF("XPTO");
+    public void badNIFTaxException() {
+        this.irs.getTaxPayerByNIF("A12345678");
     }
-
-
     @After
     public void tearDown() {
         this.irs.clearTaxPayers();
