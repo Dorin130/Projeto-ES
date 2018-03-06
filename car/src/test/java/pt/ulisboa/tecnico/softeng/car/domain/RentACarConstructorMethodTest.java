@@ -1,7 +1,8 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
@@ -13,9 +14,9 @@ public class RentACarConstructorMethodTest {
     public void success() {
 		RentACar rentacar = new RentACar(RENTACAR_NAME);
 
-		Assert.assertEquals(RENTACAR_NAME, rentacar.getName());
-		Assert.assertEquals(1, RentACar.rentacars.size());
-		Assert.assertEquals(0, rentacar.getNumberOfVehicles());
+		assertEquals(RENTACAR_NAME, rentacar.getName());
+		assertEquals(1, RentACar.rentacars.size());
+		assertEquals(0, rentacar.getNumberOfVehicles());
 	}
 
 	@Test(expected = CarException.class)
@@ -26,11 +27,6 @@ public class RentACarConstructorMethodTest {
 	@Test(expected = CarException.class)
 	public void emptyName() {
 		new RentACar("");
-	}
-	
-	@Test(expected = CarException.class)
-	public void blankName() {
-		new RentACar("    ");
 	}
 	
 	@After
