@@ -17,6 +17,7 @@ public class Buyer extends TaxPayer {
     		if(i.getDate().getYear() == YEAR)
     			taxReturn += i.getIVA()*0.05;
 		}
+
 		return taxReturn;
 	}
 
