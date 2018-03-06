@@ -15,6 +15,7 @@ public class RentACarConstructorMethodTest {
 
 		Assert.assertEquals(RENTACAR_NAME, rentacar.getName());
 		Assert.assertEquals(1, RentACar.rentacars.size());
+		Assert.assertEquals(0, rentacar.getNumberOfVehicles());
 	}
 
 	@Test(expected = CarException.class)
@@ -25,6 +26,11 @@ public class RentACarConstructorMethodTest {
 	@Test(expected = CarException.class)
 	public void emptyName() {
 		new RentACar("");
+	}
+	
+	@Test(expected = CarException.class)
+	public void blankName() {
+		new RentACar("    ");
 	}
 	
 	@After

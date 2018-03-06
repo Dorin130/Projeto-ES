@@ -2,15 +2,11 @@ package pt.ulisboa.tecnico.softeng.car.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
-
-import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
 public class RentACarGetRentingTest {
 	private static final String DRIVING_LICENSE = "123456";
@@ -26,24 +22,23 @@ public class RentACarGetRentingTest {
 	}
 	
 	@Test
-	public void sucess() {
-		Assert.assertEquals(this.renting, this.rentacar.getRenting(this.renting.getReference()));
+	public void success() {
+		assertEquals(this.renting, this.rentacar.getRenting(this.renting.getReference()));
 	}
 	
 	@Test
 	public void successCancelled() {
 		this.renting.cancel();
-		Assert.assertEquals(this.renting, this.rentacar.getRenting(this.renting.getCancellation()));
+		assertEquals(this.renting, this.rentacar.getRenting(this.renting.getCancellation()));
 	}
 	
 	@Test
 	public void doesNotExist() {
-		Assert.assertNull(this.rentacar.getRenting("123a"));
+		assertNull(this.rentacar.getRenting("123a"));
 	}
 
 	@After
 	public void tearDown() {
 		RentACar.rentacars.clear();
-	}
-	
+	}	
 }
