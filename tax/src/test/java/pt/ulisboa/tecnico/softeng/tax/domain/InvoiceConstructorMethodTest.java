@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +80,12 @@ public class InvoiceConstructorMethodTest {
     @Test(expected = TaxException.class)
     public void invalidValueNegative() {
         new Invoice(-12f, DATE, ITEM_TYPE, SELLER, "");
+    }
+
+    @After
+    public void tearDown() {
+        this.irs.clearItemTypes();
+        this.irs.clearTaxPayers();
     }
 
 }

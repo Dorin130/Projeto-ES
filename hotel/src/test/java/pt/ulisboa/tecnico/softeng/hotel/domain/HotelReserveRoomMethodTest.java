@@ -8,8 +8,6 @@ import org.junit.Test;
 import pt.ulisboa.tecnico.softeng.hotel.dataobjects.RoomBookingData;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
-import static org.junit.Assert.fail;
-
 public class HotelReserveRoomMethodTest {
     private static final String HOTEL_NAME = "Londres";
     private static final String HOTEL_CODE = "XPTO123";
@@ -32,8 +30,8 @@ public class HotelReserveRoomMethodTest {
     public void success() {
         Hotel.hotels.clear();
         Room room = new Room(this.hotel, "01", Room.Type.SINGLE);
-        String reference = this.hotel.reserveRoom(Room.Type.SINGLE, arrival, departure);
-        RoomBookingData data = this.hotel.getRoomBookingData(reference);
+        String reference = Hotel.reserveRoom(Room.Type.SINGLE, arrival, departure);
+        RoomBookingData data = Hotel.getRoomBookingData(reference);
 
         Assert.assertEquals(room.getHotel().getCode(), data.getHotelCode());
         Assert.assertEquals(room.getNumber(), data.getRoomNumber());
@@ -44,35 +42,35 @@ public class HotelReserveRoomMethodTest {
 
     @Test(expected = HotelException.class)
     public void noRoom() {
-        this.hotel.hotels.clear();
+        Hotel.hotels.clear();
         this.hotel = new Hotel(HOTEL_CODE, HOTEL_NAME);
-        this.hotel.reserveRoom(Room.Type.SINGLE, arrival, departure);
+        Hotel.reserveRoom(Room.Type.SINGLE, arrival, departure);
 
     }
 
     @Test(expected = HotelException.class)
     public void nullType() {
-        this.hotel.reserveRoom(null, arrival, departure);
+        Hotel.reserveRoom(null, arrival, departure);
     }
 
     @Test(expected = HotelException.class)
     public void nullArrival() {
-        this.hotel.reserveRoom(Room.Type.SINGLE, null, departure);
+        Hotel.reserveRoom(Room.Type.SINGLE, null, departure);
     }
 
     @Test(expected = HotelException.class)
     public void nullDeparture() {
-        this.hotel.reserveRoom(Room.Type.SINGLE, arrival, null);
+        Hotel.reserveRoom(Room.Type.SINGLE, arrival, null);
     }
 
     @Test(expected = HotelException.class)
     public void arrivalAfterDeparture() {
-        this.hotel.reserveRoom(Room.Type.SINGLE, departure, arrival);
+        Hotel.reserveRoom(Room.Type.SINGLE, departure, arrival);
     }
 
     @Test(expected = HotelException.class)
     public void arrivalEqualsDeparture() {
-        this.hotel.reserveRoom(Room.Type.SINGLE, arrival, arrival);
+        Hotel.reserveRoom(Room.Type.SINGLE, arrival, arrival);
     }
 
     @After
