@@ -21,6 +21,15 @@ Sub-group car+broker:
  	* class AdventureProcessMethodTest (complete);
  	* class BulkRoomBookingGetReferenceMethodTest;
  	* class BulkRoomBookingProcessBookingMethodTest;
+	
+ - (83534) Nádia Fernandes (NadiaSofia):
+ 	* class RentACar;
+ 	* class RentACarConstructorMethodTest;
+ 	* class RentACarGetAllAvailableCarsTest;
+ 	* class RentACarGetAllAvailableMotorcyclesTest;
+ 	* class RentACarGerRentingDataTest;
+ 	* class RentACarGetRentingTest;
+ 	* class RentingData;
  	
 Sub-group tax+others:
  - (83448) Dorin Gujuman (Dorin130):
