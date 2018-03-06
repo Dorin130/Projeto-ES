@@ -1,8 +1,9 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
@@ -62,9 +63,36 @@ public class Vehicle {
 		this.rentAcar = rentAcar;
 	}
 	
+	int getNumberOfRentings() {
+		return this.rentings.size();
+	}
+	
 	public void addRenting(Renting renting){
 		this.rentings.add(renting);
 	}
 	
+	public boolean isFree(LocalDate begin, LocalDate end) {
+		for(Renting r : rentings) {
+			if(r.getCancellation() != null) {
+				continue;
+			}
+			if(r.conflict(begin, end)) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
+	public Renting rent(String drivingLicense, LocalDate begin, LocalDate end){
+		if(drivingLicense == null || begin == null || end == null) {
+			throw new CarException();
+		}
+		if(!this.isFree(begin, end)) {
+			throw new CarException();
+		}
+		
+		Renting renting = new Renting(this.getRentAcar(), drivingLicense, begin, end);
+		this.addRenting(renting);
+		return renting;
+	}	
 }
