@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-import java.util.ArrayList;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +9,6 @@ public class VehicleConstructorMethodTest{
 	private String plate = "AA-09-BB";
 	private int kilometers = 0;
 	private RentACar rentACar;
-	private ArrayList rentings =  new ArrayList();
 	
 	@Before
 	public void setUp() {

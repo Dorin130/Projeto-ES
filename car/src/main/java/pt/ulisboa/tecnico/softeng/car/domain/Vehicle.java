@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
+
 public class Vehicle {
 	
 	private String plate;
@@ -63,16 +64,20 @@ public class Vehicle {
 		this.rentAcar = rentAcar;
 	}
 	
-	int getNumberOfRentings() {
+	public int getNumberOfRentings() {
 		return this.rentings.size();
+	}
+	
+	public Set<Renting> getRentings(){
+		return rentings;
 	}
 	
 	public void addRenting(Renting renting){
 		this.rentings.add(renting);
 	}
 	
-	public boolean isFree(LocalDate begin, LocalDate end) {
-		for(Renting r : rentings) {
+	boolean isFree(LocalDate begin, LocalDate end) {
+		for(Renting r : this.rentings) {
 			if(r.getCancellation() != null) {
 				continue;
 			}
@@ -83,8 +88,12 @@ public class Vehicle {
 		return true;
 	}
 	
+
 	public Renting rent(String drivingLicense, LocalDate begin, LocalDate end){
 		if(drivingLicense == null || begin == null || end == null) {
+			throw new CarException();
+		}
+		if(begin.isAfter(end)) {
 			throw new CarException();
 		}
 		if(!this.isFree(begin, end)) {
@@ -94,5 +103,14 @@ public class Vehicle {
 		Renting renting = new Renting(this.getRentAcar(), drivingLicense, begin, end);
 		this.addRenting(renting);
 		return renting;
-	}	
+	}
+	
+	public Renting getRenting(String reference) {
+		for (Renting r : this.rentings) {
+			if (r.getReference().equals(reference) || (r.isCancelled() && r.getCancellation().equals(reference))) {
+				return r;
+			}
+		}
+		return null;
+	}
 }

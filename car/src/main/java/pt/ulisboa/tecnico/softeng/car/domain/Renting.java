@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-//license plate test incomplete
-
 import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.car.domain.RentACar;
@@ -12,10 +10,9 @@ public class Renting {
 
 	private final String reference;
 	private final String drivingLicense;
-	private String cancellation;
-	private LocalDate cancellationDate;
 	private final LocalDate begin;
 	private LocalDate end;
+	private boolean checkedOut = false;
 	private int kilometers = 0;
 
 	Renting(RentACar rentacar, String drivingLicense, LocalDate begin, LocalDate end) {
@@ -29,6 +26,10 @@ public class Renting {
 
 	private void checkArguments(RentACar rentacar, String drivingLicense, LocalDate begin, LocalDate end) {
 		if (rentacar == null || drivingLicense == null || begin == null || end == null) {
+			throw new CarException();
+		}
+		
+		if(! drivingLicense.matches("^[a-zA-Z]+\\[0-9]+$")){
 			throw new CarException();
 		}
 
@@ -45,9 +46,6 @@ public class Renting {
 		return this.drivingLicense;
 	}
 	
-	public String getCancellation() {
-		return this.cancellation;
-	}
 
 	public LocalDate getBegin() {
 		return this.begin;
@@ -57,16 +55,12 @@ public class Renting {
 		return this.end;
 	}
 	
-	public LocalDate getCancellationDate() {
-		return this.cancellationDate;
-	}
-	
 	public int getKilometers() {
 		return kilometers;
 	}
 
 	boolean conflict(LocalDate begin, LocalDate end) {
-		if (isCancelled()) {
+		if (isCheckedOut()) {
 			return false;
 		}
 
@@ -95,7 +89,7 @@ public class Renting {
 	}
 	
 	public void checkout(int kilometers) {
-		if (isCancelled()) {
+		if (isCheckedOut()) {
 			return;
 		}
 		
@@ -104,17 +98,11 @@ public class Renting {
 		}
 		
 		this.kilometers = kilometers;
-		this.cancel();
-	}
-	
-	public String cancel() {
-		this.cancellation = this.reference + "CANCEL";
-		this.cancellationDate = new LocalDate();
-		return this.cancellation;
+		this.checkedOut = true;
 	}
 
-	public boolean isCancelled() {
-		return this.cancellation != null;
+	public boolean isCheckedOut() {
+		return this.checkedOut;
 	}
 
 }

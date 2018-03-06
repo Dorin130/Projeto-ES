@@ -29,7 +29,7 @@ public class RentingCheckoutMethodTest {
 		renting.checkout(50);
 		
 		assertEquals(50, renting.getKilometers());
-		assertTrue(renting.isCancelled()); //check specification with teacher
+		assertTrue(renting.isCheckedOut()); //check specification with teacher
 		assertFalse(renting.conflict(begin, end)); //check specification with teacher
 	}
 	
@@ -38,33 +38,30 @@ public class RentingCheckoutMethodTest {
 		renting.checkout(0);
 		
 		assertEquals(0, renting.getKilometers());
-		assertTrue(renting.isCancelled()); //check specification with teacher
+		assertTrue(renting.isCheckedOut()); //check specification with teacher
 		assertFalse(renting.conflict(begin, end)); //check specification with teacher
 	}
 	
 	@Test(expected = CarException.class)
 	public void failureBecauseNegativeValue() {
-		this.renting.cancel();
 		this.renting.checkout(-1);
 	}
 	
 	@Test(expected = CarException.class)
-	public void failureBecauseAlreadyCancelled() {
-		this.renting.cancel();
+	public void failureOnDoubleCheckout() {
+		this.renting.checkout(0);
 		this.renting.checkout(50);
 	}
 	
-	@Test(expected = CarException.class)
-	public void failureOnDoubleCheckout() {
+	@Test
+	public void doubleCheckoutDoesntRuinConflict() {
 		this.renting.checkout(50);
-		LocalDate cancelDate = this.renting.getCancellationDate();
 		try {
 			this.renting.checkout(50);
 			fail();
 		} catch (CarException c) {
-			assertTrue(renting.isCancelled());
+			assertTrue(renting.isCheckedOut());
 			assertFalse(renting.conflict(begin, end));
-			assertEquals(cancelDate, this.renting.getCancellationDate());
 		}
 	}
 

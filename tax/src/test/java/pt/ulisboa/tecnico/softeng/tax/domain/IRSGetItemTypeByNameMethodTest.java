@@ -44,12 +44,9 @@ public class IRSGetItemTypeByNameMethodTest {
 		this.irs.getItemTypeByName("    ");
 	}
 
-	@Test(expected = TaxException.class)
-	public void emptySetOfItemType() {
-		this.irs.getItemTypeByName("XPTO");
-	}
 
-	
+
+
 	@After
 	public void tearDown() {
 		this.irs.clearItemTypes();
