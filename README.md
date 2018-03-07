@@ -39,3 +39,11 @@ Sub-group tax+others:
  	* class IRSGetTaxPayerByNIFMethodTest;
  	* class IRSSubmitInvoiceMethodTest;
  	* class InvoiceConstructorMethodTest;
+
+ - (83509) Marco Silva (MarcofSilva):
+ 	* class TaxPayer;
+ 	* class Seller;
+ 	* class SellerConstructorMethodTest;
+ 	* class SellerGetInvoiceByReferenceMethodTest;
+ 	* class SellerToPayMethodTest;
+ 	* class ActivityProviderReserveActivityMethodTest;
