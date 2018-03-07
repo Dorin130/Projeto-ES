@@ -21,7 +21,7 @@ abstract public class TaxPayer {
 		this.setName(name);
 		this.setAddress(address);
 		
-		irs.addTaxPayer(this);
+		this.irs.addTaxPayer(this);
 	}
 	
 	private void checkArguments(String NIF, String name, String address) {
@@ -31,15 +31,12 @@ abstract public class TaxPayer {
 			throw new TaxException();
 		}
 		try {
-			int nif;
-			nif = Integer.parseInt(NIF);
+			Integer.parseInt(NIF);
 		}
 		catch (NumberFormatException nfe) {
 			throw new TaxException();
 		}
 	}
-
-
 
 	public String getNIF() {
 		return NIF;
@@ -73,7 +70,20 @@ abstract public class TaxPayer {
 		return invoices;
 	}
 
-	Invoice getInvoiceByReference(int invoice_reference) {
+	Invoice getInvoiceByReference(String invoice_reference) {
+		checkInvoiceReference(invoice_reference);
+		
+		for (Invoice invoice : this.invoices) {
+			if(invoice.getReference().equals(invoice_reference)) {
+				return invoice;
+			}
+		}
 		return null;
-	}//TODO implement this method
+	}
+	
+	public void checkInvoiceReference(String reference) {
+		if(reference == null || reference.trim().equals("")) {
+			throw new TaxException();
+		}
+	}
 }
