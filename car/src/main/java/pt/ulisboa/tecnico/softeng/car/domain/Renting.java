@@ -90,7 +90,7 @@ public class Renting {
 	
 	public void checkout(int kilometers) {
 		if (isCheckedOut()) {
-			return;
+			throw new CarException();
 		}
 		
 		if (kilometers < 0) {
