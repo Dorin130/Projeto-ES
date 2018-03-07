@@ -23,17 +23,18 @@ public class SellerGetInvoiceByReferenceMethodTest {
 	
 	@Before
 	public void setUp() {
-		irs = IRS.getInstance();
-		seller = new Seller("123456789", "Marco", "Parchal");
+		this.irs = IRS.getInstance();
+		this.seller = new Seller("123456789", "Marco", "Parchal");
 		new ItemType(ITEM_TYPE, 50);
 	}
 	
 	@Test
 	public void success() {
-		seller.addInvoice(new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, BUYER));
+		Invoice invoice = new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, BUYER);
+		this.seller.addInvoice(invoice);
 		
-		Invoice invoice = this.seller.getInvoiceByReference(INVOICE_REFERENCE);
-		Assert.assertNotNull(invoice);
+		Invoice invoiceGet = this.seller.getInvoiceByReference(invoice.getReference());
+		Assert.assertEquals(invoice.getReference(), invoiceGet.getReference());
 	}
 	
 	@Test
