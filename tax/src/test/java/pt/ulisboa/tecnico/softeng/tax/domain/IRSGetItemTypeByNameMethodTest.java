@@ -18,9 +18,7 @@ public class IRSGetItemTypeByNameMethodTest {
 		this.irs = IRS.getInstance();
 		this.alimentares = new ItemType("alimentares", 13);
 		this.vinho = new ItemType("vinho", 50);
-		
-		this.irs.addItemType(alimentares);
-		this.irs.addItemType(vinho);
+
 	}
 	
 	@Test

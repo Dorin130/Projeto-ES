@@ -22,9 +22,9 @@ public class InvoiceConstructorMethodTest {
     public void setUp() {
         irs = IRS.getInstance();
 
-        this.irs.addItemType(new ItemType(ITEM_TYPE, 50));
-        this.irs.addTaxPayer(new Buyer(BUYER, "Marco", "Faro"));
-        this.irs.addTaxPayer(new Seller(SELLER, "Nadia", "Lisboa"));
+        new ItemType(ITEM_TYPE, 50);
+        new Buyer(BUYER, "Marco", "Faro");
+        new Seller(SELLER, "Nadia", "Lisboa");
     }
 
     @Test
