@@ -2,12 +2,12 @@ package pt.ulisboa.tecnico.softeng.car.domain;
 
 import org.joda.time.LocalDate;
 
-import pt.ulisboa.tecnico.softeng.car.domain.RentACar;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
 public class Renting {
 	private static int counter = 0;
 
+	private final Vehicle vehicle;
 	private final String reference;
 	private final String drivingLicense;
 	private final LocalDate begin;
@@ -15,17 +15,18 @@ public class Renting {
 	private boolean checkedOut = false;
 	private int kilometers = 0;
 
-	Renting(RentACar rentacar, String drivingLicense, LocalDate begin, LocalDate end) {
-		checkArguments(rentacar, drivingLicense, begin, end);
+	Renting(Vehicle vehicle, String drivingLicense, LocalDate begin, LocalDate end) {
+		checkArguments(vehicle, drivingLicense, begin, end);
 
-		this.reference = rentacar.getCode() + Integer.toString(++Renting.counter);
+		this.vehicle = vehicle;
+		this.reference = vehicle.getRentAcar().getCode() + Integer.toString(++Renting.counter);
 		this.drivingLicense = drivingLicense;
 		this.begin = begin;
 		this.end = end;
 	}
 
-	private void checkArguments(RentACar rentacar, String drivingLicense, LocalDate begin, LocalDate end) {
-		if (rentacar == null || drivingLicense == null || begin == null || end == null) {
+	private void checkArguments(Vehicle vehicle, String drivingLicense, LocalDate begin, LocalDate end) {
+		if (vehicle == null || drivingLicense == null || begin == null || end == null) {
 			throw new CarException();
 		}
 		
@@ -45,7 +46,6 @@ public class Renting {
 	public String getDrivingLicense() {
 		return this.drivingLicense;
 	}
-	
 
 	public LocalDate getBegin() {
 		return this.begin;
@@ -98,6 +98,7 @@ public class Renting {
 		}
 		
 		this.kilometers = kilometers;
+		this.vehicle.addKilometers(kilometers);
 		this.checkedOut = true;
 	}
 
