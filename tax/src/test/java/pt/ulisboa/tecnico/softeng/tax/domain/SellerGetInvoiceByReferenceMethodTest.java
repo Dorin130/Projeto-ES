@@ -16,7 +16,6 @@ public class SellerGetInvoiceByReferenceMethodTest {
     private static final String SELLER = "123456789";
     private static final String BUYER = "456123789";
 	
-	//invoice_reference from count in Invoice, so it's value is 1
 	private IRS irs;
 	private Seller seller;
 	
