@@ -106,9 +106,13 @@ public class Bank {
 
 	public static String processPayment(String IBAN, int amount) {
 		for (Bank bank : Bank.banks) {
-			if (bank.getAccount(IBAN) != null) {
-				return bank.getAccount(IBAN).withdraw(amount);
+			try {
+				Account account = bank.getAccount(IBAN);
+				return account.withdraw(amount);
+			}catch (BankException be){
+				//be.printStackTrace();
 			}
+
 		}
 		throw new BankException();
 	}
