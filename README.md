@@ -52,6 +52,6 @@ Sub-group tax+others:
  	* class Buyer;
  	* class BuyerConstructorMethodTest;
  	* class BuyerTaxReturnMethodTest;
- 	* class SellerGetInvoiceByReferenceMethodTest;
+ 	* class ItemType;
  	* class BankProcessPayementMethodTest;
  	* class HotelReserveRoomMethodTest;
