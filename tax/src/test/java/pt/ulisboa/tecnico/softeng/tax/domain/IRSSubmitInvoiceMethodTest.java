@@ -23,14 +23,8 @@ public class IRSSubmitInvoiceMethodTest {
         this.buyer = new Buyer("123123123", "Manel", "Lisboa");
         this.seller = new Seller("133713378", "Hugo", "Albufeira");
 
-        this.irs.addTaxPayer(buyer);
-        this.irs.addTaxPayer(seller);
-
         this.alimentares = new ItemType("alimentares", 13);
         this.vinho = new ItemType("vinho", 50);
-
-        this.irs.addItemType(alimentares);
-        this.irs.addItemType(vinho);
 
         this.date = new LocalDate(2016, 12, 21);
     }

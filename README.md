@@ -21,6 +21,15 @@ Sub-group car+broker:
  	* class AdventureProcessMethodTest (complete);
  	* class BulkRoomBookingGetReferenceMethodTest;
  	* class BulkRoomBookingProcessBookingMethodTest;
+	
+ - (83534) Nádia Fernandes (NadiaSofia):
+ 	* class RentACar;
+ 	* class RentACarConstructorMethodTest;
+ 	* class RentACarGetAllAvailableCarsTest;
+ 	* class RentACarGetAllAvailableMotorcyclesTest;
+ 	* class RentACarGerRentingDataTest;
+ 	* class RentACarGetRentingTest;
+ 	* class RentingData;
  	
 Sub-group tax+others:
  - (83448) Dorin Gujuman (Dorin130):
@@ -30,3 +39,19 @@ Sub-group tax+others:
  	* class IRSGetTaxPayerByNIFMethodTest;
  	* class IRSSubmitInvoiceMethodTest;
  	* class InvoiceConstructorMethodTest;
+
+ - (83509) Marco Silva (MarcofSilva):
+ 	* class TaxPayer;
+ 	* class Seller;
+ 	* class SellerConstructorMethodTest;
+ 	* class SellerGetInvoiceByReferenceMethodTest;
+ 	* class SellerToPayMethodTest;
+ 	* class ActivityProviderReserveActivityMethodTest;
+	
+ - (83475) Hugo Guerreiro (Hugo Guerrreiro):
+ 	* class Buyer;
+ 	* class BuyerConstructorMethodTest;
+ 	* class BuyerTaxReturnMethodTest;
+ 	* class ItemType;
+ 	* class BankProcessPayementMethodTest;
+ 	* class HotelReserveRoomMethodTest;

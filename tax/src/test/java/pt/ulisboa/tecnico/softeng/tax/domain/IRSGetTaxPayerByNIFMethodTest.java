@@ -17,8 +17,6 @@ public class IRSGetTaxPayerByNIFMethodTest {
         this.buyer = new Buyer("123456789", "Manel", "Lisboa");
         this.seller = new Seller("123456456", "Hugo", "Albufeira");
 
-        this.irs.addTaxPayer(buyer);
-        this.irs.addTaxPayer(seller);
     }
 
     @Test

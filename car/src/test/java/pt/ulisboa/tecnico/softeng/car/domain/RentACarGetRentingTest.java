@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.Before;
 
 public class RentACarGetRentingTest {
-	private static final String DRIVING_LICENSE = "123456";
+	private static final String DRIVING_LICENSE = "C778798";
 	private final LocalDate begin = new LocalDate(2018, 01, 01);
 	private final LocalDate end = new LocalDate(2018, 01, 03);
 	private RentACar rentacar;
@@ -30,18 +30,15 @@ public class RentACarGetRentingTest {
 	
 	@Test
 	public void referenceDoesNotExist() {
-		//TODO verify with teacher
 		assertNull(this.rentacar.getRenting("123a"));
 	}
 	
 	@Test
 	public void nullReference() {
-		//TODO verify with teacher
 		assertNull(this.rentacar.getRenting(null));
 	}
 	
 	public void emptyReference() {
-		//TODO verify with teacher
 		assertNull(this.rentacar.getRenting(""));
 	}
 

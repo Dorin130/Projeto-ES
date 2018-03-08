@@ -5,6 +5,7 @@ import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 import org.joda.time.LocalDate;
 
 public class Invoice {
+    private static final IRS irs = IRS.getInstance();
     private static int count = 0;
 
     private String reference;
@@ -18,16 +19,17 @@ public class Invoice {
     public Invoice(float VALUE, LocalDate DATE, String ITEM_TYPE, String SELLER,String BUYER) {
         checkArguments(VALUE,DATE,ITEM_TYPE,SELLER,BUYER);
 
-        IRS irs = IRS.getInstance();
         this.reference = Integer.toString(count++);
         this.value = VALUE;
         this.date = DATE;
         this.itemType = irs.getItemTypeByName(ITEM_TYPE);
-        this.IVA = this.value * ((float) this.itemType.getTax());
+        this.IVA = this.value * (((float) this.itemType.getTax())/100f);
         this.seller = (Seller) irs.getTaxPayerByNIF(SELLER);
         this.buyer = (Buyer) irs.getTaxPayerByNIF(BUYER);
 
         this.itemType.addInvoice(this);
+        this.buyer.addInvoice(this);
+        this.seller.addInvoice(this);
 
     }
 

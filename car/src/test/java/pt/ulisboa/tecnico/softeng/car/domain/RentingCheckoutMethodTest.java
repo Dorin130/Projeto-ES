@@ -16,12 +16,14 @@ public class RentingCheckoutMethodTest {
 	private final LocalDate begin = new LocalDate(2018, 01, 01);
 	private final LocalDate end = new LocalDate(2018, 01, 03);
 	private RentACar rentacar;
+	private Car car;
 	private Renting renting;
 	
 	@Before
 	public void setUp() {
 		rentacar = new RentACar("CompanyName");
-		renting = new Renting(this.rentacar, "123456", this.begin, this.end);
+		car = new Car("AA-AA-AA", 0, rentacar);
+		renting = new Renting(this.car, "123456", this.begin, this.end);
 	}
 	
 	@Test
