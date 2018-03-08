@@ -77,12 +77,15 @@ public class Bank {
 	}
 
 	public Account getAccount(String IBAN) {
+		if(IBAN == null || IBAN.trim().equals(""))
+			throw new BankException();
+
 		for (Account account : this.accounts) {
 			if (account.getIBAN().equals(IBAN)) {
 				return account;
 			}
 		}
-		throw new BankException();
+		return null;
 	}
 
 	public Operation getOperation(String reference) {
@@ -106,13 +109,9 @@ public class Bank {
 
 	public static String processPayment(String IBAN, int amount) {
 		for (Bank bank : Bank.banks) {
-			try {
-				Account account = bank.getAccount(IBAN);
-				return account.withdraw(amount);
-			}catch (BankException be){
-				//be.printStackTrace();
+			if (bank.getAccount(IBAN) != null) {
+				return bank.getAccount(IBAN).withdraw(amount);
 			}
-
 		}
 		throw new BankException();
 	}
