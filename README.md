@@ -47,3 +47,11 @@ Sub-group tax+others:
  	* class SellerGetInvoiceByReferenceMethodTest;
  	* class SellerToPayMethodTest;
  	* class ActivityProviderReserveActivityMethodTest;
+	
+ - (83475) Hugo Guerreiro (Hugo Guerrreiro):
+ 	* class Buyer;
+ 	* class BuyerConstructorMethodTest;
+ 	* class BuyerTaxReturnMethodTest;
+ 	* class SellerGetInvoiceByReferenceMethodTest;
+ 	* class BankProcessPayementMethodTest;
+ 	* class HotelReserveRoomMethodTest;
