@@ -13,7 +13,7 @@ public class ItemType {
 	
 	public ItemType(String name, double tax) {
 
-		if(name == null || name.trim().equals("") ||   tax < 0 || IRS.getInstance().getItemTypeByName(name) != null)
+		if(name == null || name.trim().equals("") ||   tax < 0 || tax > 100 )
 			throw new TaxException();
 
 		this.name = name;
@@ -33,7 +33,5 @@ public class ItemType {
 		return tax;
 	}
 
-	public void setTax(double tax) {
-		this.tax = tax;
-	}
+
 }
