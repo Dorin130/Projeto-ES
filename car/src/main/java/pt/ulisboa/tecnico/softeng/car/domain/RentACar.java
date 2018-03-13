@@ -13,8 +13,6 @@ public class RentACar {
 
 	private static int counter = 0;
     
-    // TODO static final int CODE_SIZE = 6;
-    
     private final String name;
     private final String code;
     private final Set<Vehicle> vehicles = new HashSet<>();
