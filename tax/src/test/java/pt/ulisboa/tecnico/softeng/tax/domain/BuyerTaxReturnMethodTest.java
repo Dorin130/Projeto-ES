@@ -16,8 +16,8 @@ public class BuyerTaxReturnMethodTest {
     double delta = 0;
     @Before
     public void setUp() { 
-        new ItemType("comida",1);
-        new ItemType("bebida",0.5);
+        new ItemType("comida",100);
+        new ItemType("bebida",50);
         new ItemType("void",0);
     }
     @Test
