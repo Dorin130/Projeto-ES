@@ -69,6 +69,15 @@ public class InvoiceConstructorMethodTest {
     public void emptySellerNIF() {
         new Invoice(VALUE, DATE, ITEM_TYPE, "", BUYER);
     }
+    
+    @Test(expected = TaxException.class)
+    public void bigSellerNIF() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, "1234567891", BUYER);
+    }
+    @Test(expected = TaxException.class)
+    public void bigBuyerNIF() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, SELLER ,"1234567891");
+    }
 
     @Test(expected = TaxException.class)
     public void emptyIBuyerNIF() {

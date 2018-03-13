@@ -39,9 +39,9 @@ public class Invoice {
                 BUYER == null || BUYER.trim().equals("") || BUYER.length() != 9 || DATE.getYear() < 1970)
             throw new TaxException();
         try {
-            int num;
-            num = Integer.parseInt(SELLER);
-            num = Integer.parseInt(BUYER);
+            
+            Integer.parseInt(SELLER);
+            Integer.parseInt(BUYER);
         } catch (NumberFormatException nfe) {
             throw new TaxException();
         }
