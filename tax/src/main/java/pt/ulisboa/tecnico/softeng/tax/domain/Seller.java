@@ -1,16 +1,23 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class Seller extends TaxPayer {
-	private final Set<Invoice> invoices = new HashSet<>();
 
 	public Seller(String NIF, String name, String address) {
 		super(NIF, name, address);
 	}
 
-	public void addInvoice(Invoice invoice) {invoices.add(invoice);}
-	public  void getInvoiceByReference(String invoiceReference) {}
-
+	public float toPay(int year) {
+		if(year < 1970) {
+			throw new TaxException();
+		}
+		float valueToPay = 0;
+		for(Invoice invoice : this.getInvoices()) {
+			if(invoice.getDate().getYear() == year){
+				valueToPay += invoice.getIVA();
+			}
+		}
+		return valueToPay;
+	}
 }

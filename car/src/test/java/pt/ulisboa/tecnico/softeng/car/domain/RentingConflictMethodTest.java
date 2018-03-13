@@ -14,12 +14,14 @@ public class RentingConflictMethodTest {
 	private final LocalDate begin = new LocalDate(2018, 12, 15);
 	private final LocalDate end = new LocalDate(2018, 12, 20);
 	private RentACar rentacar;
+	private Car car;
 	private Renting renting;
 	
 	@Before
 	public void setUp() {
-		rentacar = new RentACar("CompanyName");
-		renting = new Renting(this.rentacar, "123456", this.begin, this.end);
+		this.rentacar = new RentACar("CompanyName");
+		this.car = new Car("AA-AA-AA", 0, rentacar);
+		this.renting = new Renting(this.car, "C123456", this.begin, this.end);
 	}
 	
 	@Test

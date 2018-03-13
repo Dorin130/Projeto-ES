@@ -10,17 +10,14 @@ import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 
 public class BuyerTaxReturnMethodTest {
-    IRS irs;
+    IRS irs = IRS.getInstance();
     LocalDate localDate =  new LocalDate("2018-01-01");
 
     double delta = 0;
     @Before
-    public void setUp() {
-        irs = IRS.getInstance();
-        irs.clearTaxPayers();
-        irs.clearItemTypes();
-        new ItemType("comida",1);
-        new ItemType("bebida",0.5);
+    public void setUp() { 
+        new ItemType("comida",100);
+        new ItemType("bebida",50);
         new ItemType("void",0);
     }
     @Test
@@ -85,7 +82,8 @@ public class BuyerTaxReturnMethodTest {
 
     @After
     public void tearDown() {
-        this.irs.clearTaxPayers();
+        irs.clearTaxPayers();
+        irs.clearItemTypes();
     }
 
 }

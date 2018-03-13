@@ -66,11 +66,10 @@ public class IRS {
 	}
 
 	private void checkNIF(String s) {
-		if( s == null || s.length() != 9 || s.trim().equals(""))
+		if( s == null ||s.trim().equals("") || s.length() != 9  )
 			throw new TaxException();
 		try {
-			int nif;
-			nif = Integer.parseInt(s);
+			Integer.parseInt(s);
 		}
 		catch (NumberFormatException nfe) {
 			throw new TaxException();

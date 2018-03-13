@@ -25,15 +25,15 @@ abstract public class TaxPayer {
 	}
 	
 	private void checkArguments(String NIF, String name, String address) {
-		if(NIF.length() != 9 || irs.getTaxPayerByNIF(NIF) != null ||
-				name == null || name.trim().equals("") ||
-				address == null || address.trim().equals("")) {
-			throw new TaxException();
-		}
 		try {
 			Integer.parseInt(NIF);
 		}
 		catch (NumberFormatException nfe) {
+			throw new TaxException();
+		}
+		if(NIF.length() != 9 || irs.getTaxPayerByNIF(NIF) != null ||
+				name == null || name.trim().equals("") ||
+				address == null || address.trim().equals("")) {
 			throw new TaxException();
 		}
 	}

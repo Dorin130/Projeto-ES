@@ -43,25 +43,20 @@ public class Vehicle {
 	public int getKilometers() {
 		return kilometers;
 	}
-
-	public void setKilometers(int kilometers) {
-		this.kilometers = kilometers;
+	
+	void addKilometers(int kilometers) {
+		if(kilometers < 0) {
+			throw new CarException();
+		}
+		this.kilometers += kilometers;
 	}
 
 	public String getPlate() {
 		return plate;
 	}
 
-	public void setPlate(String plate) {
-		this.plate = plate;
-	}
-
 	public RentACar getRentAcar() {
 		return rentAcar;
-	}
-
-	public void setRentAcar(RentACar rentAcar) {
-		this.rentAcar = rentAcar;
 	}
 	
 	public int getNumberOfRentings() {
@@ -78,16 +73,12 @@ public class Vehicle {
 	
 	boolean isFree(LocalDate begin, LocalDate end) {
 		for(Renting r : this.rentings) {
-			if(r.getCancellation() != null) {
-				continue;
-			}
 			if(r.conflict(begin, end)) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
 
 	public Renting rent(String drivingLicense, LocalDate begin, LocalDate end){
 		if(drivingLicense == null || begin == null || end == null) {
@@ -100,14 +91,14 @@ public class Vehicle {
 			throw new CarException();
 		}
 		
-		Renting renting = new Renting(this.getRentAcar(), drivingLicense, begin, end);
+		Renting renting = new Renting(this, drivingLicense, begin, end);
 		this.addRenting(renting);
 		return renting;
 	}
 	
 	public Renting getRenting(String reference) {
 		for (Renting r : this.rentings) {
-			if (r.getReference().equals(reference) || (r.isCancelled() && r.getCancellation().equals(reference))) {
+			if (r.getReference().equals(reference)) {
 				return r;
 			}
 		}

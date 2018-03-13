@@ -15,27 +15,28 @@ public class RentingConstructorTest {
 	private final LocalDate begin = new LocalDate(2018, 12, 15);
 	private final LocalDate end = new LocalDate(2018, 12, 20);
 	private RentACar rentacar;
-	
+	private Car car;
+
 	@Before
 	public void setUp() {
 		this.rentacar = new RentACar("CompanyName");
+		this.car = new Car("AA-AA-AA", 0, rentacar);
 	}
-	
+
 	@Test
 	public void success() {
-		Renting renting = new Renting(this.rentacar, DRIVER_LICENSE, this.begin, this.end);
+		Renting renting = new Renting(this.car, DRIVER_LICENSE, this.begin, this.end);
 
 		assertTrue(renting.getReference().startsWith(this.rentacar.getCode()));
-		//assertTrue(renting.getReference().length() > RentACar.CODE_SIZE);
 		assertEquals(this.begin, renting.getBegin());
 		assertEquals(this.end, renting.getEnd());
 	}
-	
+
 	@Test(expected = CarException.class)
-	public void nullRentACar() {
+	public void nullCar() {
 		new Renting(null, DRIVER_LICENSE, this.begin, this.end);
 	}
-	
+
 	@Test(expected = CarException.class)
 	public void nullDriverLicense() {
 		new Renting(null, null, this.begin, this.end);
@@ -43,16 +44,38 @@ public class RentingConstructorTest {
 
 	@Test(expected = CarException.class)
 	public void nullBegin() {
-		new Renting(this.rentacar, DRIVER_LICENSE, null, this.end);
+		new Renting(this.car, DRIVER_LICENSE, null, this.end);
 	}
 
 	@Test(expected = CarException.class)
 	public void nullEnd() {
-		new Renting(this.rentacar, DRIVER_LICENSE, this.begin, null);
+		new Renting(this.car, DRIVER_LICENSE, this.begin, null);
 	}
 
-	//TODO driver license tests - see parameterized tests
-	//https://github.com/junit-team/junit4/wiki/parameterized-tests
+	@Test(expected = CarException.class)
+	public void failOnDriverLicenseOnlyNumbers() {
+		new Renting(this.car, "777222", this.begin, null);
+	}
+	
+	@Test(expected = CarException.class)
+	public void failOnDriverLicenseOnlyLetters() {
+		new Renting(this.car, "ABCD", this.begin, null);
+	}
+	
+	@Test(expected = CarException.class)
+	public void driverLicenseAcceptsLowercase() {
+		new Renting(this.car, "abc123213", this.begin, null);
+	}
+	
+	@Test(expected = CarException.class)
+	public void failDriverLicenseHasBeginningSpace() {
+		new Renting(this.car, " " + DRIVER_LICENSE, this.begin, null);
+	}
+	
+	@Test(expected = CarException.class)
+	public void failDriverLicenseHasEndingSpace() {
+		new Renting(this.car, DRIVER_LICENSE + " ", this.begin, null);
+	}
 	
 	@Test(expected = CarException.class)
 	public void endBeforeBegin() {
@@ -61,14 +84,12 @@ public class RentingConstructorTest {
 
 	@Test
 	public void arrivalEqualDeparture() {
-		new Renting(this.rentacar, DRIVER_LICENSE, this.begin, this.begin);
+		new Renting(this.car, DRIVER_LICENSE, this.begin, this.begin);
 	}
 
-
-	
 	@After
 	public void tearDown() {
 		RentACar.rentacars.clear();
 	}
-	
+
 }

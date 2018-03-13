@@ -47,3 +47,18 @@ Sub-group tax+others:
  	* class SellerGetInvoiceByReferenceMethodTest;
  	* class SellerToPayMethodTest;
  	* class ActivityProviderReserveActivityMethodTest;
+	
+ - (83475) Hugo Guerreiro (Hugo Guerrreiro):
+ 	* class Buyer;
+ 	* class BuyerConstructorMethodTest;
+ 	* class BuyerTaxReturnMethodTest;
+ 	* class ItemType;
+ 	* class BankProcessPayementMethodTest;
+ 	* class HotelReserveRoomMethodTest;
+
+- (83487) João Sousa (JoaoPBSousa):
+ 	* class Vehicle;
+	* class Motorcycle;
+	* class Car;
+	* class VehicleConstructorMethodTest
+ 	* class VehicleRentMethodTest;

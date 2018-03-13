@@ -3,6 +3,8 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import junit.framework.Assert;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 import static org.junit.Assert.assertEquals;
@@ -43,6 +45,15 @@ public class IRSGetTaxPayerByNIFMethodTest {
     @Test(expected = TaxException.class)
     public void badNIFTaxException() {
         this.irs.getTaxPayerByNIF("A12345678");
+    }
+    @Test(expected = TaxException.class)
+    public void bigNIFTaxException() {
+        this.irs.getTaxPayerByNIF("1234567891");
+    }
+    
+    @Test
+    public void NIFDoesNotExist() {
+        assertEquals(null, this.irs.getTaxPayerByNIF("123456799"));
     }
     @After
     public void tearDown() {

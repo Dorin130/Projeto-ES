@@ -59,11 +59,6 @@ public class BankProcessPaymentMethodTest {
 
 
     @Test(expected = BankException.class)
-    public void nullAmount() {
-        Bank.processPayment(this.account.getIBAN(), 10);
-    }
-
-    @Test(expected = BankException.class)
     public void zeroAmount() {
         Bank.processPayment(this.account.getIBAN(), 0);
     }

@@ -16,15 +16,25 @@ public class ItemTypeConstructorMethodTest {
     public void negativeTax() {
         new ItemType(BATATA, -1);
     }
+    
+    @Test(expected = TaxException.class)
+    public void bigTax() {
+        new ItemType(BATATA, 102);
+    }
 
     @Test(expected = TaxException.class)
     public void nullName() {
         new ItemType(null, TAX);
     }
+   
 
     @Test(expected = TaxException.class)
     public void emptyName() {
         new ItemType("", TAX);
+    }
+    
+    public void emptyName2() {
+        new ItemType("    ", TAX);
     }
 
 

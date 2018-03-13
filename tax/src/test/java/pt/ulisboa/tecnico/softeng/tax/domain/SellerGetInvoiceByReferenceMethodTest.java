@@ -22,22 +22,30 @@ public class SellerGetInvoiceByReferenceMethodTest {
 	@Before
 	public void setUp() {
 		this.irs = IRS.getInstance();
-		this.seller = new Seller("123456789", "Marco", "Parchal");
+		this.seller = new Seller(SELLER, "Marco", "Parchal");
+		new Buyer(BUYER, "Nádia", "Almada");
 		new ItemType(ITEM_TYPE, 50);
 	}
 	
 	@Test
 	public void success() {
 		Invoice invoice = new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, BUYER);
-		this.seller.addInvoice(invoice);
 		
 		Invoice invoiceGet = this.seller.getInvoiceByReference(invoice.getReference());
 		Assert.assertEquals(invoice.getReference(), invoiceGet.getReference());
 	}
 	
 	@Test
+	public void ReturnNullNoInvoiceInTaxPayer() {
+		Invoice invoice = this.seller.getInvoiceByReference("10");
+		Assert.assertNull(invoice);
+	}
+	
+	@Test
 	public void ReturnNull() {
-		Invoice invoice = this.seller.getInvoiceByReference("2");
+		new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, BUYER);
+		
+		Invoice invoice = this.seller.getInvoiceByReference("20");
 		Assert.assertNull(invoice);
 	}
 	
