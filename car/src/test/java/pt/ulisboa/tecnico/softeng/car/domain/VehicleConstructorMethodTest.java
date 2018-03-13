@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,28 +26,33 @@ public class VehicleConstructorMethodTest{
 	
 	@Test(expected = CarException.class)
 	public void nullPlate() {
-		Car car = new Car(null, this.kilometers , this.rentACar);
+		new Car(null, this.kilometers , this.rentACar);
 	}
 
 	@Test(expected = CarException.class)
 	public void nullRentACar() {
-		Car car = new Car(this.plate, this.kilometers , null);
+		new Car(this.plate, this.kilometers , null);
 	}
 	
 	@Test(expected = CarException.class)
 	public void badPlate() {
-		Car car = new Car("AAAAA", this.kilometers , this.rentACar);
+		new Car("AAAAA", this.kilometers , this.rentACar);
 	}
 	
 	@Test(expected = CarException.class)
 	public void badKilometers() {
-		Car car = new Car(this.plate, -10, this.rentACar);
+		new Car(this.plate, -10, this.rentACar);
 	}
 	
 	@Test(expected = CarException.class)
 	public void addNegativeKm() {
 		Car car = new Car(this.plate, this.kilometers , this.rentACar);
 		car.addKilometers(-10);
+	}
+	
+	@After
+	public void tearDown() {
+		RentACar.rentacars.clear();
 	}
 	
 }

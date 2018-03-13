@@ -76,5 +76,6 @@ public class VehicleRentMethodTest{
 	@After
 	public void tearDown() {
 		car.getRentings().clear();
+		RentACar.rentacars.clear();
 	}
 }
