@@ -79,10 +79,17 @@ public class BulkRoomBookingGetReferenceMethodTest {
 		assertNull(reference);
 	}
 	
-	//assertEquals(Adventure.State.CONFIRMED, adventure.getState());
-	//assertNotNull(adventure.getPaymentConfirmation());
-	//assertNotNull(adventure.getActivityConfirmation());
-
+	@Test
+	public void bookingCancelled() {
+		BulkRoomBooking bulkRoomBooking = new BulkRoomBooking(1, begin, end);
+		for(int i=0; i<BulkRoomBooking.MAX_HOTEL_EXCEPTIONS; i++) {
+			bulkRoomBooking.processBooking();
+		}
+		
+		String reference = bulkRoomBooking.getReference("SINGLE");
+		
+		assertNull(reference);
+	}
 
 	@After
 	public void tearDown() {
