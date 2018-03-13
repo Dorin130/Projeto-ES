@@ -41,6 +41,14 @@ public class InvoiceConstructorMethodTest {
     public void nullItemType() {
         new Invoice(VALUE, DATE, null, SELLER, BUYER);
     }
+    @Test(expected = TaxException.class)
+    public void badSellerFormat() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, "123ABC123", BUYER);
+    }
+    @Test(expected = TaxException.class)
+    public void badBuyerFormat() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, "123GFD123");
+    }
 
     @Test(expected = TaxException.class)
     public void nullSellerNIF() {
