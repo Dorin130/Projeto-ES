@@ -55,16 +55,8 @@ public class Vehicle {
 		return plate;
 	}
 
-	public void setPlate(String plate) {
-		this.plate = plate;
-	}
-
 	public RentACar getRentAcar() {
 		return rentAcar;
-	}
-
-	public void setRentAcar(RentACar rentAcar) {
-		this.rentAcar = rentAcar;
 	}
 	
 	public int getNumberOfRentings() {

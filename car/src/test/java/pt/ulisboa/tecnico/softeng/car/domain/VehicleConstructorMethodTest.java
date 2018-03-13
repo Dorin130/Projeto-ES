@@ -20,7 +20,7 @@ public class VehicleConstructorMethodTest{
 		Car car = new Car(this.plate, this.kilometers , this.rentACar);
 		Assert.assertEquals(this.plate, car.getPlate());
 		Assert.assertEquals(this.kilometers, car.getKilometers());
-		Assert.assertEquals(this.rentACar, car.getRentAcar())	;
+		Assert.assertEquals(this.rentACar, car.getRentAcar());
 	}
 	
 	@Test(expected = CarException.class)
@@ -41,6 +41,12 @@ public class VehicleConstructorMethodTest{
 	@Test(expected = CarException.class)
 	public void badKilometers() {
 		Car car = new Car(this.plate, -10, this.rentACar);
+	}
+	
+	@Test(expected = CarException.class)
+	public void addNegativeKm() {
+		Car car = new Car(this.plate, this.kilometers , this.rentACar);
+		car.addKilometers(-10);
 	}
 	
 }
