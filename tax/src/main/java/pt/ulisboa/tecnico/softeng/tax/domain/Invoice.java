@@ -51,67 +51,27 @@ public class Invoice {
         return reference;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public float getValue() {
         return value;
-    }
-
-    public void setValue(float value) {
-        this.value = value;
     }
 
     public float getIVA() {
         return IVA;
     }
 
-    public void setIVA(float IVA) {
-        this.IVA = IVA;
-    }
-
     public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Seller getSeller() {
-        return seller;
     }
 
     public String getSellerNIF() {
         return seller.getNIF();
     }
 
-    public void setSeller(Seller seller) {
-        this.seller = seller;
-    }
-
-    public Buyer getBuyer() {
-        return buyer;
-    }
-
     public String getBuyerNIF() {
         return buyer.getNIF();
     }
 
-    public void setBuyer(Buyer buyer) {
-        this.buyer = buyer;
-    }
-
-    public ItemType getItemType() {
-        return itemType;
-    }
-
     public String getItemTypeName() {
         return itemType.getName();
-    }
-
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
     }
 }

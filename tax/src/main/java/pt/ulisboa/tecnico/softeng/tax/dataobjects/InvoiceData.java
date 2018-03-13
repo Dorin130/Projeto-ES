@@ -8,9 +8,7 @@ public class InvoiceData {
 	private String itemType;
 	private float value;
 	private LocalDate date;
-	
-	public InvoiceData () {}
-	
+
 	public InvoiceData(String sellerNIF, String buyerNIF, String itemType, float value, LocalDate date) {
 		this.sellerNIF = sellerNIF;
 		this.buyerNIF = buyerNIF;
@@ -23,40 +21,20 @@ public class InvoiceData {
 		return sellerNIF;
 	}
 
-	public void setSellerNIF(String sellerNIF) {
-		this.sellerNIF = sellerNIF;
-	}
-
 	public String getBuyerNIF() {
 		return buyerNIF;
-	}
-
-	public void setBuyerNIF(String buyerNIF) {
-		this.buyerNIF = buyerNIF;
 	}
 
 	public String getItemType() {
 		return itemType;
 	}
 
-	public void setItemType(String itemType) {
-		this.itemType = itemType;
-	}
-
 	public float getValue() {
 		return value;
 	}
 
-	public void setValue(float value) {
-		this.value = value;
-	}
-
 	public LocalDate getDate() {
 		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
 	}
 
 }
