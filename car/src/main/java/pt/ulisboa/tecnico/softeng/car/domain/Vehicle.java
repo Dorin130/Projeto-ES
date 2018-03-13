@@ -20,6 +20,7 @@ public class Vehicle {
 		this.plate = plate;
 		this.kilometers= kilometers;	
 		this.rentAcar = rentAcar;
+		this.rentAcar.addVehicle(this);
 	}
 	
 	private void checkArguments(String plate, int kilometers, RentACar rentAcar) {
