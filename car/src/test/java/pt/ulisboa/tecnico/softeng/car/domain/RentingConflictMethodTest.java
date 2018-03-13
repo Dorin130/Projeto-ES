@@ -21,7 +21,7 @@ public class RentingConflictMethodTest {
 	public void setUp() {
 		this.rentacar = new RentACar("CompanyName");
 		this.car = new Car("AA-AA-AA", 0, rentacar);
-		this.renting = new Renting(this.car, "123456", this.begin, this.end);
+		this.renting = new Renting(this.car, "C123456", this.begin, this.end);
 	}
 	
 	@Test

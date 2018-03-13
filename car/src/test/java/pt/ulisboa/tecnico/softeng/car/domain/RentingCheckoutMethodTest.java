@@ -23,7 +23,7 @@ public class RentingCheckoutMethodTest {
 	public void setUp() {
 		rentacar = new RentACar("CompanyName");
 		car = new Car("AA-AA-AA", 0, rentacar);
-		renting = new Renting(this.car, "123456", this.begin, this.end);
+		renting = new Renting(this.car, "C123456", this.begin, this.end);
 	}
 	
 	@Test
