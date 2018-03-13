@@ -55,3 +55,10 @@ Sub-group tax+others:
  	* class ItemType;
  	* class BankProcessPayementMethodTest;
  	* class HotelReserveRoomMethodTest;
+
+- (83487) João Sousa (JoaoPBSousa):
+ 	* class Vehicle;
+	* class Motorcycle;
+	* class Car;
+	* class VehicleConstructorMethodTest
+ 	* class VehicleRentMethodTest;
