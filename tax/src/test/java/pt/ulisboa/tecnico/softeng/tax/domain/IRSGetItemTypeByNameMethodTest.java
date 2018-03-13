@@ -20,13 +20,23 @@ public class IRSGetItemTypeByNameMethodTest {
 		this.vinho = new ItemType("vinho", 50);
 
 	}
-	
+
 	@Test
 	public void success() {
 		ItemType ret = this.irs.getItemTypeByName("vinho");
 		assertEquals(ret, this.vinho);
 	}
+	@Test
+	public void moreThanOneType( ) {
+		new ItemType("limpeza", 12);
+		this.irs.getItemTypeByName("alimentares");
+	}
 	
+	@Test
+	public void noItemType( ) {
+		this.irs.clearItemTypes();
+		assertEquals(null, this.irs.getItemTypeByName("alimentares"));
+	}
 	@Test(expected = TaxException.class)
 	public void nullItemType() {
 		this.irs.getItemTypeByName(null);
