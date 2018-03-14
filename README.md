@@ -30,7 +30,14 @@ Sub-group car+broker:
  	* class RentACarGerRentingDataTest;
  	* class RentACarGetRentingTest;
  	* class RentingData;
- 	
+ 
+- (83487) João Sousa (JoaoPBSousa):
+ 	* class Vehicle;
+	* class Motorcycle;
+	* class Car;
+	* class VehicleConstructorMethodTest
+ 	* class VehicleRentMethodTest;
+	
 Sub-group tax+others:
  - (83448) Dorin Gujuman (Dorin130):
  	* class Invoice;
@@ -55,10 +62,3 @@ Sub-group tax+others:
  	* class ItemType;
  	* class BankProcessPayementMethodTest;
  	* class HotelReserveRoomMethodTest;
-
-- (83487) João Sousa (JoaoPBSousa):
- 	* class Vehicle;
-	* class Motorcycle;
-	* class Car;
-	* class VehicleConstructorMethodTest
- 	* class VehicleRentMethodTest;
