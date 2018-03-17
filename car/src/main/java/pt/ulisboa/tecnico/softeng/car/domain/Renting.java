@@ -20,7 +20,7 @@ public class Renting {
 
 		this.vehicle = vehicle;
 		this.reference = vehicle.getRentAcar().getCode() + Integer.toString(++Renting.counter);
-		this.drivingLicense = drivingLicense;
+		this.drivingLicense = drivingLicense.trim();
 		this.begin = begin;
 		this.end = end;
 	}
@@ -30,7 +30,7 @@ public class Renting {
 			throw new CarException();
 		}
 		
-		if(! drivingLicense.matches("^[a-zA-Z]+[0-9]+$")){
+		if(! drivingLicense.trim().matches("^[a-zA-Z]+[0-9]+$")){
 			throw new CarException();
 		}
 

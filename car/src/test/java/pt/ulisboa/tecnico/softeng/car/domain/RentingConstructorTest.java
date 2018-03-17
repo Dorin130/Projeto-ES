@@ -28,6 +28,17 @@ public class RentingConstructorTest {
 		Renting renting = new Renting(this.car, DRIVER_LICENSE, this.begin, this.end);
 
 		assertTrue(renting.getReference().startsWith(this.rentacar.getCode()));
+		assertEquals(DRIVER_LICENSE, renting.getDrivingLicense());
+		assertEquals(this.begin, renting.getBegin());
+		assertEquals(this.end, renting.getEnd());
+	}
+	
+	@Test
+	public void successWhiteSpaceDriverLicense() {
+		Renting renting = new Renting(this.car, " \t\n" + DRIVER_LICENSE + " \t\n", this.begin, this.end);
+
+		assertTrue(renting.getReference().startsWith(this.rentacar.getCode()));
+		assertEquals(DRIVER_LICENSE, renting.getDrivingLicense());
 		assertEquals(this.begin, renting.getBegin());
 		assertEquals(this.end, renting.getEnd());
 	}
@@ -65,16 +76,6 @@ public class RentingConstructorTest {
 	@Test(expected = CarException.class)
 	public void driverLicenseAcceptsLowercase() {
 		new Renting(this.car, "abc123213", this.begin, null);
-	}
-	
-	@Test(expected = CarException.class)
-	public void failDriverLicenseHasBeginningSpace() {
-		new Renting(this.car, " " + DRIVER_LICENSE, this.begin, null);
-	}
-	
-	@Test(expected = CarException.class)
-	public void failDriverLicenseHasEndingSpace() {
-		new Renting(this.car, DRIVER_LICENSE + " ", this.begin, null);
 	}
 	
 	@Test(expected = CarException.class)
