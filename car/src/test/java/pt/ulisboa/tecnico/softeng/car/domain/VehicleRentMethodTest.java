@@ -27,7 +27,7 @@ public class VehicleRentMethodTest{
 
 	@Test
 	public void success() {
-		Renting renting = this.car.rent(this.drivingLicense, this.begin, this.begin);
+		Renting renting = this.car.rent(this.drivingLicense, this.begin, this.end);
 
 		Assert.assertEquals(1, this.car.getNumberOfRentings());
 		Assert.assertTrue(renting.getReference().length() > 0);
@@ -67,7 +67,7 @@ public class VehicleRentMethodTest{
 		try {
 			this.car.rent(this.drivingLicense, this.begin, this.end);
 			fail();
-		}
+		} 
 		catch (CarException ce) {
 			Assert.assertEquals(1, this.car.getNumberOfRentings());
 		}
@@ -76,5 +76,6 @@ public class VehicleRentMethodTest{
 	@After
 	public void tearDown() {
 		car.getRentings().clear();
+		RentACar.rentacars.clear();
 	}
 }

@@ -36,8 +36,16 @@ public class SellerGetInvoiceByReferenceMethodTest {
 	}
 	
 	@Test
+	public void ReturnNullNoInvoiceInTaxPayer() {
+		Invoice invoice = this.seller.getInvoiceByReference("10");
+		Assert.assertNull(invoice);
+	}
+	
+	@Test
 	public void ReturnNull() {
-		Invoice invoice = this.seller.getInvoiceByReference("2");
+		new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, BUYER);
+		
+		Invoice invoice = this.seller.getInvoiceByReference("20");
 		Assert.assertNull(invoice);
 	}
 	

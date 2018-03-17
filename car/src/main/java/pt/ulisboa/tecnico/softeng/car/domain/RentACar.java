@@ -13,8 +13,6 @@ public class RentACar {
 
 	private static int counter = 0;
     
-    // TODO static final int CODE_SIZE = 6;
-    
     private final String name;
     private final String code;
     private final Set<Vehicle> vehicles = new HashSet<>();
@@ -71,7 +69,7 @@ public class RentACar {
 		return null;
 	}
 
-	public static String rentVehicle(String drivingLicense, LocalDate begin, LocalDate end) {
+	/*public static String rentVehicle(String drivingLicense, LocalDate begin, LocalDate end) {
 		for (RentACar rentacar : rentacars) {
 			Vehicle vehicle = rentacar.freeVehicle(begin, end);
 			if(vehicle != null) {
@@ -93,7 +91,7 @@ public class RentACar {
 		}
 		return null;
 	}
-
+*/
 	public static Set<Car> getAllAvailableCars(LocalDate begin, LocalDate end) {
 		Set<Car> cars = new HashSet<>();
 		for (RentACar rentacar : rentacars) {

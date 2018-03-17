@@ -44,5 +44,6 @@ public class RentACarGetAllAvailableMotorcyclesTest {
 	@After
 	public void tearDown() {
 		RentACar.rentacars.clear();
+		availableMotorcycles.clear();
 	}	
 }
