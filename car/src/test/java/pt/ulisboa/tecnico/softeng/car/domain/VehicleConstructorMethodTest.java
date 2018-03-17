@@ -40,6 +40,17 @@ public class VehicleConstructorMethodTest{
 	}
 	
 	@Test(expected = CarException.class)
+	public void duplicatePlate() {
+		new Car(this.plate, this.kilometers , this.rentACar);
+		new Car(this.plate, this.kilometers , this.rentACar);
+	}
+	
+	@Test(expected = CarException.class)
+	public void blankPlate() {
+		new Car("     ", this.kilometers , this.rentACar);
+	}
+	
+	@Test(expected = CarException.class)
 	public void badKilometers() {
 		new Car(this.plate, -10, this.rentACar);
 	}
@@ -53,6 +64,7 @@ public class VehicleConstructorMethodTest{
 	@After
 	public void tearDown() {
 		RentACar.rentacars.clear();
+		Vehicle.plates.clear();
 	}
 	
 }

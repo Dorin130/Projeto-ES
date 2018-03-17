@@ -45,5 +45,6 @@ public class RentACarGetAllAvailableCarsTest {
 	public void tearDown() {
 		RentACar.rentacars.clear();
 		availableCars.clear();
+		Vehicle.plates.clear();
 	}	
 }

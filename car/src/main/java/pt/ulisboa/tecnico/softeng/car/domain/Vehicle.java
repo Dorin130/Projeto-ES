@@ -10,17 +10,21 @@ import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
 public class Vehicle {
 	
+	public static Set<String> plates = new HashSet<>();
+	
 	private String plate;
 	private int kilometers;
 	private RentACar rentAcar;
 	private Set<Renting> rentings = new HashSet<>();
 	
 	public Vehicle(String plate, int kilometers, RentACar rentAcar) {
+		
 		checkArguments(plate, kilometers, rentAcar);
 		this.plate = plate;
 		this.kilometers= kilometers;	
 		this.rentAcar = rentAcar;
 		this.rentAcar.addVehicle(this);
+		Vehicle.plates.add(plate);
 	}
 	
 	private void checkArguments(String plate, int kilometers, RentACar rentAcar) {
@@ -30,6 +34,12 @@ public class Vehicle {
 		
 		if(! plate.matches("^[A-Z0-9]{2}\\-[A-Z0-9]{2}\\-[A-Z0-9]{2}$")){
 			throw new CarException();
+		}
+		
+		for(String p : plates) {
+			if(plate.equals(p)) {
+				throw new CarException();
+			}
 		}
 
 		if (kilometers < 0) {
