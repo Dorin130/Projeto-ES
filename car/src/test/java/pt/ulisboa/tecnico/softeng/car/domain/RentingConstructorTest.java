@@ -50,7 +50,7 @@ public class RentingConstructorTest {
 
 	@Test(expected = CarException.class)
 	public void nullDriverLicense() {
-		new Renting(null, null, this.begin, this.end);
+		new Renting(this.car, null, this.begin, this.end);
 	}
 
 	@Test(expected = CarException.class)
@@ -80,7 +80,7 @@ public class RentingConstructorTest {
 	
 	@Test(expected = CarException.class)
 	public void endBeforeBegin() {
-		new Renting(null, DRIVER_LICENSE, this.begin, this.begin.minusDays(1));
+		new Renting(this.car, DRIVER_LICENSE, this.begin, this.begin.minusDays(1));
 	}
 
 	@Test
