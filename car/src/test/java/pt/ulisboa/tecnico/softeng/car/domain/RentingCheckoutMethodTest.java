@@ -31,6 +31,7 @@ public class RentingCheckoutMethodTest {
 		renting.checkout(50);
 		
 		assertEquals(50, renting.getKilometers());
+		assertEquals(50, car.getKilometers());
 		assertTrue(renting.isCheckedOut()); //check specification with teacher
 		assertFalse(renting.conflict(begin, end)); //check specification with teacher
 	}
@@ -40,6 +41,7 @@ public class RentingCheckoutMethodTest {
 		renting.checkout(0);
 		
 		assertEquals(0, renting.getKilometers());
+		assertEquals(0, car.getKilometers());
 		assertTrue(renting.isCheckedOut()); //check specification with teacher
 		assertFalse(renting.conflict(begin, end)); //check specification with teacher
 	}
@@ -47,6 +49,7 @@ public class RentingCheckoutMethodTest {
 	@Test(expected = CarException.class)
 	public void failureBecauseNegativeValue() {
 		this.renting.checkout(-1);
+		assertEquals(0, car.getKilometers());
 	}
 	
 	@Test(expected = CarException.class)
@@ -63,6 +66,7 @@ public class RentingCheckoutMethodTest {
 			fail();
 		} catch (CarException c) {
 			assertTrue(renting.isCheckedOut());
+			assertEquals(50, car.getKilometers());
 			assertFalse(renting.conflict(begin, end));
 		}
 	}
