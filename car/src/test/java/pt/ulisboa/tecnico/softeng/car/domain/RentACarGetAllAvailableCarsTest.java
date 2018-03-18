@@ -41,6 +41,15 @@ public class RentACarGetAllAvailableCarsTest {
 		assertEquals(availableCars, cars);
 	}
 	
+	@Test
+	public void oneCarRented() {
+		Car car = new Car("LL-06-MM", 900, this.rentacar);
+		car.rent("C778798", begin, end);
+		
+		Set<Car> cars = RentACar.getAllAvailableCars(begin, end);
+		assertEquals(availableCars, cars);
+	}
+	
 	@After
 	public void tearDown() {
 		RentACar.rentacars.clear();
