@@ -39,20 +39,8 @@ public class RentACar {
 		return this.code;
 	}
 	
-	public void addVehicle(Vehicle vehicle) {
-		if (hasVehicle(vehicle.getPlate())) {
-			throw new CarException();
-		}
+	void addVehicle(Vehicle vehicle) {
 		this.vehicles.add(vehicle);
-	}
-
-	public boolean hasVehicle(String plate) {
-		for (Vehicle vehicle : this.vehicles) {
-			if(vehicle.getPlate().equals(plate)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public int getNumberOfVehicles() {
