@@ -68,30 +68,7 @@ public class RentACar {
 		}
 		return null;
 	}
-
-	/*public static String rentVehicle(String drivingLicense, LocalDate begin, LocalDate end) {
-		for (RentACar rentacar : rentacars) {
-			Vehicle vehicle = rentacar.freeVehicle(begin, end);
-			if(vehicle != null) {
-				return vehicle.rent(drivingLicense, begin, end).getReference();
-			}
-		}
-		throw new CarException();
-	}
-
-	public Vehicle freeVehicle(LocalDate begin, LocalDate end) {
-		if (begin == null || end == null) {
-			throw new CarException();
-		}
-		
-		for (Vehicle vehicle : this.vehicles) {
-			if (vehicle.isFree(begin, end)) {
-				return vehicle;
-			}
-		}
-		return null;
-	}
-*/
+	
 	public static Set<Car> getAllAvailableCars(LocalDate begin, LocalDate end) {
 		Set<Car> cars = new HashSet<>();
 		for (RentACar rentacar : rentacars) {
