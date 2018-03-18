@@ -11,12 +11,11 @@ import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class IRSGetItemTypeByNameMethodTest {
 	private IRS irs;
-	private ItemType alimentares;
 	private ItemType vinho;
 	@Before
 	public void setUp() {
 		this.irs = IRS.getInstance();
-		this.alimentares = new ItemType("alimentares", 13);
+		new ItemType("alimentares", 13);
 		this.vinho = new ItemType("vinho", 50);
 
 	}
@@ -24,11 +23,13 @@ public class IRSGetItemTypeByNameMethodTest {
 	@Test
 	public void success() {
 		ItemType ret = this.irs.getItemTypeByName("vinho");
-		assertEquals(ret, this.vinho);
+		assertEquals(this.vinho, ret);
 	}
 	@Test
 	public void moreThanOneType( ) {
+		this.irs.clearItemTypes();
 		new ItemType("limpeza", 12);
+		new ItemType("alimentares", 13);
 		this.irs.getItemTypeByName("alimentares");
 	}
 	
@@ -51,9 +52,6 @@ public class IRSGetItemTypeByNameMethodTest {
 	public void blankTaxException() {
 		this.irs.getItemTypeByName("    ");
 	}
-
-
-
 
 	@After
 	public void tearDown() {

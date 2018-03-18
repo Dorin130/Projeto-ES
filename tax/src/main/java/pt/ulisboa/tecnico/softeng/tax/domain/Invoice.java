@@ -34,12 +34,11 @@ public class Invoice {
     }
 
     private void checkArguments(float VALUE, LocalDate DATE, String ITEM_TYPE, String SELLER,String BUYER) {
-        if(ITEM_TYPE == null || ITEM_TYPE.trim().equals("") ||
+        if(ITEM_TYPE == null || ITEM_TYPE.trim().equals("") || VALUE <= 0 ||
                 SELLER == null || SELLER.trim().equals("") || SELLER.length() != 9 ||
                 BUYER == null || BUYER.trim().equals("") || BUYER.length() != 9 || DATE.getYear() < 1970)
             throw new TaxException();
         try {
-            
             Integer.parseInt(SELLER);
             Integer.parseInt(BUYER);
         } catch (NumberFormatException nfe) {

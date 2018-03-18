@@ -41,6 +41,11 @@ public class BuyerConstructorMethodTest {
 	public void nullname() {
 		new Buyer(NIF_1,null,ADDRESS_1);
 	}
+
+	@Test(expected = TaxException.class)
+	public void test() {
+		new Buyer("123ASD123",NAME_1,ADDRESS_1);
+	}
 	
 	@Test(expected = TaxException.class)
 	public void emptyname() {

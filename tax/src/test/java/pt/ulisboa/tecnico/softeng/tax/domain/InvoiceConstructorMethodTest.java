@@ -41,14 +41,6 @@ public class InvoiceConstructorMethodTest {
     public void nullItemType() {
         new Invoice(VALUE, DATE, null, SELLER, BUYER);
     }
-    @Test(expected = TaxException.class)
-    public void badSellerFormat() {
-        new Invoice(VALUE, DATE, ITEM_TYPE, "123ABC123", BUYER);
-    }
-    @Test(expected = TaxException.class)
-    public void badBuyerFormat() {
-        new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, "123GFD123");
-    }
 
     @Test(expected = TaxException.class)
     public void nullSellerNIF() {
@@ -69,7 +61,12 @@ public class InvoiceConstructorMethodTest {
     public void emptySellerNIF() {
         new Invoice(VALUE, DATE, ITEM_TYPE, "", BUYER);
     }
-    
+
+    @Test(expected = TaxException.class)
+    public void emptyIBuyerNIF() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, "");
+    }
+
     @Test(expected = TaxException.class)
     public void bigSellerNIF() {
         new Invoice(VALUE, DATE, ITEM_TYPE, "1234567891", BUYER);
@@ -80,23 +77,27 @@ public class InvoiceConstructorMethodTest {
     }
 
     @Test(expected = TaxException.class)
-    public void emptyIBuyerNIF() {
-        new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, "");
+    public void badSellerFormat() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, "123ABC123", BUYER);
+    }
+    @Test(expected = TaxException.class)
+    public void badBuyerFormat() {
+        new Invoice(VALUE, DATE, ITEM_TYPE, SELLER, "123GFD123");
     }
 
     @Test(expected = TaxException.class)
     public void invalidDate() {
-        new Invoice(VALUE, new LocalDate(1950, 10, 10), ITEM_TYPE, SELLER, "");
+        new Invoice(VALUE, new LocalDate(1950, 10, 10), ITEM_TYPE, SELLER, BUYER);
     }
 
     @Test(expected = TaxException.class)
     public void invalidValueZero() {
-        new Invoice(0, DATE, ITEM_TYPE, SELLER, "");
+        new Invoice(0, DATE, ITEM_TYPE, SELLER, BUYER);
     }
 
     @Test(expected = TaxException.class)
     public void invalidValueNegative() {
-        new Invoice(-12f, DATE, ITEM_TYPE, SELLER, "");
+        new Invoice(-12f, DATE, ITEM_TYPE, SELLER, BUYER);
     }
 
     @After

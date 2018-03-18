@@ -11,12 +11,11 @@ import static org.junit.Assert.assertEquals;
 
 public class IRSGetTaxPayerByNIFMethodTest {
     private IRS irs;
-    private TaxPayer buyer;
     private TaxPayer seller;
     @Before
     public void setUp() {
         this.irs = IRS.getInstance();
-        this.buyer = new Buyer("123456789", "Manel", "Lisboa");
+        new Buyer("123456789", "Manel", "Lisboa");
         this.seller = new Seller("123456456", "Hugo", "Albufeira");
 
     }
@@ -24,7 +23,7 @@ public class IRSGetTaxPayerByNIFMethodTest {
     @Test
     public void success() {
         TaxPayer ret = this.irs.getTaxPayerByNIF("123456456");
-        assertEquals(ret, this.seller);
+        assertEquals(this.seller, ret);
     }
 
     @Test(expected = TaxException.class)
