@@ -35,6 +35,12 @@ public class VehicleRentMethodTest{
 		Assert.assertEquals(this.end, renting.getEnd());
 	}
 
+	@Test
+	public void successMultipleRents() {
+		this.car.rent(this.drivingLicense, this.begin, this.end);
+		this.car.rent(this.drivingLicense, this.end.plusDays(4), this.end.plusDays(8));
+	}
+	
 	@Test(expected = CarException.class)
 	public void noDrivingLicence() {
 		this.car.rent(null, this.begin, this.end);
