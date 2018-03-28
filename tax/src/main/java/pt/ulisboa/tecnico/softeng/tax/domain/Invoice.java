@@ -14,6 +14,8 @@ public class Invoice {
 	private final ItemType itemType;
 	private final Seller seller;
 	private final Buyer buyer;
+	private String cancel;
+	private LocalDate cancellationDate;
 
 	Invoice(double value, LocalDate date, ItemType itemType, Seller seller, Buyer buyer) {
 		checkArguments(value, date, itemType, seller, buyer);
@@ -79,4 +81,24 @@ public class Invoice {
 	public Buyer getBuyer() {
 		return this.buyer;
 	}
+
+	public String cancel() {
+		this.cancel = "CANCEL" + this.reference;
+		this.cancellationDate = new LocalDate();
+
+		return this.cancel;
+	}
+
+	public boolean isCancelled() {
+		return this.cancel != null;
+	}
+	
+	public String getCancellation() {
+		return this.cancel;
+	}
+
+	public LocalDate getCancellationDate() {
+		return this.cancellationDate;
+	}
+	
 }

@@ -51,7 +51,8 @@ public abstract class TaxPayer {
 		}
 
 		for (Invoice invoice : this.invoices) {
-			if (invoice.getReference().equals(invoiceReference)) {
+			if (invoice.getReference().equals(invoiceReference)
+					|| (invoice.isCancelled() && invoice.getCancellation().equals(invoiceReference))) {
 				return invoice;
 			}
 		}

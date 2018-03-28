@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
+import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class IRS {
 	private final Set<TaxPayer> taxPayers = new HashSet<>();
@@ -55,6 +56,24 @@ public class IRS {
 		Invoice invoice = new Invoice(invoiceData.getValue(), invoiceData.getDate(), itemType, seller, buyer);
 
 		return invoice.getReference();
+	}
+
+	public static void cancelInvoice(String invoiceReference) {
+		IRS irs = IRS.getIRS();
+		Invoice i = irs.getInvoiceByReference(invoiceReference);
+		if(i != null) i.cancel();
+	}
+	
+	public Invoice getInvoiceByReference(String invoiceReference) {
+		if (invoiceReference == null || invoiceReference.isEmpty()) {
+			throw new TaxException();
+		}
+		
+		for (TaxPayer taxPayer : this.taxPayers) {
+			Invoice i = taxPayer.getInvoiceByReference(invoiceReference);
+			if (i != null) return i;
+		}
+		return null;
 	}
 
 	public void removeItemTypes() {
