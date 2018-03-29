@@ -10,7 +10,7 @@ public class Adventure {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
 
 	public static enum State {
-		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, UNDO, CONFIRMED, CANCELLED
+		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RESERVE_VEHICLE, UNDO, CONFIRMED, CANCELLED
 	}
 
 	private static int counter = 0;
@@ -26,6 +26,13 @@ public class Adventure {
 	private String paymentCancellation;
 	private String roomConfirmation;
 	private String roomCancellation;
+
+
+	private String vehicleConfirmation;
+
+
+
+	private String vehicleCancellation;
 	private String activityConfirmation;
 	private String activityCancellation;
 
@@ -89,6 +96,8 @@ public class Adventure {
 		return this.client;
 	}
 
+	public String getIBAN() {return this.client.getIBAN();}
+
 	public int getAmount() {
 		return this.amount;
 	}
@@ -140,6 +149,14 @@ public class Adventure {
 	public void setRoomCancellation(String roomCancellation) {
 		this.roomCancellation = roomCancellation;
 	}
+
+	public String getVehicleConfirmation() {return vehicleConfirmation;	}
+
+	public void setVehicleConfirmation(String vehicleConfirmation) {this.vehicleConfirmation = vehicleConfirmation; }
+
+	public String getVehicleCancellation() {return vehicleCancellation;	}
+
+	public void setVehicleCancellation(String vehicleCancellation) { this.vehicleCancellation = vehicleCancellation;}
 
 	public State getState() {
 		return this.state.getState();

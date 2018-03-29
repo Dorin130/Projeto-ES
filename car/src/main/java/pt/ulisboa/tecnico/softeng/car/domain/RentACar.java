@@ -113,4 +113,14 @@ public class RentACar {
 			renting.getEnd()
 		);
 	}
+
+	public static String processRenting() {
+	//TODO
+		return "";
+	}
+
+	public static String cancelRenting(String rentingReference) {
+		//TODO
+		return "";
+	}
 }
