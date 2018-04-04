@@ -8,7 +8,7 @@ public class Client {
     private final int age;
     private final String NIF;
 
-    public Client(String iban, int age, String nif) throws BrokerException{
+    public Client(String iban, int age, String nif) throws BrokerException {
         checkArguments(iban, age, nif);
         IBAN = iban;
         this.age = age;

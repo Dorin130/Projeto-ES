@@ -30,7 +30,7 @@ public class RentVehicleStateProcessMethodMockTest {
 
     @Before
     public void setUp() {
-        this.broker = new Broker("BR98", "Travel Light");
+        this.broker = new Broker("BR98", "Travel Light", "123456789", "987654321");
         this.client = new Client("BK01987654321",20, "123456789");
     }
 
@@ -43,7 +43,7 @@ public class RentVehicleStateProcessMethodMockTest {
 
             }
         };
-        Adventure adventure = new Adventure(this.broker, this.begin, this.end, 20, this.client, 300);
+        Adventure adventure = new Adventure(this.broker, this.begin, this.end, this.client, 300);
         adventure.setState(Adventure.State.RESERVE_VEHICLE);
         adventure.process();
 

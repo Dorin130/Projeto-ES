@@ -21,12 +21,15 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 public class AdventureProcessMethodTest {
 	private final LocalDate begin = new LocalDate(2016, 12, 19);
 	private final LocalDate end = new LocalDate(2016, 12, 21);
+	private static final String buyerNIF = "123456789";
+	private static final String sellerNIF = "987654321";
 	private Broker broker;
 	private String IBAN;
+	pt.ulisboa.tecnico.softeng.broker.domain.Client clientBroker;
 
 	@Before
 	public void setUp() {
-		this.broker = new Broker("BR01", "eXtremeADVENTURE");
+		this.broker = new Broker("BR01", "eXtremeADVENTURE", buyerNIF, sellerNIF);
 
 		Bank bank = new Bank("Money", "BK01");
 		Client client = new Client(bank, "António");
@@ -37,6 +40,8 @@ public class AdventureProcessMethodTest {
 		Hotel hotel = new Hotel("XPTO123", "Paris");
 		new Room(hotel, "01", Type.SINGLE);
 
+		clientBroker = new pt.ulisboa.tecnico.softeng.broker.domain.Client(this.IBAN, 20, "123456789");
+
 		ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", "IBAN");
 		Activity activity = new Activity(provider, "Bush Walking", 18, 80, 10);
 		new ActivityOffer(activity, this.begin, this.end, 30);
@@ -45,7 +50,7 @@ public class AdventureProcessMethodTest {
 
 	@Test
 	public void success() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.end, 20, this.IBAN, 300);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, this.clientBroker, 300);
 
 		adventure.process();
 		adventure.process();
@@ -59,7 +64,7 @@ public class AdventureProcessMethodTest {
 
 	@Test
 	public void successNoHotelBooking() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, 20, this.IBAN, 300);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, this.clientBroker, 300);
 
 		adventure.process();
 		adventure.process();

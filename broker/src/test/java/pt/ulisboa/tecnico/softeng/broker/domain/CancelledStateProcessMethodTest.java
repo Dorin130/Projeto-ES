@@ -31,13 +31,15 @@ public class CancelledStateProcessMethodTest {
 	private final LocalDate begin = new LocalDate(2016, 12, 19);
 	private final LocalDate end = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
+	private static Client client;
 
 	@Injectable
 	private Broker broker;
 
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, this.begin, this.end, 20, IBAN, 300);
+		this.client = new Client(IBAN, 20, "123456789");
+		this.adventure = new Adventure(this.broker, this.begin, this.end, this.client, 300);
 		this.adventure.setState(State.CANCELLED);
 	}
 
