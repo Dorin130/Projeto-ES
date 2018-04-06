@@ -56,7 +56,7 @@ public class RentACarCancelReservationMethodTest {
 		Renting renting = car.rent(DRIVING_LICENSE, DATE1, DATE2, NIF2, IBAN2);
 		this.rentacar.getProcessor().submitRenting(renting);
 
-		String cancel = RentACar.cancelReservation(renting.getReference());
+		String cancel = RentACar.cancelRenting(renting.getReference());
 
 		assertTrue(renting.isCancelled());
 		assertEquals(cancel, renting.getCancel());
@@ -74,7 +74,7 @@ public class RentACarCancelReservationMethodTest {
 
 		this.rentacar.getProcessor().submitRenting(motorcycle.rent(DRIVING_LICENSE, DATE1, DATE2, NIF2, IBAN2));
 
-		RentACar.cancelReservation("XPTO");
+		RentACar.cancelRenting("XPTO");
 	}
 
 	@After
