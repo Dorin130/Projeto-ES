@@ -167,7 +167,7 @@ public class RentACar {
 		return rentVehicle(Motorcycle.class, drivingLicense, begin, end, nif ,iban);
 	}
 
-	public static String cancelReservation(String reference) {
+	public static String cancelRenting(String reference) {
 		Renting renting = getRenting(reference);
 		if (renting != null) {
 			return renting.cancel();
@@ -178,11 +178,6 @@ public class RentACar {
 	/*
 	public static String processRenting() {
 	//TODO
-		return "";
-	}
-
-	public static String cancelRenting(String rentingReference) {
-		//TODO
 		return "";
 	} */
 }
