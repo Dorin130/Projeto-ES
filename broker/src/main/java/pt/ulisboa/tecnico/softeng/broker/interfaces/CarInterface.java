@@ -9,18 +9,8 @@ import java.util.Set;
 
 public class CarInterface {
 
-    public static Set<Vehicle> getAllAvailableMotorcycles(LocalDate begin, LocalDate end) {
-        return RentACar.getAllAvailableMotorcycles(begin, end);
-    }
-
-    public static Set<Vehicle> getAllAvailableCars(LocalDate begin, LocalDate end) {
-        return RentACar.getAllAvailableCars(begin, end);
-    }
-
-    public static Renting getRenting(String reference) {
-        return RentACar.getRenting(reference);
-    }
-
+    public static  String processRenting() { return RentACar.processRenting();}
+    public static  String cancelRenting(String reference) { return RentACar.cancelRenting(reference);}
     public static RentingData getRentingData(String reference) {
         return RentACar.getRentingData(reference);
     }

@@ -12,18 +12,21 @@ public class AdventureConstructorMethodTest {
 	private static final int AGE = 20;
 	private static final int AMOUNT = 300;
 	private static final String IBAN = "BK011234567";
+	private static final String buyerNIF = "123456789";
+	private static final String sellerNIF = "987654321";
 	private Broker broker;
 	private final LocalDate begin = new LocalDate(2016, 12, 19);
 	private final LocalDate end = new LocalDate(2016, 12, 21);
 
 	@Before
 	public void setUp() {
-		this.broker = new Broker("BR01", "eXtremeADVENTURE");
+		this.broker = new Broker("BR01", "eXtremeADVENTURE", buyerNIF, sellerNIF);
 	}
 
 	@Test
 	public void success() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.end, AGE, IBAN, AMOUNT);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 
 		Assert.assertEquals(this.broker, adventure.getBroker());
 		Assert.assertEquals(this.begin, adventure.getBegin());
@@ -40,22 +43,26 @@ public class AdventureConstructorMethodTest {
 
 	@Test(expected = BrokerException.class)
 	public void nullBroker() {
-		new Adventure(null, this.begin, this.end, AGE, IBAN, AMOUNT);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		new Adventure(null, this.begin, this.end, client, AMOUNT);
 	}
 
 	@Test(expected = BrokerException.class)
 	public void nullBegin() {
-		new Adventure(this.broker, null, this.end, AGE, IBAN, AMOUNT);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		new Adventure(this.broker, null, this.end, client, AMOUNT);
 	}
 
 	@Test(expected = BrokerException.class)
 	public void nullEnd() {
-		new Adventure(this.broker, this.begin, null, AGE, IBAN, AMOUNT);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		new Adventure(this.broker, this.begin, null, client, AMOUNT);
 	}
 
 	@Test
 	public void successEqual18() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.end, 18, IBAN, AMOUNT);
+		Client client = new Client(IBAN, 18, buyerNIF);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 
 		Assert.assertEquals(this.broker, adventure.getBroker());
 		Assert.assertEquals(this.begin, adventure.getBegin());
@@ -72,12 +79,14 @@ public class AdventureConstructorMethodTest {
 
 	@Test(expected = BrokerException.class)
 	public void lessThan18Age() {
-		new Adventure(this.broker, this.begin, this.end, 17, IBAN, AMOUNT);
+		Client client = new Client(IBAN, 17, buyerNIF);
+		new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 	}
 
 	@Test
 	public void successEqual100() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.end, 100, IBAN, AMOUNT);
+		Client client = new Client(IBAN, 100, buyerNIF);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 
 		Assert.assertEquals(this.broker, adventure.getBroker());
 		Assert.assertEquals(this.begin, adventure.getBegin());
@@ -94,27 +103,32 @@ public class AdventureConstructorMethodTest {
 
 	@Test(expected = BrokerException.class)
 	public void over100() {
-		new Adventure(this.broker, this.begin, this.end, 101, IBAN, AMOUNT);
+		Client client = new Client(IBAN, 101, buyerNIF);
+		new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 	}
 
 	@Test(expected = BrokerException.class)
 	public void nullIBAN() {
-		new Adventure(this.broker, this.begin, this.end, AGE, null, AMOUNT);
+		Client client = new Client(null, AGE, buyerNIF);
+		new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 	}
 
 	@Test(expected = BrokerException.class)
 	public void emptyIBAN() {
-		new Adventure(this.broker, this.begin, this.end, AGE, "     ", AMOUNT);
+		Client client = new Client("    ", AGE, buyerNIF);
+		new Adventure(this.broker, this.begin, this.end, client, AMOUNT);
 	}
 
 	@Test(expected = BrokerException.class)
 	public void negativeAmount() {
-		new Adventure(this.broker, this.begin, this.end, AGE, IBAN, -100);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		new Adventure(this.broker, this.begin, this.end, client,  -100);
 	}
 
 	@Test
 	public void success1Amount() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.end, AGE, IBAN, 1);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, client, 1);
 
 		Assert.assertEquals(this.broker, adventure.getBroker());
 		Assert.assertEquals(this.begin, adventure.getBegin());
@@ -131,12 +145,14 @@ public class AdventureConstructorMethodTest {
 
 	@Test(expected = BrokerException.class)
 	public void zeroAmount() {
-		new Adventure(this.broker, this.begin, this.end, AGE, IBAN, 0);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		new Adventure(this.broker, this.begin, this.end, client, 0);
 	}
 
 	@Test
 	public void successEqualDates() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, AGE, IBAN, AMOUNT);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, client, AMOUNT);
 
 		Assert.assertEquals(this.broker, adventure.getBroker());
 		Assert.assertEquals(this.begin, adventure.getBegin());
@@ -153,7 +169,8 @@ public class AdventureConstructorMethodTest {
 
 	@Test(expected = BrokerException.class)
 	public void inconsistentDates() {
-		new Adventure(this.broker, this.begin, this.begin.minusDays(1), AGE, IBAN, AMOUNT);
+		Client client = new Client(IBAN, AGE, buyerNIF);
+		new Adventure(this.broker, this.begin, this.begin.minusDays(1), client, AMOUNT);
 	}
 
 	@After

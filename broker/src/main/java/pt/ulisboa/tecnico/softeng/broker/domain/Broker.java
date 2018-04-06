@@ -16,17 +16,38 @@ public class Broker {
 
 	private final String code;
 	private final String name;
+	private final String sellerNIF;
+	private final String buyerNIF;
 	private final Set<Adventure> adventures = new HashSet<>();
 	private final Set<BulkRoomBooking> bulkBookings = new HashSet<>();
 
-	public Broker(String code, String name) {
+	public Broker(String code, String name, String buyerNIF, String sellerNIF) {
 		checkCode(code);
 		this.code = code;
 
 		checkName(name);
 		this.name = name;
 
+		checkNIF(buyerNIF);
+		this.buyerNIF = buyerNIF;
+
+		checkNIF(sellerNIF);
+		this.sellerNIF = sellerNIF;
+
 		Broker.brokers.add(this);
+	}
+
+
+	private void checkNIF(String NIF) {
+		if (NIF == null || NIF.length() != 9) {
+			throw new BrokerException();
+		}
+		try {
+			Integer.parseInt(NIF);
+		} catch (NumberFormatException nfe) {
+			throw new BrokerException();
+		}
+
 	}
 
 	private void checkCode(String code) {
@@ -53,6 +74,14 @@ public class Broker {
 
 	String getName() {
 		return this.name;
+	}
+
+	String getBuyerNIF() {
+		return this.buyerNIF;
+	}
+
+	String getSellerNIF() {
+		return this.sellerNIF;
 	}
 
 	public int getNumberOfAdventures() {

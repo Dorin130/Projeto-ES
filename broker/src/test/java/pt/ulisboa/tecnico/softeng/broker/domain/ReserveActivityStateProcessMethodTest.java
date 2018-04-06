@@ -25,19 +25,20 @@ public class ReserveActivityStateProcessMethodTest {
 	private static final LocalDate begin = new LocalDate(2016, 12, 19);
 	private static final LocalDate end = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
+	private  Client client = new Client(IBAN, AGE, "123456789");
 
 	@Injectable
 	private Broker broker;
 
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, begin, end, AGE, IBAN, AMOUNT);
+		this.adventure = new Adventure(this.broker, begin, end, client, AMOUNT);
 		this.adventure.setState(State.RESERVE_ACTIVITY);
 	}
 
 	@Test
 	public void successNoBookRoom(@Mocked final ActivityInterface activityInterface) {
-		Adventure sameDayAdventure = new Adventure(this.broker, begin, begin, AGE, IBAN, AMOUNT);
+		Adventure sameDayAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT);
 		sameDayAdventure.setState(State.RESERVE_ACTIVITY);
 
 		new Expectations() {

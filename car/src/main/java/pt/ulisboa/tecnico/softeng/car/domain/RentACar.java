@@ -174,4 +174,15 @@ public class RentACar {
 		}
 		throw new CarException();
 	}
+
+	/*
+	public static String processRenting() {
+	//TODO
+		return "";
+	}
+
+	public static String cancelRenting(String rentingReference) {
+		//TODO
+		return "";
+	} */
 }

@@ -10,7 +10,7 @@ public class Adventure {
 	private static Logger logger = LoggerFactory.getLogger(Adventure.class);
 
 	public static enum State {
-		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, UNDO, CONFIRMED, CANCELLED
+		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RESERVE_VEHICLE, UNDO, CONFIRMED, CANCELLED
 	}
 
 	private static int counter = 0;
@@ -19,26 +19,35 @@ public class Adventure {
 	private final Broker broker;
 	private final LocalDate begin;
 	private final LocalDate end;
-	private final int age;
 	private final Client client;
 	private final int amount;
 	private String paymentConfirmation;
 	private String paymentCancellation;
 	private String roomConfirmation;
 	private String roomCancellation;
+	private String taxConfirmation;
+
+
+	private String taxCancellation;
+
+
+	private String vehicleConfirmation;
+
+
+
+	private String vehicleCancellation;
 	private String activityConfirmation;
 	private String activityCancellation;
 
 	private AdventureState state;
 
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, int age, Client client, int amount) {
-		checkArguments(broker, begin, end, age, amount);
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, int amount) {
+		checkArguments(broker, begin, end, client.getAge(), amount);
 
 		this.ID = broker.getCode() + Integer.toString(++counter);
 		this.broker = broker;
 		this.begin = begin;
 		this.end = end;
-		this.age = age;
 		this.client = client;
 		this.amount = amount;
 
@@ -82,12 +91,14 @@ public class Adventure {
 	}
 
 	public int getAge() {
-		return this.age;
+		return this.client.getAge();
 	}
 
 	public Client getClient() {
 		return this.client;
 	}
+
+	public String getIBAN() {return this.client.getIBAN();}
 
 	public int getAmount() {
 		return this.amount;
@@ -139,6 +150,30 @@ public class Adventure {
 
 	public void setRoomCancellation(String roomCancellation) {
 		this.roomCancellation = roomCancellation;
+	}
+
+	public String getVehicleConfirmation() {return vehicleConfirmation;	}
+
+	public void setVehicleConfirmation(String vehicleConfirmation) {this.vehicleConfirmation = vehicleConfirmation; }
+
+	public String getVehicleCancellation() {return vehicleCancellation;	}
+
+	public void setVehicleCancellation(String vehicleCancellation) { this.vehicleCancellation = vehicleCancellation;}
+
+	public String getTaxConfirmation() {
+		return taxConfirmation;
+	}
+
+	public void setTaxConfirmation(String taxConfirmation) {
+		this.taxConfirmation = taxConfirmation;
+	}
+
+	public String getTaxCancellation() {
+		return taxCancellation;
+	}
+
+	public void setTaxCancellation(String taxCancellation) {
+		this.taxCancellation = taxCancellation;
 	}
 
 	public State getState() {
