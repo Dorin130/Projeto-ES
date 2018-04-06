@@ -13,26 +13,31 @@ public class RentingCheckoutTest {
 	private static final String NAME1 = "eartz";
 	private static final String PLATE_CAR1 = "aa-00-11";
 	private static final String DRIVING_LICENSE = "br123";
-	private static final LocalDate date1 = LocalDate.parse("2018-01-06");
-	private static final LocalDate date2 = LocalDate.parse("2018-01-07");
+	private static final LocalDate DATE1 = LocalDate.parse("2018-01-06");
+	private static final LocalDate DATE2 = LocalDate.parse("2018-01-07");
+	private static final String NIF1 = "123456789";
+	private static final String IBAN1 = "IBAN";
+	private static final String NIF2 = "123456778";
+	private static final String IBAN2 = "IBAN2";
+	private static final int AMOUNT = 100;
 	private Car car;
 
 	@Before
 	public void setUp() {
-		RentACar rentACar1 = new RentACar(NAME1);
-		this.car = new Car(PLATE_CAR1, 10, rentACar1);
+		RentACar rentACar1 = new RentACar(NAME1, NIF1, IBAN1);
+		this.car = new Car(PLATE_CAR1, 10, AMOUNT, rentACar1);
 	}
 
 	@Test
 	public void checkout() {
-		Renting renting = car.rent(DRIVING_LICENSE, date1, date2);
+		Renting renting = car.rent(DRIVING_LICENSE, DATE1, DATE2, NIF2, IBAN2);
 		renting.checkout(100);
 		assertEquals(110, car.getKilometers());
 	}
 
 	@Test(expected = CarException.class)
 	public void failCheckout() {
-		Renting renting = car.rent(DRIVING_LICENSE, date1, date2);
+		Renting renting = car.rent(DRIVING_LICENSE, DATE1, DATE2, NIF2, IBAN2);
 		renting.checkout(-10);
 	}
 
