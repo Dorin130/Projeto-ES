@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -34,6 +35,10 @@ public class RentingConstructorTest {
 		assertEquals(DRIVING_LICENSE, renting.getDrivingLicense());
 		assertEquals(NIF2, renting.getBuyerNif());
 		assertEquals(IBAN2, renting.getBuyerIban());
+		assertEquals(DATE1, renting.getBegin());
+		assertEquals(DATE2, renting.getEnd());
+		assertEquals(null, renting.getCancelledPaymentReference());
+		assertFalse(renting.isCancelledInvoice());
 	}
 
 	@Test(expected = CarException.class)

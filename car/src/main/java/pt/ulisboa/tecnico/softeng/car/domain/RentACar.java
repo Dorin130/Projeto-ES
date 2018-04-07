@@ -135,14 +135,7 @@ public class RentACar {
 		if (renting == null) {
 			throw new CarException();
 		}
-		return new RentingData(
-			renting.getReference(),
-			renting.getVehicle().getPlate(),
-			renting.getDrivingLicense(),
-			renting.getVehicle().getRentACar().getCode(),
-			renting.getBegin(),
-			renting.getEnd()
-		);
+		return new RentingData(renting);
 	}
 	
 	public static String rentVehicle(Class<?> cls, String drivingLicense, LocalDate begin, LocalDate end, String nif, String iban) {

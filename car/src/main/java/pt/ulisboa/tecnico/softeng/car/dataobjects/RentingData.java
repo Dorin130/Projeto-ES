@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.softeng.car.dataobjects;
 
 import org.joda.time.LocalDate;
 
+import pt.ulisboa.tecnico.softeng.car.domain.Renting;
+
 public class RentingData {
 	private String reference;
 	private String plate;
@@ -9,18 +11,23 @@ public class RentingData {
 	private String rentACarCode;
 	private LocalDate begin;
 	private LocalDate end;
+	private String cancel;
+	private LocalDate cancellationDate;
+	private int amount;
 
 	public RentingData() {
 	}
 
-	public RentingData(String reference, String plate, String drivingLicense, String rentACarCode, LocalDate begin,
-			LocalDate end) {
-		this.reference = reference;
-		this.plate = plate;
-		this.drivingLicense = drivingLicense;
-		this.rentACarCode = rentACarCode;
-		this.begin = begin;
-		this.end = end;
+	public RentingData(Renting renting) {
+		this.reference = renting.getReference();
+		this.plate = renting.getVehicle().getPlate();
+		this.drivingLicense = renting.getDrivingLicense();
+		this.rentACarCode = renting.getVehicle().getRentACar().getCode();
+		this.begin = renting.getBegin();
+		this.end = renting.getEnd();
+		this.amount = renting.getAmount();
+		this.cancel = renting.getCancel();
+		this.cancellationDate = renting.getCancellationDate();
 	}
 
 	/**
@@ -111,5 +118,25 @@ public class RentingData {
 	 */
 	public void setEnd(LocalDate end) {
 		this.end = end;
+	}
+	
+	public int getAmount() {
+		return this.amount;
+	}
+	
+	public String getCancel() {
+		return this.cancel;
+	}
+	
+	public void setCancel(String cancel) {
+		this.cancel = cancel;
+	}
+	
+	public LocalDate getCancellationDate() {
+		return this.cancellationDate;
+	}
+	
+	public void setCancellationDate (LocalDate date) {
+		this.cancellationDate = date;
 	}
 }
