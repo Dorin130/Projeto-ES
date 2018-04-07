@@ -6,18 +6,28 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class BookingConflictMethodTest {
 	private final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private final LocalDate departure = new LocalDate(2016, 12, 24);
+	
+	private final String NIF = "123456789";
+	private final String IBAN = "PT50 1111 2222 3333 4444";
+	private final String buyerNIF = "111111111";
+	private final String buyerIBAN = "PT50 2222 3333 4444 5555";
+	private final int priceSingle = 50;
+	private final int priceDouble = 100;
+	private final Type type = Type.SINGLE;
+	
 	private Booking booking;
 
 	@Before
 	public void setUp() {
-		Hotel hotel = new Hotel("XPTO123", "Londres");
+		Hotel hotel = new Hotel("XPTO123", "Londres", this.NIF, this.IBAN, this.priceSingle, this.priceDouble);
 
-		this.booking = new Booking(hotel, this.arrival, this.departure);
+		this.booking = new Booking(hotel, this.arrival, this.departure,this.type, this.buyerNIF,this.buyerIBAN , hotel.getPrice(this.type));
 	}
 
 	@Test

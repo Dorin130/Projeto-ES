@@ -11,11 +11,15 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class RoomConstructorMethodTest {
+	private final String NIF = "123456789";
+	private final String IBAN = "PT50 1111 2222 3333 4444"; 
+	private final int priceSingle = 50;
+	private final int priceDouble = 100;
 	private Hotel hotel;
 
 	@Before
 	public void setUp() {
-		this.hotel = new Hotel("XPTO123", "Lisboa");
+		this.hotel = new Hotel("XPTO123", "Lisboa",this.NIF, this.IBAN, this.priceSingle, this.priceDouble);
 	}
 
 	@Test
@@ -47,6 +51,7 @@ public class RoomConstructorMethodTest {
 	public void blankRoomNumber() {
 		new Room(this.hotel, "     ", Type.DOUBLE);
 	}
+	
 
 	@Test(expected = HotelException.class)
 	public void nonAlphanumericRoomNumber() {
@@ -68,7 +73,7 @@ public class RoomConstructorMethodTest {
 	public void nullType() {
 		new Room(this.hotel, "01", null);
 	}
-
+	
 	@After
 	public void tearDown() {
 		Hotel.hotels.clear();
