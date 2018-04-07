@@ -20,6 +20,7 @@ import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 @RunWith(JMockit.class)
 public class ProcessPaymentStateProcessMethodTest {
+	private static final String DRIVING_LICENSE = "IMT1234";
 	private static final String IBAN = "BK01987654321";
 	private static final String BUYER = "123456789";
 	private static final String SELLER = "987654321";
@@ -38,7 +39,8 @@ public class ProcessPaymentStateProcessMethodTest {
 
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, this.begin, this.end, new Client(IBAN, 30, BUYER), AMOUNT, NOT_RENT_CAR);
+		this.adventure = new Adventure(this.broker, this.begin, this.end,
+				new Client(this.broker, IBAN, BUYER, DRIVING_LICENSE,30), AMOUNT, NOT_RENT_CAR);
 		this.adventure.setState(State.PROCESS_PAYMENT);
 	}
 

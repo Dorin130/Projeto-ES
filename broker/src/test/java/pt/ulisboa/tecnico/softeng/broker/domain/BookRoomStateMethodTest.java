@@ -22,17 +22,18 @@ public class BookRoomStateMethodTest {
 	private static final boolean RENT_CAR = true;
 	private static final boolean NO_RENT_CAR = false;
 	private static final String IBAN = "BK01987654321";
+	private static final String DRIVING_LICENSE = "IMT1234";
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
 	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
-	private static final Client client = new Client(IBAN, AGE, "123456789");
 
 	@Injectable
 	private Broker broker;
 
+	private final Client client = new Client(broker, IBAN, "123456789",DRIVING_LICENSE,AGE);
 	@Test
 	public void successNoReserveVehicle(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {

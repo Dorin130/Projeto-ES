@@ -22,6 +22,7 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
 @RunWith(JMockit.class)
 public class CancelledStateProcessMethodTest {
 	private static final String IBAN = "BK01987654321";
+	private static final String DRIVING_LICENSE = "IMT1234";
 	private static final String PAYMENT_CONFIRMATION = "PaymentConfirmation";
 	private static final String PAYMENT_CANCELLATION = "PaymentCancellation";
 	private static final String ACTIVITY_CONFIRMATION = "ActivityConfirmation";
@@ -38,7 +39,7 @@ public class CancelledStateProcessMethodTest {
 
 	@Before
 	public void setUp() {
-		this.client = new Client(IBAN, 20, "123456789");
+		this.client = new Client(broker, IBAN, "123456789", DRIVING_LICENSE,20);
 		this.adventure = new Adventure(this.broker, this.begin, this.end, this.client, 300, false);
 		this.adventure.setState(State.CANCELLED);
 	}

@@ -19,6 +19,13 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 
 public class AdventureProcessMethodTest {
+	private static final String HOTEL_NAME = "Londres";
+	private static final String HOTEL_CODE = "XPTO123";
+	private static final String NIF = "123456789";
+
+	private static final String DRIVING_LICENSE = "IMT1234";
+	private final int priceSingle = 50;
+	private final int priceDouble = 100;
 	private final LocalDate begin = new LocalDate(2016, 12, 19);
 	private final LocalDate end = new LocalDate(2016, 12, 21);
 	private static final String buyerNIF = "123456789";
@@ -37,10 +44,10 @@ public class AdventureProcessMethodTest {
 		this.IBAN = account.getIBAN();
 		account.deposit(1000);
 
-		Hotel hotel = new Hotel("XPTO123", "Paris");
+		Hotel hotel = new Hotel(HOTEL_CODE, HOTEL_NAME, NIF, IBAN, this.priceSingle, this.priceDouble);
 		new Room(hotel, "01", Type.SINGLE);
 
-		clientBroker = new pt.ulisboa.tecnico.softeng.broker.domain.Client(this.IBAN, 20, "123456789");
+		clientBroker = new pt.ulisboa.tecnico.softeng.broker.domain.Client(this.broker, IBAN, NIF, DRIVING_LICENSE,20);
 
 		ActivityProvider provider = new ActivityProvider("XtremX", "ExtremeAdventure", "NIF", "IBAN");
 		Activity activity = new Activity(provider, "Bush Walking", 18, 80, 10);
@@ -50,7 +57,7 @@ public class AdventureProcessMethodTest {
 
 	@Test
 	public void success() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.end, this.clientBroker, 300);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, this.clientBroker, 300, true);
 
 		adventure.process();
 		adventure.process();
@@ -64,7 +71,7 @@ public class AdventureProcessMethodTest {
 
 	@Test
 	public void successNoHotelBooking() {
-		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, this.clientBroker, 300);
+		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, this.clientBroker, 300, true);
 
 		adventure.process();
 		adventure.process();

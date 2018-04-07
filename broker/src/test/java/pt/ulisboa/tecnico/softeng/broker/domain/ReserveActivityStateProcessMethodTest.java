@@ -19,26 +19,29 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 @RunWith(JMockit.class)
 public class ReserveActivityStateProcessMethodTest {
 	private static final String IBAN = "BK01987654321";
+	private static final String NIF = "BK01987654321";
+	private static final String DRIVING_LICENSE = "IMT1234";
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
 	private static final String ACTIVITY_CONFIRMATION = "ActivityConfirmation";
 	private static final LocalDate begin = new LocalDate(2016, 12, 19);
 	private static final LocalDate end = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
-	private  Client client = new Client(IBAN, AGE, "123456789");
 
 	@Injectable
 	private Broker broker;
 
+
+	private  Client client = new Client(broker, IBAN, NIF ,DRIVING_LICENSE,AGE);
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, begin, end, client, AMOUNT);
+		this.adventure = new Adventure(this.broker, begin, end, client, AMOUNT, true);
 		this.adventure.setState(State.RESERVE_ACTIVITY);
 	}
 
 	@Test
 	public void successNoBookRoom(@Mocked final ActivityInterface activityInterface) {
-		Adventure sameDayAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT);
+		Adventure sameDayAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT, true);
 		sameDayAdventure.setState(State.RESERVE_ACTIVITY);
 
 		new Expectations() {

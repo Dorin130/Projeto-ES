@@ -24,6 +24,7 @@ public class AdventureSequenceTest {
 	private static final boolean RENT_CAR = true;
 	private static final boolean NOT_RENT_CAR = false;
 	private static final String IBAN = "BK01987654321";
+	private static final String DRIVING_LICENSE = "IMT1234";
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
 	private static final String PAYMENT_CONFIRMATION = "PaymentConfirmation";
@@ -39,11 +40,11 @@ public class AdventureSequenceTest {
 	private static final String sellerNIF = "987654321";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
-	private static final Client client = new Client(IBAN, AGE, buyerNIF);
 
 	@Injectable
 	private Broker broker;
 
+	private final Client client = new Client(broker, IBAN, buyerNIF, DRIVING_LICENSE,AGE);
 	@Test
 	public void successSequenceOne(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface, @Mocked CarInterface carInterface) {
