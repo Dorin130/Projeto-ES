@@ -13,6 +13,8 @@ public class RentingData {
 	private LocalDate end;
 	private String cancel;
 	private LocalDate cancellationDate;
+	private String paymentReference;
+	private String invoiceReference;
 	private int amount;
 
 	public RentingData() {
@@ -28,6 +30,8 @@ public class RentingData {
 		this.amount = renting.getAmount();
 		this.cancel = renting.getCancel();
 		this.cancellationDate = renting.getCancellationDate();
+		this.paymentReference = renting.getPaymentReference();
+		this.invoiceReference = renting.getInvoiceReference();
 	}
 
 	/**
@@ -139,4 +143,20 @@ public class RentingData {
 	public void setCancellationDate (LocalDate date) {
 		this.cancellationDate = date;
 	}
+	
+    public String getPaymentReference() {
+    	return paymentReference;
+    }
+    
+    public boolean paymentConfirmed() {
+    	return paymentReference != null;
+    }
+    
+    public String getInvoiceReference() {
+    	return invoiceReference;
+    }
+    
+    public boolean invoiceConfirmed() {
+    	return invoiceReference != null;
+    }
 }
