@@ -62,6 +62,7 @@ public class IRS {
 		IRS irs = IRS.getIRS();
 		Invoice i = irs.getInvoiceByReference(invoiceReference);
 		if(i != null) i.cancel();
+		else throw new TaxException();
 	}
 	
 	public Invoice getInvoiceByReference(String invoiceReference) {

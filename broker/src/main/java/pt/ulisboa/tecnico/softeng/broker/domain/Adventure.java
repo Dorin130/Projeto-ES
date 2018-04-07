@@ -29,7 +29,7 @@ public class Adventure {
 	private String taxConfirmation;
 
 
-	private String taxCancellation;
+	private boolean cancelledInvoice = false;
 
 
 	private String vehicleConfirmation;
@@ -173,12 +173,12 @@ public class Adventure {
 		this.taxConfirmation = taxConfirmation;
 	}
 
-	public String getTaxCancellation() {
-		return taxCancellation;
+	public boolean getTaxCancellation() {
+		return cancelledInvoice;
 	}
 
-	public void setTaxCancellation(String taxCancellation) {
-		this.taxCancellation = taxCancellation;
+	public void setCancelledInvoice(boolean cancelledInvoice) {
+		this.cancelledInvoice = cancelledInvoice;
 	}
 
 	public State getState() {
