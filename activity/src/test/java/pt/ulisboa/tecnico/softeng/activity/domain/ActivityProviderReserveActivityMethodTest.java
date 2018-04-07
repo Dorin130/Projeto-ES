@@ -44,8 +44,8 @@ public class ActivityProviderReserveActivityMethodTest {
 	}
 
 	@Test(expected = ActivityException.class)
-	public void reserveAcitivityNoOption() {
-		String act = ActivityProvider.reserveActivity(new LocalDate(2018, 02, 19), new LocalDate(2016, 12, 19), 20, NIF,
+	public void reserveActivityNoOption() {
+		ActivityProvider.reserveActivity(new LocalDate(2018, 02, 19), new LocalDate(2016, 12, 19), 20, NIF,
 				IBAN);
 	}
 
