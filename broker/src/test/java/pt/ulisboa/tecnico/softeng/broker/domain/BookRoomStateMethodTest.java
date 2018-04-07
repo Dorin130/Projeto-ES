@@ -19,6 +19,8 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 @RunWith(JMockit.class)
 public class BookRoomStateMethodTest {
+	private static final boolean RENT_CAR = true;
+	private static final boolean NO_RENT_CAR = false;
 	private static final String IBAN = "BK01987654321";
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
@@ -31,24 +33,38 @@ public class BookRoomStateMethodTest {
 	@Injectable
 	private Broker broker;
 
-	@Before
-	public void setUp() {
-		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
-		this.adventure.setState(State.BOOK_ROOM);
-	}
-
 	@Test
-	public void successBookRoom(@Mocked final HotelInterface hotelInterface) {
+	public void successNoReserveVehicle(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
 				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
 				this.result = ROOM_CONFIRMATION;
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		this.adventure.process();
 
-		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
+		Assert.assertEquals(State.PROCESS_PAYMENT, this.adventure.getState());
+	}
+	
+	@Test
+	public void successReserveVehicle(@Mocked final HotelInterface hotelInterface) {
+		new Expectations() {
+			{
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				this.result = ROOM_CONFIRMATION;
+			}
+		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
+
+		this.adventure.process();
+
+		Assert.assertEquals(State.RESERVE_VEHICLE, this.adventure.getState());
 	}
 
 	@Test
@@ -59,6 +75,9 @@ public class BookRoomStateMethodTest {
 				this.result = new HotelException();
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		this.adventure.process();
 
@@ -73,6 +92,9 @@ public class BookRoomStateMethodTest {
 				this.result = new RemoteAccessException();
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		this.adventure.process();
 
@@ -88,6 +110,9 @@ public class BookRoomStateMethodTest {
 				this.times = BookRoomState.MAX_REMOTE_ERRORS;
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		for (int i = 0; i < BookRoomState.MAX_REMOTE_ERRORS; i++) {
 			this.adventure.process();
@@ -105,6 +130,9 @@ public class BookRoomStateMethodTest {
 				this.times = BookRoomState.MAX_REMOTE_ERRORS - 1;
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		for (int i = 0; i < BookRoomState.MAX_REMOTE_ERRORS - 1; i++) {
 			this.adventure.process();
@@ -133,6 +161,9 @@ public class BookRoomStateMethodTest {
 				this.times = 6;
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		this.adventure.process();
 		this.adventure.process();
@@ -141,7 +172,7 @@ public class BookRoomStateMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
+		Assert.assertEquals(State.PROCESS_PAYMENT, this.adventure.getState());
 	}
 
 	@Test
@@ -164,6 +195,9 @@ public class BookRoomStateMethodTest {
 				this.times = 2;
 			}
 		};
+		
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, NO_RENT_CAR);
+		this.adventure.setState(State.BOOK_ROOM);
 
 		this.adventure.process();
 		this.adventure.process();

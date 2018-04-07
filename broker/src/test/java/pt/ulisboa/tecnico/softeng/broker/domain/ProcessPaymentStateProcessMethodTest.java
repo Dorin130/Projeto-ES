@@ -25,6 +25,7 @@ public class ProcessPaymentStateProcessMethodTest {
 	private static final String SELLER = "987654321";
 	private static final String ITEMTYPE = "ADVENTURE";
 	private static final int AMOUNT = 300;
+	private static final boolean NOT_RENT_CAR = false;
 	private static final String PAYMENT_CONFIRMATION = "PaymentConfirmation";
 	private static final String TAX_CONFIRMATION = "TaxConfirmation";
 	private static final String IRS_REFERENCE = "123";
@@ -37,7 +38,7 @@ public class ProcessPaymentStateProcessMethodTest {
 
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, this.begin, this.end, new Client(IBAN, 30, BUYER), AMOUNT);
+		this.adventure = new Adventure(this.broker, this.begin, this.end, new Client(IBAN, 30, BUYER), AMOUNT, NOT_RENT_CAR);
 		this.adventure.setState(State.PROCESS_PAYMENT);
 	}
 
@@ -55,7 +56,7 @@ public class ProcessPaymentStateProcessMethodTest {
 
 		this.adventure.process();
 
-		Assert.assertEquals(State.RESERVE_ACTIVITY, this.adventure.getState());
+		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
 	}
 
 	@Test
@@ -69,7 +70,7 @@ public class ProcessPaymentStateProcessMethodTest {
 
 		this.adventure.process();
 
-		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+		Assert.assertEquals(State.UNDO, this.adventure.getState());
 	}
 
 	@Test
@@ -86,7 +87,7 @@ public class ProcessPaymentStateProcessMethodTest {
 
 		this.adventure.process();
 
-		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+		Assert.assertEquals(State.UNDO, this.adventure.getState());
 	}
 
 	@Test
@@ -133,7 +134,7 @@ public class ProcessPaymentStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+		Assert.assertEquals(State.UNDO, this.adventure.getState());
 	}
 
 
@@ -153,7 +154,7 @@ public class ProcessPaymentStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+		Assert.assertEquals(State.UNDO, this.adventure.getState());
 	}
 
 	@Test
@@ -218,7 +219,7 @@ public class ProcessPaymentStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.RESERVE_ACTIVITY, this.adventure.getState());
+		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
 	}
 
 	@Test
@@ -250,7 +251,7 @@ public class ProcessPaymentStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.RESERVE_ACTIVITY, this.adventure.getState());
+		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
 	}
 
 	@Test
@@ -279,7 +280,7 @@ public class ProcessPaymentStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+		Assert.assertEquals(State.UNDO, this.adventure.getState());
 	}
 
 	@Test
@@ -310,7 +311,7 @@ public class ProcessPaymentStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+		Assert.assertEquals(State.UNDO, this.adventure.getState());
 	}
 
 }
