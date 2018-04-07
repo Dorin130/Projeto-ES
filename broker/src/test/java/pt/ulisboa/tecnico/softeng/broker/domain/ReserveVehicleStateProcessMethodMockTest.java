@@ -11,9 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.broker.exception.RemoteAccessException;
-import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.CarInterface;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
@@ -48,20 +46,17 @@ public class ReserveVehicleStateProcessMethodMockTest {
     }
 
     @Test
-    public void processWithNoExceptions(@Mocked final BankInterface bankInterface, @Mocked final CarInterface carInterface) {
+    public void processWithNoExceptions(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
                 CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = VEHICLE_REFERENCE;
-                BankInterface.processPayment("BK01987654321", 300);
-                this.result = PAYMENT_CONFIRMATION;
 
             }
         };
         this.adventure.process();
 
         Assert.assertEquals(VEHICLE_REFERENCE, this.adventure.getVehicleConfirmation());
-        Assert.assertEquals(PAYMENT_CONFIRMATION, this.adventure.getPaymentConfirmation());
         Assert.assertEquals(Adventure.State.CONFIRMED, this.adventure.getState());
     }
 
@@ -78,29 +73,13 @@ public class ReserveVehicleStateProcessMethodMockTest {
         Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
     }
 
-    @Test
-    public void bankException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
-        new Expectations() {
-            {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
-                this.result = VEHICLE_REFERENCE;
-                BankInterface.processPayment("BK01987654321", 300);
-                this.result = new BankException();
-            }
-        };
-        this.adventure.process();
-
-        Assert.assertEquals(Adventure.State.CANCELLED, adventure.getState());
-    }
 
     @Test
-    public void singleCarRemoteAccessException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
+    public void singleCarRemoteAccessException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
                 CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
-                BankInterface.processPayment("BK01987654321", 300);
-                this.result = PAYMENT_CONFIRMATION;
             }
         };
         this.adventure.process();
@@ -108,13 +87,11 @@ public class ReserveVehicleStateProcessMethodMockTest {
     }
 
     @Test
-    public void maxCarRemoteAccessException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
+    public void maxCarRemoteAccessException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
                 CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
-                BankInterface.processPayment("BK01987654321", 300);
-                this.result = PAYMENT_CONFIRMATION;
             }
         };
         for(int i=0; i < MAXTRIES+1; i++) {
@@ -124,13 +101,12 @@ public class ReserveVehicleStateProcessMethodMockTest {
     }
 
     @Test
-    public void maxMinusOneCarRemoteAccessException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
+    public void maxMinusOneCarRemoteAccessException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
                 CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
-                BankInterface.processPayment("BK01987654321", 300);
-                this.result = PAYMENT_CONFIRMATION;
+
             }
         };
         for(int i=0; i < MAXTRIES; i++) {
@@ -139,7 +115,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
         Assert.assertEquals(Adventure.State.CONFIRMED, adventure.getState());
     }
     @Test
-    public void fourCarRemoteAccessExceptionOneSuccess(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
+    public void fourCarRemoteAccessExceptionOneSuccess(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
                 CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
@@ -156,10 +132,6 @@ public class ReserveVehicleStateProcessMethodMockTest {
                     }
                 };
                 this.times = 5;
-
-                BankInterface.processPayment("BK01987654321", 300);
-                this.result = PAYMENT_CONFIRMATION;
-
             }
         };
         for(int i=0; i < MAXTRIES; i++) {
@@ -169,7 +141,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     }
 
     @Test
-    public void oneRemoteAccessExceptionOneCarException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
+    public void oneRemoteAccessExceptionOneCarException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
                 CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
