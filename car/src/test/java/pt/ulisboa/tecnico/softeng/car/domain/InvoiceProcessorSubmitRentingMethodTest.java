@@ -55,11 +55,6 @@ public class InvoiceProcessorSubmitRentingMethodTest {
 		};
 
 		this.rentacar.getProcessor().submitRenting(this.renting);
-
-		new FullVerifications() {
-			{
-			}
-		};
 	}
 
 	@Test
@@ -172,11 +167,6 @@ public class InvoiceProcessorSubmitRentingMethodTest {
 
 		this.rentacar.getProcessor().submitRenting(this.renting);
 		this.renting.cancel();
-
-		new FullVerifications() {
-			{
-			}
-		};
 	}
 
 	@Test
