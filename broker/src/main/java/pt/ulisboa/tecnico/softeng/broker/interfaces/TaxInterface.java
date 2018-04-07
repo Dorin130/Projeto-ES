@@ -9,7 +9,7 @@ public class TaxInterface {
         return IRS.submitInvoice( new InvoiceData(sellerNIF, buyerNIF, itemType, value, date));
     }
 
-    public static String cancelInvoice(String invoiceReference) {
-        return IRS.cancelInvoice(invoiceReference);
+    public static void cancelInvoice(String invoiceReference) {
+        IRS.cancelInvoice(invoiceReference);
     }
 }

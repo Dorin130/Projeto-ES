@@ -58,10 +58,10 @@ public class IRS {
 		return invoice.getReference();
 	}
 
-	public static String cancelInvoice(String invoiceReference) {
+	public static void cancelInvoice(String invoiceReference) {
 		IRS irs = IRS.getIRS();
 		Invoice i = irs.getInvoiceByReference(invoiceReference);
-		if(i != null) return i.cancel();
+		if(i != null) i.cancel();
 		else throw new TaxException();
 	}
 	
