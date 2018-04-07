@@ -17,17 +17,21 @@ import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
 import pt.ulisboa.tecnico.softeng.broker.exception.RemoteAccessException;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
+import pt.ulisboa.tecnico.softeng.broker.interfaces.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 @RunWith(JMockit.class)
 public class ConfirmedStateProcessMethodTest {
+	private static final boolean RENT_CAR = true;
+	private static final boolean NO_RENT_CAR = false;
 	private static final String IBAN = "BK01987654321";
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
 	private static final String PAYMENT_CONFIRMATION = "PaymentConfirmation";
 	private static final String ACTIVITY_CONFIRMATION = "ActivityConfirmation";
 	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
+	private static final String CAR_CONFIRMATION = "CarConfirmation";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
@@ -35,26 +39,29 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Injectable
 	private Broker broker;
-
+	
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
+		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, RENT_CAR);
 		this.adventure.setState(State.CONFIRMED);
 	}
 
 	@Test
 	public void successAll(@Mocked final BankInterface bankInterface, @Mocked final ActivityInterface activityInterface,
-			@Mocked final HotelInterface roomInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
-		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
+			@Mocked final HotelInterface roomInterface, @Mocked final CarInterface carInterface) {
+		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);		
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
-				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
-
-				ActivityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION);
+				ActivityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION);				
 
 				HotelInterface.getRoomBookingData(ROOM_CONFIRMATION);
+				
+				CarInterface.getVehicleRentingData(CAR_CONFIRMATION);
+				
+				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
 			}
 		};
 
@@ -64,15 +71,57 @@ public class ConfirmedStateProcessMethodTest {
 	}
 
 	@Test
-	public void successPaymentAndActivity(@Mocked final BankInterface bankInterface,
+	public void successActivityAndPayment(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
-				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
-
 				ActivityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION);
+				
+				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
+			}
+		};
+
+		this.adventure.process();
+
+		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
+	}
+	
+	@Test
+	public void successActivityRoomAndPayment(@Mocked final BankInterface bankInterface, @Mocked final ActivityInterface activityInterface,
+			@Mocked final HotelInterface roomInterface) {
+		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);		
+		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
+		new Expectations() {
+			{
+				ActivityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION);				
+
+				HotelInterface.getRoomBookingData(ROOM_CONFIRMATION);
+				
+				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
+			}
+		};
+
+		this.adventure.process();
+
+		Assert.assertEquals(State.CONFIRMED, this.adventure.getState());
+	}
+	
+	@Test
+	public void successActivityVehicleAndPayment(@Mocked final BankInterface bankInterface, @Mocked final ActivityInterface activityInterface,
+			@Mocked final CarInterface carInterface) {
+		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);		
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
+		new Expectations() {
+			{
+				ActivityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION);				
+				
+				CarInterface.getVehicleRentingData(CAR_CONFIRMATION);
+				
+				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
 			}
 		};
 
@@ -83,9 +132,10 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Test
 	public void oneBankException(@Mocked final BankInterface bankInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -100,9 +150,10 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Test
 	public void maxBankException(@Mocked final BankInterface bankInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -119,9 +170,10 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Test
 	public void maxMinusOneBankException(@Mocked final BankInterface bankInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -138,9 +190,10 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Test
 	public void oneRemoteAccessExceptionStartingInPayment(@Mocked final BankInterface bankInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -155,9 +208,10 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Test
 	public void maxRemoteAccessExceptionStartingInPayment(@Mocked final BankInterface bankInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -174,9 +228,10 @@ public class ConfirmedStateProcessMethodTest {
 
 	@Test
 	public void maxMinusOneRemoteAccessExceptionStartingInPayment(@Mocked final BankInterface bankInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -194,9 +249,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void oneRemoteAccessExceptionStartingInActivity(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -214,9 +270,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void maxRemoteAccessExceptionStartingInActivity(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -248,9 +305,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void maxMinusOneRemoteAccessExceptionStartingInActivity(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -282,9 +340,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void oneRemoteAccessExceptionStartingInRoom(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -304,9 +363,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void maxRemoteAccessExceptionStartingInRoom(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -340,9 +400,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void maxMinusOneRemoteAccessExceptionStartingInRoom(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -376,9 +437,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void activityException(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
@@ -396,9 +458,10 @@ public class ConfirmedStateProcessMethodTest {
 	@Test
 	public void hotelException(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface) {
-		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		this.adventure.setActivityConfirmation(ACTIVITY_CONFIRMATION);
 		this.adventure.setRoomConfirmation(ROOM_CONFIRMATION);
+		this.adventure.setVehicleConfirmation(CAR_CONFIRMATION);
+		this.adventure.setPaymentConfirmation(PAYMENT_CONFIRMATION);
 		new Expectations() {
 			{
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);

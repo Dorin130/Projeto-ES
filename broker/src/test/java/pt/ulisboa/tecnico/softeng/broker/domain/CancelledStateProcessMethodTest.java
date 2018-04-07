@@ -39,7 +39,7 @@ public class CancelledStateProcessMethodTest {
 	@Before
 	public void setUp() {
 		this.client = new Client(IBAN, 20, "123456789");
-		this.adventure = new Adventure(this.broker, this.begin, this.end, this.client, 300);
+		this.adventure = new Adventure(this.broker, this.begin, this.end, this.client, 300, false);
 		this.adventure.setState(State.CANCELLED);
 	}
 
