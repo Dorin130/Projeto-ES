@@ -29,8 +29,11 @@ public class AdventureSequenceTest {
 	private static final String ACTIVITY_CANCELLATION = "ActivityCancellation";
 	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
 	private static final String ROOM_CANCELLATION = "RoomCancellation";
+	private static final String buyerNIF = "123456789";
+	private static final String sellerNIF = "987654321";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
+	private static final Client client = new Client(IBAN, AGE, buyerNIF);
 
 	@Injectable
 	private Broker broker;
@@ -57,7 +60,7 @@ public class AdventureSequenceTest {
 			}
 		};
 
-		Adventure adventure = new Adventure(this.broker, arrival, departure, AGE, IBAN, AMOUNT);
+		Adventure adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
 
 		adventure.process();
 		adventure.process();
@@ -84,7 +87,7 @@ public class AdventureSequenceTest {
 			}
 		};
 
-		Adventure adventure = new Adventure(this.broker, arrival, arrival, AGE, IBAN, AMOUNT);
+		Adventure adventure = new Adventure(this.broker, arrival, arrival, client, AMOUNT);
 
 		adventure.process();
 		adventure.process();
@@ -103,7 +106,7 @@ public class AdventureSequenceTest {
 			}
 		};
 
-		Adventure adventure = new Adventure(this.broker, arrival, departure, AGE, IBAN, AMOUNT);
+		Adventure adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
 
 		adventure.process();
 
@@ -126,7 +129,7 @@ public class AdventureSequenceTest {
 			}
 		};
 
-		Adventure adventure = new Adventure(this.broker, arrival, departure, AGE, IBAN, AMOUNT);
+		Adventure adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
 
 		adventure.process();
 		adventure.process();
@@ -157,7 +160,7 @@ public class AdventureSequenceTest {
 			}
 		};
 
-		Adventure adventure = new Adventure(this.broker, arrival, departure, AGE, IBAN, AMOUNT);
+		Adventure adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
 
 		adventure.process();
 		adventure.process();
@@ -196,7 +199,7 @@ public class AdventureSequenceTest {
 			}
 		};
 
-		Adventure adventure = new Adventure(this.broker, arrival, departure, AGE, IBAN, AMOUNT);
+		Adventure adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT);
 
 		adventure.process();
 		adventure.process();

@@ -17,19 +17,38 @@ public class RentACar {
 
 	private final String name;
 	private final String code;
+	private final String nif;
+	private final String iban;
+	
 	private final Map<String, Vehicle> vehicles = new HashMap<>();
 
-	public RentACar(String name) {
-		checkArguments(name);
+	private final Processor processor = new Processor();
+	
+	public RentACar(String name, String nif, String iban) {
+		checkArguments(name, nif, iban);
 		this.name = name;
+		this.nif = nif;
+		this.iban = iban;
 		this.code = Integer.toString(++RentACar.counter);
 
 		rentACars.add(this);
 	}
 
-	private void checkArguments(String name) {
-		if (name == null || name.isEmpty()) {
+	private void checkArguments(String name, String nif, String iban) {
+		if (name == null || name.isEmpty() || nif == null || nif.trim().length() == 0 || iban == null || iban.trim().length() == 0) {
 			throw new CarException();
+		}
+		
+		for (RentACar rentacar : rentACars) {
+			if (rentacar.getNif().equals(nif)) {
+				throw new CarException();
+			}
+		}
+		
+		for (RentACar rentacar : rentACars) {
+			if (rentacar.getIban().equals(iban)) {
+				throw new CarException();
+			}
 		}
 	}
 
@@ -45,6 +64,18 @@ public class RentACar {
 	 */
 	public String getCode() {
 		return code;
+	}
+	
+	public String getNif() {
+		return this.nif;
+	}
+	
+	public String getIban() {
+		return this.iban;
+	}
+	
+	public Processor getProcessor() {
+		return this.processor;
 	}
 
 	void addVehicle(Vehicle vehicle) {
@@ -104,23 +135,42 @@ public class RentACar {
 		if (renting == null) {
 			throw new CarException();
 		}
-		return new RentingData(
-			renting.getReference(),
-			renting.getVehicle().getPlate(),
-			renting.getDrivingLicense(),
-			renting.getVehicle().getRentACar().getCode(),
-			renting.getBegin(),
-			renting.getEnd()
-		);
+		return new RentingData(renting);
+	}
+	
+	public static String rentVehicle(Class<?> cls, String drivingLicense, LocalDate begin, LocalDate end, String nif, String iban) {
+		Set<Vehicle> vehicles = getAllAvailableVehicles(cls, begin, end);;
+		
+		if (!vehicles.isEmpty()) {
+			Vehicle vehicleToRent = vehicles.iterator().next();
+			RentACar rentacar = vehicleToRent.getRentACar();
+			
+			Renting renting = vehicleToRent.rent(drivingLicense, begin, end, nif, iban);
+			rentacar.getProcessor().submitRenting(renting);
+			return renting.getReference();
+		}
+		throw new CarException();
+	}
+	
+	public static String rentCar(String drivingLicense, LocalDate begin, LocalDate end, String nif, String iban) {
+		return rentVehicle(Car.class, drivingLicense, begin, end, nif ,iban);
 	}
 
+	public static String rentMotorcycle(String drivingLicense, LocalDate begin, LocalDate end, String nif, String iban) {
+		return rentVehicle(Motorcycle.class, drivingLicense, begin, end, nif ,iban);
+	}
+
+	public static String cancelRenting(String reference) {
+		Renting renting = getRenting(reference);
+		if (renting != null) {
+			return renting.cancel();
+		}
+		throw new CarException();
+	}
+
+	/*
 	public static String processRenting() {
 	//TODO
 		return "";
-	}
-
-	public static String cancelRenting(String rentingReference) {
-		//TODO
-		return "";
-	}
+	} */
 }

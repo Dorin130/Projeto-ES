@@ -8,28 +8,50 @@ public class Renting {
 	private static String drivingLicenseFormat = "^[a-zA-Z]+\\d+$";
 	private static int counter;
 
+	private static final String type = "RENTAL";
+	
 	private final String reference;
 	private final String drivingLicense;
 	private final LocalDate begin;
 	private final LocalDate end;
 	private int kilometers = -1;
+	private final String buyerNif;
+	private final String buyerIban;
+	private final String providerNif;
+	private final int amount;
 	private final Vehicle vehicle;
 
-	public Renting(String drivingLicense, LocalDate begin, LocalDate end, Vehicle vehicle) {
-		checkArguments(drivingLicense, begin, end, vehicle);
+	private String paymentReference;
+	private String invoiceReference;
+	private String cancel;
+	private LocalDate cancellationDate;
+	private boolean cancelledInvoice = false;
+	private String cancelledPaymentReference = null;
+
+	public Renting(String drivingLicense, LocalDate begin, LocalDate end, Vehicle vehicle, String nif, String iban) {
+		checkArguments(drivingLicense, begin, end, vehicle, nif, iban);
+		
 		this.reference = Integer.toString(++Renting.counter);
 		this.drivingLicense = drivingLicense;
 		this.begin = begin;
 		this.end = end;
 		this.vehicle = vehicle;
+		this.buyerNif = nif;
+		this.buyerIban = iban;
+		this.providerNif = vehicle.getRentACar().getNif();
+		this.amount = vehicle.getAmount();
 	}
 
-	private void checkArguments(String drivingLicense, LocalDate begin, LocalDate end, Vehicle vehicle) {
+	private void checkArguments(String drivingLicense, LocalDate begin, LocalDate end, Vehicle vehicle, String nif, String iban) {
 		if (drivingLicense == null || !drivingLicense.matches(drivingLicenseFormat) || begin == null || end == null || vehicle == null
-				|| end.isBefore(begin))
+				|| end.isBefore(begin) || nif == null || iban == null || nif.trim().length() == 0 || iban.trim().length() == 0)
 			throw new CarException();
 	}
 
+	public String getType() {
+		return this.type;
+	}
+	
 	/**
 	 * @return the reference
 	 */
@@ -57,6 +79,22 @@ public class Renting {
 	public LocalDate getEnd() {
 		return end;
 	}
+	
+	public String getBuyerNif() {
+		return this.buyerNif;
+	}
+	
+	public String getBuyerIban() {
+		return this.buyerIban;
+	}
+	
+	public String getProviderNif() {
+		return this.providerNif;
+	}
+	
+	public int getAmount() {
+		return this.amount;
+	}
 
 	/**
 	 * @return the vehicle
@@ -64,7 +102,62 @@ public class Renting {
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
+	
+	public String getPaymentReference() {
+		return this.paymentReference;
+	}
 
+	public void setPaymentReference(String paymentReference) {
+		this.paymentReference = paymentReference;
+	}
+
+	public String getInvoiceReference() {
+		return this.invoiceReference;
+	}
+
+	public void setInvoiceReference(String invoiceReference) {
+		this.invoiceReference = invoiceReference;
+	}
+
+	public String getCancel() {
+		return this.cancel;
+	}
+
+	public LocalDate getCancellationDate() {
+		return this.cancellationDate;
+	}
+
+	public boolean isCancelledInvoice() {
+		return this.cancelledInvoice;
+	}
+
+	public void setCancelledInvoice(boolean cancelledInvoice) {
+		this.cancelledInvoice = cancelledInvoice;
+	}
+
+	public String getCancelledPaymentReference() {
+		return this.cancelledPaymentReference;
+	}
+
+	public void setCancelledPaymentReference(String cancelledPaymentReference) {
+		this.cancelledPaymentReference = cancelledPaymentReference;
+	}
+	
+	public boolean isCancelled() {
+		return this.cancel != null;
+	}
+
+	public String cancel() {
+		RentACar rentacar = this.vehicle.getRentACar();
+		
+		this.cancel = "CANCEL" + this.reference;
+		this.cancellationDate = new LocalDate();
+	
+		rentacar.getProcessor().submitRenting(this);
+		
+		return this.cancel;
+	}
+	
 	/**
 	 * @param begin
 	 * @param end
@@ -96,5 +189,4 @@ public class Renting {
 		this.kilometers = kilometers;
 		this.vehicle.addKilometers(this.kilometers);
 	}
-
 }

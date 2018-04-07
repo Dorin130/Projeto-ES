@@ -19,13 +19,17 @@ public class Adventure {
 	private final Broker broker;
 	private final LocalDate begin;
 	private final LocalDate end;
-	private final int age;
 	private final Client client;
 	private final int amount;
+	private final boolean wantsCar;
 	private String paymentConfirmation;
 	private String paymentCancellation;
 	private String roomConfirmation;
 	private String roomCancellation;
+	private String taxConfirmation;
+
+
+	private boolean cancelledInvoice = false;
 
 
 	private String vehicleConfirmation;
@@ -38,17 +42,18 @@ public class Adventure {
 
 	private AdventureState state;
 
-	public Adventure(Broker broker, LocalDate begin, LocalDate end, int age, Client client, int amount) {
-		checkArguments(broker, begin, end, age, amount);
+
+
+	public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, int amount, boolean wantsCar) {
+		checkArguments(broker, begin, end, client.getAge(), amount);
 
 		this.ID = broker.getCode() + Integer.toString(++counter);
 		this.broker = broker;
 		this.begin = begin;
 		this.end = end;
-		this.age = age;
 		this.client = client;
 		this.amount = amount;
-
+		this.wantsCar = wantsCar;
 		broker.addAdventure(this);
 
 		setState(State.PROCESS_PAYMENT);
@@ -89,7 +94,7 @@ public class Adventure {
 	}
 
 	public int getAge() {
-		return this.age;
+		return this.client.getAge();
 	}
 
 	public Client getClient() {
@@ -97,6 +102,8 @@ public class Adventure {
 	}
 
 	public String getIBAN() {return this.client.getIBAN();}
+
+	public boolean isWantsCar() { return wantsCar;}
 
 	public int getAmount() {
 		return this.amount;
@@ -157,6 +164,22 @@ public class Adventure {
 	public String getVehicleCancellation() {return vehicleCancellation;	}
 
 	public void setVehicleCancellation(String vehicleCancellation) { this.vehicleCancellation = vehicleCancellation;}
+
+	public String getTaxConfirmation() {
+		return taxConfirmation;
+	}
+
+	public void setTaxConfirmation(String taxConfirmation) {
+		this.taxConfirmation = taxConfirmation;
+	}
+
+	public boolean getTaxCancellation() {
+		return cancelledInvoice;
+	}
+
+	public void setCancelledInvoice(boolean cancelledInvoice) {
+		this.cancelledInvoice = cancelledInvoice;
+	}
 
 	public State getState() {
 		return this.state.getState();
