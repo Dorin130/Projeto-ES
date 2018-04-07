@@ -51,7 +51,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void processWithNoExceptions(@Mocked final BankInterface bankInterface, @Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = VEHICLE_REFERENCE;
                 BankInterface.processPayment("BK01987654321", 300);
                 this.result = PAYMENT_CONFIRMATION;
@@ -69,7 +69,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void carException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new CarException();
             }
         };
@@ -82,7 +82,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void bankException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = VEHICLE_REFERENCE;
                 BankInterface.processPayment("BK01987654321", 300);
                 this.result = new BankException();
@@ -97,7 +97,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void singleCarRemoteAccessException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
                 BankInterface.processPayment("BK01987654321", 300);
                 this.result = PAYMENT_CONFIRMATION;
@@ -111,7 +111,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void maxCarRemoteAccessException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
                 BankInterface.processPayment("BK01987654321", 300);
                 this.result = PAYMENT_CONFIRMATION;
@@ -127,7 +127,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void maxMinusOneCarRemoteAccessException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
                 BankInterface.processPayment("BK01987654321", 300);
                 this.result = PAYMENT_CONFIRMATION;
@@ -142,7 +142,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void fourCarRemoteAccessExceptionOneSuccess(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new Delegate() {
                     int i = 0;
 
@@ -172,7 +172,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void oneRemoteAccessExceptionOneCarException(@Mocked final CarInterface carInterface, @Mocked final BankInterface Interface) {
         new Expectations() {
             {
-                CarInterface.processRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
 
                 this.result = new Delegate() {
                     int i = 0;
