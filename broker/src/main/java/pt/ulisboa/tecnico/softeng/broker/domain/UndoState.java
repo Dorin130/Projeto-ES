@@ -7,7 +7,9 @@ import pt.ulisboa.tecnico.softeng.broker.exception.RemoteAccessException;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
+import pt.ulisboa.tecnico.softeng.broker.interfaces.TaxInterface;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
+import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class UndoState extends AdventureState {
 
@@ -18,13 +20,6 @@ public class UndoState extends AdventureState {
 
 	@Override
 	public void process(Adventure adventure) {
-		if (requiresCancelPayment(adventure)) {
-			try {
-				adventure.setPaymentCancellation(BankInterface.cancelPayment(adventure.getPaymentConfirmation()));
-			} catch (BankException | RemoteAccessException ex) {
-				// does not change state
-			}
-		}
 
 		if (requiresCancelActivity(adventure)) {
 			try {
@@ -42,8 +37,16 @@ public class UndoState extends AdventureState {
 				// does not change state
 			}
 		}
-
-		if (!requiresCancelPayment(adventure) && !requiresCancelActivity(adventure) && !requiresCancelRoom(adventure)) {
+		
+		if (requiresCancelPayment(adventure)) {
+			try {
+				adventure.setPaymentCancellation(BankInterface.cancelPayment(adventure.getPaymentConfirmation()));
+			} catch (BankException | RemoteAccessException ex) {
+				// does not change state
+			}
+		}
+		
+		if (!requiresCancelPayment(adventure) && !requiresCancelActivity(adventure) && !requiresCancelRoom(adventure) && !requiresCancelInvoice(adventure)) {
 			adventure.setState(State.CANCELLED);
 		}
 	}
@@ -58,6 +61,29 @@ public class UndoState extends AdventureState {
 
 	public boolean requiresCancelPayment(Adventure adventure) {
 		return adventure.getPaymentConfirmation() != null && adventure.getPaymentCancellation() == null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*if (requiresCancelInvoice(adventure)) {
+	try {
+		//TODO adventure.setTaxCancellation(TaxInterface.cancelInvoice(adventure.getTaxConfirmation()));
+	} catch (TaxException | RemoteAccessException ex) {
+		// does not change state
+	}
+}*/
+	//TODO
+	public boolean requiresCancelInvoice(Adventure adventure) {
+		return adventure.getTaxConfirmation() != null && adventure.getTaxCancellation() == null;
 	}
 
 }
