@@ -25,7 +25,7 @@ public class IRSCancelInvoiceByReferenceTest {
 	}
 
 	@Test
-	public void success(@Mocked final Invoice invoice) {
+	public void success(@Injectable final Invoice invoice) {
 		IRS irs = IRS.getIRS();
 		new Expectations(IRS.class) {{
 				irs.getInvoiceByReference(invoiceReference);
@@ -65,7 +65,7 @@ public class IRSCancelInvoiceByReferenceTest {
 		IRS.cancelInvoice("");
 	}
 
-	@Test
+	@Test(expected = TaxException.class)
 	public void doesNotExist() {
 		IRS irs = IRS.getIRS();
 		new Expectations(IRS.class) {{
