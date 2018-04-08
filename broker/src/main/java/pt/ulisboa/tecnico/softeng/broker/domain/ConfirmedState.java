@@ -32,6 +32,7 @@ public class ConfirmedState extends AdventureState {
 			ActivityReservationData activityReservationData = ActivityInterface.getActivityReservationData(adventure.getActivityConfirmation());
 			if (activityReservationData.getPaymentReference() == null || activityReservationData.getInvoiceReference() == null) {
 				adventure.setState(State.UNDO);
+				return;
 			}
 		} catch (ActivityException ae) {
 			adventure.setState(State.UNDO);
@@ -50,6 +51,7 @@ public class ConfirmedState extends AdventureState {
 				RoomBookingData roomBookingData = HotelInterface.getRoomBookingData(adventure.getRoomConfirmation());
 				if (roomBookingData.getPaymentReference() == null || roomBookingData.getInvoiceReference() == null) {
 					adventure.setState(State.UNDO);
+					return;
 				}
 			} catch (HotelException he) {
 				adventure.setState(State.UNDO);
@@ -69,6 +71,7 @@ public class ConfirmedState extends AdventureState {
 				RentingData rentingData = CarInterface.getVehicleRentingData(adventure.getVehicleConfirmation());
 				if (rentingData.getPaymentReference() == null || rentingData.getInvoiceReference() == null) {
 					adventure.setState(State.UNDO);
+					return;
 				}
 			} catch (CarException he) {
 				adventure.setState(State.UNDO);

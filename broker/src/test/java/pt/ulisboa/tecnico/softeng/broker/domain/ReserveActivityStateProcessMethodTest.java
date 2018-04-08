@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +20,9 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 @RunWith(JMockit.class)
 public class ReserveActivityStateProcessMethodTest {
 	private static final boolean RENT_CAR = true;
-	private static final boolean NOT_RENT_CAR = true;
+	private static final boolean NOT_RENT_CAR = false;
 	private static final String IBAN = "BK01987654321";
-	private static final String NIF = "BK01987654321";
+	private static final String NIF = "123456789";
 	private static final String DRIVING_LICENSE = "IMT1234";
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
@@ -29,11 +30,12 @@ public class ReserveActivityStateProcessMethodTest {
 	private static final LocalDate begin = new LocalDate(2016, 12, 19);
 	private static final LocalDate end = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
-	private Broker broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
+	private Broker broker;
 	private Client client;
 
 	@Before
 	public void setUp() {
+		this.broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
 		this.client = new Client(broker, IBAN, NIF ,DRIVING_LICENSE,AGE);
 		this.adventure = new Adventure(this.broker, begin, end, client, AMOUNT, RENT_CAR);
 		this.adventure.setState(State.RESERVE_ACTIVITY);
@@ -58,7 +60,7 @@ public class ReserveActivityStateProcessMethodTest {
 
 	@Test
 	public void successBookRoomNoVehicle(@Mocked final ActivityInterface activityInterface) {
-		Adventure NoCarAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT, NOT_RENT_CAR);
+		Adventure NoCarAdventure = new Adventure(this.broker, begin, end, client, AMOUNT, NOT_RENT_CAR);
 		NoCarAdventure.setState(State.RESERVE_ACTIVITY);
 		
 		new Expectations() {
@@ -80,7 +82,7 @@ public class ReserveActivityStateProcessMethodTest {
 		
 		new Expectations() {
 			{
-				ActivityInterface.reserveActivity(begin, end, AGE);
+				ActivityInterface.reserveActivity(begin, begin, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 			}
 		};
@@ -221,5 +223,10 @@ public class ReserveActivityStateProcessMethodTest {
 		this.adventure.process();
 
 		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+	}
+	
+	@After
+	public void tearDown() {
+		Broker.brokers.clear();
 	}
 }

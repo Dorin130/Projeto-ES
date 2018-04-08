@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Mocked;
 import mockit.integration.junit4.JMockit;
+import pt.ulisboa.tecnico.softeng.activity.domain.ActivityProvider;
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure.State;
@@ -17,6 +19,7 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
+import pt.ulisboa.tecnico.softeng.broker.interfaces.TaxInterface;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
@@ -37,21 +40,24 @@ public class AdventureSequenceTest {
 	private static final String ROOM_CANCELLATION = "RoomCancellation";
 	private static final String CAR_CONFIRMATION = "CarConfirmation";
 	private static final String CAR_CANCELLATION = "CarCancellation";
+	private static final String TAX_CONFIRMATION = "TaxConfirmation";
+	private static final Boolean TAX_CANCELLATION = true;
 	private static final String buyerNIF = "123456789";
 	private static final String sellerNIF = "987654321";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
-	private Broker broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
+	private Broker broker;
 	private Client client;
 
 	@Before
 	public void setUp() {
+		broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
 		client = new Client(broker, IBAN, buyerNIF, DRIVING_LICENSE, AGE);
 	}
 	
 	@Test
 	public void successSequenceOne(@Mocked final BankInterface bankInterface,
-			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface, @Mocked CarInterface carInterface) {
+			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface, @Mocked CarInterface carInterface, @Mocked TaxInterface taxInterface) {
 		new Expectations() {
 			{
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
@@ -65,6 +71,9 @@ public class AdventureSequenceTest {
 				
 				BankInterface.processPayment(IBAN, AMOUNT);
 				this.result = PAYMENT_CONFIRMATION;
+				
+				TaxInterface.submitInvoice(null, null, anyString, AMOUNT, new LocalDate());
+				this.result =  TAX_CONFIRMATION;
 
 				ActivityInterface.getActivityReservationData(ACTIVITY_CONFIRMATION);
 
@@ -127,7 +136,7 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, arrival, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 
-				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, arrival, buyerNIF, IBAN);
 				this.result = CAR_CONFIRMATION;
 				
 				BankInterface.processPayment(IBAN, AMOUNT);
@@ -170,9 +179,9 @@ public class AdventureSequenceTest {
 
 		Adventure adventure = new Adventure(this.broker, arrival, arrival, client, AMOUNT, NOT_RENT_CAR);
 
-		adventure.process();
-		adventure.process();
-		adventure.process();
+		adventure.process();System.out.println(adventure.getState());
+		adventure.process();System.out.println(adventure.getState());
+		adventure.process();System.out.println(adventure.getState());
 
 		Assert.assertEquals(State.CONFIRMED, adventure.getState());
 	}
@@ -259,7 +268,7 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, arrival, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 				
-				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, arrival, buyerNIF, IBAN);
 				this.result = CAR_CONFIRMATION;
 
 				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
@@ -356,7 +365,7 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, arrival, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 		
-				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, arrival, buyerNIF, IBAN);
 				this.result = new CarException();
 				
 				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
@@ -453,6 +462,11 @@ public class AdventureSequenceTest {
 		adventure.process();
 
 		Assert.assertEquals(State.CANCELLED, adventure.getState());
+	}
+	
+	@After
+	public void tearDown() {
+		Broker.brokers.clear();
 	}
 
 }
