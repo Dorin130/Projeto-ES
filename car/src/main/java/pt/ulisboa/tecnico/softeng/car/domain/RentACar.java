@@ -44,12 +44,6 @@ public class RentACar {
 				throw new CarException();
 			}
 		}
-		
-		for (RentACar rentacar : rentACars) {
-			if (rentacar.getIban().equals(iban)) {
-				throw new CarException();
-			}
-		}
 	}
 
 	/**
@@ -167,10 +161,4 @@ public class RentACar {
 		}
 		throw new CarException();
 	}
-
-	/*
-	public static String processRenting() {
-	//TODO
-		return "";
-	} */
 }
