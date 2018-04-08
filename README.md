@@ -44,7 +44,10 @@ Sub-group Hotel & Car & Tax:
 	
 Sub-group Broker:
  - (83448) Dorin Gujuman (Dorin130):
- 	* 
+ 	* Class Boker (added NIFs)
+	* Refactor tests so they account for Broker's NIFs
+	* Class TaxInterface in Broker
+	* Class StatePayment
 
  - (83509) Marco Silva (MarcofSilva):
  	* Class Adventure, BookRoomState, ConfirmedState, ProcessPaymentState, ReserveActivityState, UndoState (Modified)
