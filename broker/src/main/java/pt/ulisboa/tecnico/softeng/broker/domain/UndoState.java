@@ -8,6 +8,7 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
+import pt.ulisboa.tecnico.softeng.broker.interfaces.TaxInterface;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
@@ -39,6 +40,14 @@ public class UndoState extends AdventureState {
 			}
 		}
 		
+		if (requiresCancelVehicle(adventure)) {
+			try {
+				adventure.setVehicleCancellation(CarInterface.cancelVehicleRenting(adventure.getVehicleConfirmation()));
+			} catch (CarException | RemoteAccessException ex) {
+				// does not change state
+			}
+		}
+		
 		if (requiresCancelPayment(adventure)) {
 			try {
 				adventure.setPaymentCancellation(BankInterface.cancelPayment(adventure.getPaymentConfirmation()));
@@ -46,11 +55,12 @@ public class UndoState extends AdventureState {
 				// does not change state
 			}
 		}
-
-		if (requiresCancelVehicle(adventure)) {
+		
+		if (requiresCancelInvoice(adventure)) {
 			try {
-				adventure.setVehicleCancellation(CarInterface.cancelVehicleRenting(adventure.getVehicleConfirmation()));
-			} catch (CarException | RemoteAccessException ex) {
+				TaxInterface.cancelInvoice(adventure.getTaxConfirmation());
+				adventure.setCancelledInvoice(true);
+			} catch (TaxException | RemoteAccessException ex) {
 				// does not change state
 			}
 		}
@@ -60,44 +70,26 @@ public class UndoState extends AdventureState {
 			adventure.setState(State.CANCELLED);
 		}
 	}
-
-	public boolean requiresCancelRoom(Adventure adventure) {
-		return adventure.getRoomConfirmation() != null && adventure.getRoomCancellation() == null;
-	}
+	
 
 	public boolean requiresCancelActivity(Adventure adventure) {
 		return adventure.getActivityConfirmation() != null && adventure.getActivityCancellation() == null;
+	}
+	
+	public boolean requiresCancelRoom(Adventure adventure) {
+		return adventure.getRoomConfirmation() != null && adventure.getRoomCancellation() == null;
+	}
+	
+	public boolean requiresCancelVehicle(Adventure adventure) {
+		return adventure.getVehicleConfirmation() != null && adventure.getVehicleCancellation() == null;
 	}
 
 	public boolean requiresCancelPayment(Adventure adventure) {
 		return adventure.getPaymentConfirmation() != null && adventure.getPaymentCancellation() == null;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*if (requiresCancelInvoice(adventure)) {
-	try {
-		//TODO adventure.setTaxCancellation(TaxInterface.cancelInvoice(adventure.getTaxConfirmation()));
-	} catch (TaxException | RemoteAccessException ex) {
-		// does not change state
-	}
-}*/
-	//TODO
 	public boolean requiresCancelInvoice(Adventure adventure) {
-		return adventure.getTaxConfirmation() != null && adventure.getTaxCancellation() == null;
-	}
-
-	public boolean requiresCancelVehicle(Adventure adventure) {
-		return adventure.getVehicleConfirmation() != null && adventure.getVehicleCancellation() == null;
+		return adventure.getTaxConfirmation() != null && !adventure.getTaxCancellation();
 	}
 
 }

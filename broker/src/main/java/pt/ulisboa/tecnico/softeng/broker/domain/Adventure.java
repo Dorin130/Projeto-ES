@@ -56,7 +56,7 @@ public class Adventure {
 		this.wantsCar = wantsCar;
 		broker.addAdventure(this);
 
-		setState(State.PROCESS_PAYMENT);
+		setState(State.RESERVE_ACTIVITY);
 	}
 
 	private void checkArguments(Broker broker, LocalDate begin, LocalDate end, int age, int amount) {
@@ -204,6 +204,9 @@ public class Adventure {
 			break;
 		case CANCELLED:
 			this.state = new CancelledState();
+			break;
+		case RESERVE_VEHICLE:
+			this.state = new ReserveVehicleState();
 			break;
 		default:
 			new BrokerException();

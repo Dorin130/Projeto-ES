@@ -66,7 +66,7 @@ public class AdventureConstructorMethodTest {
 
 	@Test
 	public void successEqual18() {
-		Client client = new Client(this.broker, IBAN, buyerNIF,DRIVING_LICENSE, AGE);
+		Client client = new Client(this.broker, IBAN, buyerNIF,DRIVING_LICENSE, 18);
 		Adventure adventure = new Adventure(this.broker, this.begin, this.end, client, AMOUNT, WANTSCAR);
 
 		Assert.assertEquals(this.broker, adventure.getBroker());

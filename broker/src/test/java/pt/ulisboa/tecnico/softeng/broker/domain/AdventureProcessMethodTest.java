@@ -62,11 +62,13 @@ public class AdventureProcessMethodTest {
 		adventure.process();
 		adventure.process();
 		adventure.process();
+		adventure.process();
 
 		assertEquals(Adventure.State.CONFIRMED, adventure.getState());
-		assertNotNull(adventure.getPaymentConfirmation());
-		assertNotNull(adventure.getRoomConfirmation());
 		assertNotNull(adventure.getActivityConfirmation());
+		assertNotNull(adventure.getRoomConfirmation());
+		assertNotNull(adventure.getVehicleConfirmation());
+		assertNotNull(adventure.getPaymentConfirmation());
 	}
 
 	@Test
@@ -75,10 +77,38 @@ public class AdventureProcessMethodTest {
 
 		adventure.process();
 		adventure.process();
+		adventure.process();
 
 		assertEquals(Adventure.State.CONFIRMED, adventure.getState());
-		assertNotNull(adventure.getPaymentConfirmation());
 		assertNotNull(adventure.getActivityConfirmation());
+		assertNotNull(adventure.getVehicleConfirmation());
+		assertNotNull(adventure.getPaymentConfirmation());
+	}
+	
+	@Test
+	public void successNoVehicleBooking() {
+		Adventure adventure = new Adventure(this.broker, this.begin, this.end, this.clientBroker, 300, false);
+
+		adventure.process();
+		adventure.process();
+		adventure.process();
+
+		//assertEquals(Adventure.State.CONFIRMED, adventure.getState());
+		assertNotNull(adventure.getActivityConfirmation());
+		assertNotNull(adventure.getVehicleConfirmation());
+		assertNotNull(adventure.getPaymentConfirmation());
+	}
+	
+	@Test
+	public void successNoRoomNoVehicleBooking() {
+		Adventure adventure = new Adventure(this.broker, this.begin, this.begin, this.clientBroker, 300, true);
+
+		adventure.process();
+		adventure.process();
+
+		//assertEquals(Adventure.State.CONFIRMED, adventure.getState());
+		assertNotNull(adventure.getActivityConfirmation());
+		assertNotNull(adventure.getPaymentConfirmation());
 	}
 
 	@After

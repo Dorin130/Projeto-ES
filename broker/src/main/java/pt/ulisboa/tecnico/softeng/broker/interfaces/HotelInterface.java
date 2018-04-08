@@ -9,8 +9,8 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Hotel;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room;
 
 public class HotelInterface {
-	public static String reserveRoom(Room.Type type, LocalDate arrival, LocalDate departure) {
-		return Hotel.reserveRoom(type, arrival, departure);
+	public static String reserveRoom(Room.Type type, LocalDate arrival, LocalDate departure, String nif, String iban) {
+		return Hotel.reserveRoom(type, arrival, departure, nif, iban);
 	}
 
 	public static String cancelBooking(String roomConfirmation) {
@@ -21,7 +21,7 @@ public class HotelInterface {
 		return Hotel.getRoomBookingData(reference);
 	}
 
-	public static Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure) {
-		return Hotel.bulkBooking(number, arrival, departure);
+	public static Set<String> bulkBooking(int number, LocalDate arrival, LocalDate departure, String nif, String iban) {
+		return Hotel.bulkBooking(number, arrival, departure, nif, iban);
 	}
 }

@@ -26,13 +26,15 @@ public class BulkRoomBookingGetReferenceMethodTest {
 	private static final String REF_1 = "ref1";
 	private static final String REF_2 = "ref2";
 	private static final int NUMBER = 20;
+	private static final String IBAN = "BK01987654321";
+	private static final String buyerNIF = "123456789";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
 	private BulkRoomBooking bulk;
 
 	@Before
 	public void setUp() {
-		this.bulk = new BulkRoomBooking(NUMBER, arrival, departure);
+		this.bulk = new BulkRoomBooking(NUMBER, arrival, departure, buyerNIF, IBAN);
 		this.bulk.getReferences().addAll(Arrays.asList(REF_1, REF_2));
 	}
 

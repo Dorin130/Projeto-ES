@@ -19,19 +19,25 @@ public class ReserveActivityState extends AdventureState {
 			adventure.setActivityConfirmation(
 					ActivityInterface.reserveActivity(adventure.getBegin(), adventure.getEnd(), adventure.getAge()));
 		} catch (ActivityException ae) {
-			adventure.setState(State.UNDO);
+			adventure.setState(State.CANCELLED);
 			return;
 		} catch (RemoteAccessException rae) {
 			incNumOfRemoteErrors();
 			if (getNumOfRemoteErrors() == MAX_REMOTE_ERRORS) {
-				adventure.setState(State.UNDO);
+				adventure.setState(State.CANCELLED);
 			}
 			return;
 		}
 
 		if (adventure.getBegin().equals(adventure.getEnd())) {
-			adventure.setState(State.CONFIRMED);
-		} else {
+			if (adventure.isWantsCar()) {
+				adventure.setState(State.RESERVE_VEHICLE);
+			}
+			else {
+				adventure.setState(State.PROCESS_PAYMENT);
+			}
+		} 
+		else {
 			adventure.setState(State.BOOK_ROOM);
 		}
 	}

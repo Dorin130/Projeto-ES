@@ -24,20 +24,20 @@ public class ProcessPaymentState extends AdventureState {
 			String buyerNIF = adventure.getBroker().getBuyerNIF();
 			adventure.setTaxConfirmation(TaxInterface.submitInvoice(sellerNIF, buyerNIF, "ADVENTURE", adventure.getAmount(), new LocalDate()));
 		} catch (BankException be) {
-			adventure.setState(State.CANCELLED);
+			adventure.setState(State.UNDO);
 			return;
 		} catch (TaxException be) {
-			adventure.setState(State.CANCELLED);
+			adventure.setState(State.UNDO);
 			return;
 		} catch (RemoteAccessException rae) {
 			incNumOfRemoteErrors();
 			if (getNumOfRemoteErrors() == MAX_REMOTE_ERRORS) {
-				adventure.setState(State.CANCELLED);
+				adventure.setState(State.UNDO);
 			}
 			return;
 		}
 
-		adventure.setState(State.RESERVE_ACTIVITY);
+		adventure.setState(State.CONFIRMED);
 	}
 
 }
