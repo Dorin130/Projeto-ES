@@ -56,6 +56,16 @@ public class BuyerToReturnTest {
 
 		assertEquals(0.0d, value, 0.00d);
 	}
+	
+	@Test
+	public void cancelledInvoices() {
+		new Invoice(100, this.date, this.itemType, this.seller, this.buyer);
+		Invoice i = new Invoice(100, this.date, this.itemType, this.seller, this.buyer);
+		i.cancel();
+		double value = this.buyer.taxReturn(2018);
+
+		assertEquals(0.5d, value, 0.00d);
+	}
 
 	@Test(expected = TaxException.class)
 	public void before1970() {
