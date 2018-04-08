@@ -2,7 +2,6 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,6 +25,7 @@ public class BookRoomStateMethodTest {
 	private static final int AMOUNT = 300;
 	private static final int AGE = 20;
 	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
+	private static final String buyerNIF = "123456789";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
@@ -38,7 +38,7 @@ public class BookRoomStateMethodTest {
 	public void successNoReserveVehicle(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 			}
 		};
@@ -55,7 +55,7 @@ public class BookRoomStateMethodTest {
 	public void successReserveVehicle(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 			}
 		};
@@ -72,7 +72,7 @@ public class BookRoomStateMethodTest {
 	public void hotelException(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new HotelException();
 			}
 		};
@@ -89,7 +89,7 @@ public class BookRoomStateMethodTest {
 	public void singleRemoteAccessException(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new RemoteAccessException();
 			}
 		};
@@ -106,7 +106,7 @@ public class BookRoomStateMethodTest {
 	public void maxRemoteAccessException(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new RemoteAccessException();
 				this.times = BookRoomState.MAX_REMOTE_ERRORS;
 			}
@@ -126,7 +126,7 @@ public class BookRoomStateMethodTest {
 	public void maxMinusOneRemoteAccessException(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new RemoteAccessException();
 				this.times = BookRoomState.MAX_REMOTE_ERRORS - 1;
 			}
@@ -146,7 +146,7 @@ public class BookRoomStateMethodTest {
 	public void fiveRemoteAccessExceptionOneSuccess(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new Delegate() {
 					int i = 0;
 
@@ -180,7 +180,7 @@ public class BookRoomStateMethodTest {
 	public void oneRemoteAccessExceptionOneActivityException(@Mocked final HotelInterface hotelInterface) {
 		new Expectations() {
 			{
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new Delegate() {
 					int i = 0;
 

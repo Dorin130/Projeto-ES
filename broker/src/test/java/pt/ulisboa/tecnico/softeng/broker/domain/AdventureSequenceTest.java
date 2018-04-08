@@ -16,6 +16,7 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.CarInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.HotelInterface;
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
@@ -33,9 +34,8 @@ public class AdventureSequenceTest {
 	private static final String ACTIVITY_CANCELLATION = "ActivityCancellation";
 	private static final String ROOM_CONFIRMATION = "RoomConfirmation";
 	private static final String ROOM_CANCELLATION = "RoomCancellation";
-	//TODO
-	//private static final String CAR_CONFIRMATION = "CarConfirmation";
-	//private static final String CAR_CANCELLATION = "CarCancellation";
+	private static final String CAR_CONFIRMATION = "CarConfirmation";
+	private static final String CAR_CANCELLATION = "CarCancellation";
 	private static final String buyerNIF = "123456789";
 	private static final String sellerNIF = "987654321";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
@@ -53,12 +53,11 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 				
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = CAR_CONFIRMATION;
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = CAR_CONFIRMATION;
 				
 				BankInterface.processPayment(IBAN, AMOUNT);
 				this.result = PAYMENT_CONFIRMATION;
@@ -67,8 +66,7 @@ public class AdventureSequenceTest {
 
 				HotelInterface.getRoomBookingData(ROOM_CONFIRMATION);
 				
-				//TODO
-				//CarInterface.getRentingData(CAR_CONFIRMATION);
+				CarInterface.getVehicleRentingData(CAR_CONFIRMATION);
 				
 				BankInterface.getOperationData(PAYMENT_CONFIRMATION);
 			}
@@ -93,7 +91,7 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 				
 				BankInterface.processPayment(IBAN, AMOUNT);
@@ -125,9 +123,8 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, arrival, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = CAR_CONFIRMATION;
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = CAR_CONFIRMATION;
 				
 				BankInterface.processPayment(IBAN, AMOUNT);
 				this.result = PAYMENT_CONFIRMATION;
@@ -226,7 +223,7 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 				
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 
 				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
@@ -258,9 +255,8 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, arrival, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 				
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = CAR_CONFIRMATION;
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = CAR_CONFIRMATION;
 
 				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
 				this.result = new BankException();
@@ -268,9 +264,8 @@ public class AdventureSequenceTest {
 				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
 				this.result = ACTIVITY_CANCELLATION;
 				
-				//TODO
-				//CarInterface.cancelRenting(CAR_CONFIRMATION);
-				//this.result = CAR_CANCELLATION;
+				CarInterface.cancelVehicleRenting(CAR_CONFIRMATION);
+				this.result = CAR_CANCELLATION;
 			}
 		};
 		
@@ -292,12 +287,11 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 			
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 				
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = CAR_CONFIRMATION;
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = CAR_CONFIRMATION;
 
 				BankInterface.cancelPayment(PAYMENT_CONFIRMATION);
 				this.result = new BankException();
@@ -308,9 +302,8 @@ public class AdventureSequenceTest {
 				HotelInterface.cancelBooking(ROOM_CONFIRMATION);
 				this.result = ROOM_CANCELLATION;
 				
-				//TODO
-				//CarInterface.cancelRenting(CAR_CONFIRMATION);
-				//this.result = CAR_CANCELLATION;
+				CarInterface.cancelVehicleRenting(CAR_CONFIRMATION);
+				this.result = CAR_CANCELLATION;
 			}
 		};
 
@@ -333,7 +326,7 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 		
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = new HotelException();
 				
 				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
@@ -359,9 +352,8 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, arrival, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 		
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = new Car_Exception();
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = new CarException();
 				
 				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
 				this.result = ACTIVITY_CANCELLATION;
@@ -386,12 +378,11 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;
 		
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 				
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = new Car_Exception();
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = new CarException();
 				
 				ActivityInterface.cancelReservation(ACTIVITY_CONFIRMATION);
 				this.result = ACTIVITY_CANCELLATION;
@@ -419,12 +410,11 @@ public class AdventureSequenceTest {
 				ActivityInterface.reserveActivity(arrival, departure, AGE);
 				this.result = ACTIVITY_CONFIRMATION;				
 
-				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure);
+				HotelInterface.reserveRoom(Type.SINGLE, arrival, departure, buyerNIF, IBAN);
 				this.result = ROOM_CONFIRMATION;
 				
-				//TODO
-				//CarInterface.processRenting(TODO);
-				//this.result = CAR_CONFIRMATION;
+				CarInterface.processVehicleRenting(DRIVING_LICENSE, arrival, departure, buyerNIF, IBAN);
+				this.result = CAR_CONFIRMATION;
 				
 				BankInterface.processPayment(IBAN, AMOUNT);
 				this.result = PAYMENT_CONFIRMATION;
@@ -442,9 +432,8 @@ public class AdventureSequenceTest {
 				HotelInterface.cancelBooking(ROOM_CONFIRMATION);
 				this.result = ROOM_CANCELLATION;
 				
-				//TODO
-				//CarInterface.cancelRenting(CAR_CONFIRMATION);
-				//this.result = CAR_CANCELLATION;
+				CarInterface.cancelVehicleRenting(CAR_CONFIRMATION);
+				this.result = CAR_CANCELLATION;
 			}
 		};
 

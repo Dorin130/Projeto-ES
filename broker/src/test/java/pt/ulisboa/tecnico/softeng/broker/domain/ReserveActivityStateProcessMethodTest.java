@@ -18,6 +18,8 @@ import pt.ulisboa.tecnico.softeng.broker.interfaces.ActivityInterface;
 
 @RunWith(JMockit.class)
 public class ReserveActivityStateProcessMethodTest {
+	private static final boolean RENT_CAR = true;
+	private static final boolean NOT_RENT_CAR = true;
 	private static final String IBAN = "BK01987654321";
 	private static final String NIF = "BK01987654321";
 	private static final String DRIVING_LICENSE = "IMT1234";
@@ -27,22 +29,22 @@ public class ReserveActivityStateProcessMethodTest {
 	private static final LocalDate begin = new LocalDate(2016, 12, 19);
 	private static final LocalDate end = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
+	private  Client client;
 
 	@Injectable
 	private Broker broker;
 
-
-	private  Client client = new Client(broker, IBAN, NIF ,DRIVING_LICENSE,AGE);
 	@Before
 	public void setUp() {
-		this.adventure = new Adventure(this.broker, begin, end, client, AMOUNT, true);
+		this.client = new Client(broker, IBAN, NIF ,DRIVING_LICENSE,AGE);
+		this.adventure = new Adventure(this.broker, begin, end, client, AMOUNT, RENT_CAR);
 		this.adventure.setState(State.RESERVE_ACTIVITY);
 	}
 
 	@Test
-	public void successNoBookRoom(@Mocked final ActivityInterface activityInterface) {
-		Adventure sameDayAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT, true);
-		sameDayAdventure.setState(State.RESERVE_ACTIVITY);
+	public void successNoBookRoomNoVehicle(@Mocked final ActivityInterface activityInterface) {
+		Adventure sameDayNoCarAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT, NOT_RENT_CAR);
+		sameDayNoCarAdventure.setState(State.RESERVE_ACTIVITY);
 
 		new Expectations() {
 			{
@@ -51,13 +53,47 @@ public class ReserveActivityStateProcessMethodTest {
 			}
 		};
 
-		sameDayAdventure.process();
+		sameDayNoCarAdventure.process();
 
-		Assert.assertEquals(State.CONFIRMED, sameDayAdventure.getState());
+		Assert.assertEquals(State.PROCESS_PAYMENT, sameDayNoCarAdventure.getState());
 	}
 
 	@Test
-	public void successBookRoom(@Mocked final ActivityInterface activityInterface) {
+	public void successBookRoomNoVehicle(@Mocked final ActivityInterface activityInterface) {
+		Adventure NoCarAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT, NOT_RENT_CAR);
+		NoCarAdventure.setState(State.RESERVE_ACTIVITY);
+		
+		new Expectations() {
+			{
+				ActivityInterface.reserveActivity(begin, end, AGE);
+				this.result = ACTIVITY_CONFIRMATION;
+			}
+		};
+
+		NoCarAdventure.process();
+
+		Assert.assertEquals(State.BOOK_ROOM, NoCarAdventure.getState());
+	}
+	
+	@Test
+	public void successReserveVehicleNoRoom(@Mocked final ActivityInterface activityInterface) {
+		Adventure sameDayWithCarAdventure = new Adventure(this.broker, begin, begin, client, AMOUNT, RENT_CAR);
+		sameDayWithCarAdventure.setState(State.RESERVE_ACTIVITY);
+		
+		new Expectations() {
+			{
+				ActivityInterface.reserveActivity(begin, end, AGE);
+				this.result = ACTIVITY_CONFIRMATION;
+			}
+		};
+
+		sameDayWithCarAdventure.process();
+
+		Assert.assertEquals(State.RESERVE_VEHICLE, sameDayWithCarAdventure.getState());
+	}
+	
+	@Test
+	public void successBookRoomAndVehicle(@Mocked final ActivityInterface activityInterface) {
 		new Expectations() {
 			{
 				ActivityInterface.reserveActivity(begin, end, AGE);
@@ -81,7 +117,7 @@ public class ReserveActivityStateProcessMethodTest {
 
 		this.adventure.process();
 
-		Assert.assertEquals(State.UNDO, this.adventure.getState());
+		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
 	}
 
 	@Test
@@ -113,7 +149,7 @@ public class ReserveActivityStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.UNDO, this.adventure.getState());
+		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
 	}
 
 	@Test
@@ -186,6 +222,6 @@ public class ReserveActivityStateProcessMethodTest {
 		this.adventure.process();
 		this.adventure.process();
 
-		Assert.assertEquals(State.UNDO, this.adventure.getState());
+		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
 	}
 }
