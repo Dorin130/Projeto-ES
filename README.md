@@ -1,4 +1,4 @@
-# Adventure Builder
+﻿# Adventure Builder
 
 To run tests execute: mvn clean install
 
@@ -36,7 +36,11 @@ Sub-group Hotel & Car & Tax:
 	* All previously existing Tests in the car module (Modified)
  
 - (83487) João Sousa (JoaoPBSousa):
- 	* 
+ 	* Class Processor
+	* Class InvoiceProcessorSubmitBookingMethodTest
+	* Class RemoteAcsessException
+	* Class Hotel, Room, Booking(Modified)
+	* All previously existing Tests in hotel module (Modified)
 	
 Sub-group Broker:
  - (83448) Dorin Gujuman (Dorin130):

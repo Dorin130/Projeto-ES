@@ -39,7 +39,7 @@ public class Booking {
 	}
 
 	private void checkArguments(Hotel hotel, LocalDate arrival, LocalDate departure, String buyerNif, String buyerIban, int price) {
-		if (hotel == null || arrival == null || departure == null|| type == null|| buyerNif == null || buyerNif.trim().length() == 0||buyerIban == null || buyerIban.trim().length() == 0 || price <=0) {
+		if (hotel == null || arrival == null || departure == null||buyerNif == null || buyerNif.trim().length() == 0||buyerIban == null || buyerIban.trim().length() == 0 || price <=0) {
 			throw new HotelException();
 		}
 
