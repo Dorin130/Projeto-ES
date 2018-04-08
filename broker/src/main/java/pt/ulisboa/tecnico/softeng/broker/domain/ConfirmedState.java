@@ -30,7 +30,7 @@ public class ConfirmedState extends AdventureState {
 	public void process(Adventure adventure) {
 		try {
 			ActivityReservationData activityReservationData = ActivityInterface.getActivityReservationData(adventure.getActivityConfirmation());
-			if (activityReservationData.getPaymentReference() == null || activityReservationData.getInvoiceReference() == null) {
+			if(activityReservationData.getPaymentReference() == null || activityReservationData.getInvoiceReference() == null) {
 				adventure.setState(State.UNDO);
 				return;
 			}
