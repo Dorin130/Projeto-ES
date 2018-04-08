@@ -47,7 +47,8 @@ Sub-group Broker:
  	* 
 
  - (83509) Marco Silva (MarcofSilva):
- 	* 
+ 	* Class Adventure, BookRoomState, ConfirmedState, ProcessPaymentState, ReserveActivityState, UndoState (Modified)
+ 	* All previously existing Tests in broker module (Modified)
 	
  - (83475) Hugo Guerreiro (Hugo Guerrreiro):
  	* 
