@@ -50,7 +50,7 @@ public class Processor {
 			}
 		}
 		
-		clean(); //this.rentingToProcess.clear();
+		clean();
 		this.rentingToProcess.addAll(failedToProcess);
 	}
 	

@@ -49,7 +49,7 @@ public class Renting {
 	}
 
 	public String getType() {
-		return this.type;
+		return type;
 	}
 	
 	/**

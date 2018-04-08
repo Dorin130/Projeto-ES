@@ -1,4 +1,4 @@
-# Adventure Builder
+﻿# Adventure Builder
 
 To run tests execute: mvn clean install
 
@@ -27,16 +27,20 @@ Sub-group Hotel & Car & Tax:
  	* Curated code globally
  		
  - (83534) Nádia Fernandes (NadiaSofia):
- 	* Class Processor
+ 	* Class Processor - Car module
 	* Class RentACarCancelRentingMethodTest
 	* Class RentACarRentVehicleMethodTest
-	* Class InvoiceProcessorSubmitRentingMethodTest
-	* Class RemoteAcsessException
-	* Class Vehicle, Car, Motorcycle, Renting (Modified)
+	* Class InvoiceProcessorSubmitRentingMethodTest - Car module
+	* Class RemoteAcsessException - Car module
+	* Class Vehicle, Car, Motorcycle, Renting, RentingData (Modified)
 	* All previously existing Tests in the car module (Modified)
  
 - (83487) João Sousa (JoaoPBSousa):
- 	* 
+ 	* Class Processor
+	* Class InvoiceProcessorSubmitBookingMethodTest
+	* Class RemoteAcsessException
+	* Class Hotel, Room, Booking(Modified)
+	* All previously existing Tests in hotel module (Modified)
 	
 Sub-group Broker:
  - (83448) Dorin Gujuman (Dorin130):
