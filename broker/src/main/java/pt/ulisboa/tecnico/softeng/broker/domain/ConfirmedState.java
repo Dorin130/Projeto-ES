@@ -40,7 +40,7 @@ public class ConfirmedState extends AdventureState {
 		} catch (RemoteAccessException rae) {
 			incNumOfRemoteErrors();
 			if (getNumOfRemoteErrors() == MAX_REMOTE_ERRORS) {
-				adventure.setState(State.UNDO);
+				adventure.setState(State.CONFIRMED);
 			}
 			return;
 		}
@@ -59,7 +59,7 @@ public class ConfirmedState extends AdventureState {
 			} catch (RemoteAccessException rae) {
 				incNumOfRemoteErrors();
 				if (getNumOfRemoteErrors() == MAX_REMOTE_ERRORS) {
-					adventure.setState(State.UNDO);
+					adventure.setState(State.CONFIRMED);
 				}
 				return;
 			}
@@ -79,7 +79,7 @@ public class ConfirmedState extends AdventureState {
 			} catch (RemoteAccessException rae) {
 				incNumOfRemoteErrors();
 				if (getNumOfRemoteErrors() == MAX_REMOTE_ERRORS) {
-					adventure.setState(State.UNDO);
+					adventure.setState(State.CONFIRMED);
 				}
 				return;
 			}
@@ -97,7 +97,7 @@ public class ConfirmedState extends AdventureState {
 		} catch (RemoteAccessException rae) {
 			incNumOfRemoteErrors();
 			if (getNumOfRemoteErrors() == MAX_REMOTE_ERRORS) {
-				adventure.setState(State.UNDO);
+				adventure.setState(State.CONFIRMED);
 			}
 			return;
 		}
