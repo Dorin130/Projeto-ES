@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,11 +39,12 @@ public class UndoStateProcessMethodTest {
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
-	private Broker broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
+	private Broker broker;
 	private Client client;
 
 	@Before
 	public void setUp() {
+		this.broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
 		client = new Client(broker, IBAN,NIF,DRIVING_LICENSE, AGE);
 		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, true);
 		this.adventure.setState(State.UNDO);
@@ -367,6 +369,11 @@ public class UndoStateProcessMethodTest {
 		this.adventure.process();
 
 		Assert.assertEquals(State.CANCELLED, this.adventure.getState());
+	}
+	
+	@After
+	public void tearDown() {
+		Broker.brokers.clear();
 	}
 
 }
