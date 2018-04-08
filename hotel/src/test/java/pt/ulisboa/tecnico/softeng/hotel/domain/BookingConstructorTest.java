@@ -30,7 +30,7 @@ public class BookingConstructorTest {
 
 	@Test
 	public void success() {
-		Booking booking = new Booking(this.hotel, this.arrival, this.departure, this.type ,this.BuyerNIF ,this.BuyerIBAN ,this.hotel.getPrice(this.type));
+		Booking booking = new Booking(this.hotel, this.arrival, this.departure, this.BuyerNIF ,this.BuyerIBAN ,this.hotel.getPrice(this.type));
 
 		Assert.assertTrue(booking.getReference().startsWith(this.hotel.getCode()));
 		Assert.assertTrue(booking.getReference().length() > Hotel.CODE_SIZE);
@@ -40,62 +40,58 @@ public class BookingConstructorTest {
 
 	@Test(expected = HotelException.class)
 	public void nullHotel() {
-		new Booking(null, this.arrival, this.departure, this.type, this.BuyerNIF ,this.BuyerIBAN , this.PRICE);
+		new Booking(null, this.arrival, this.departure, this.BuyerNIF ,this.BuyerIBAN , this.PRICE);
 	}
 
 	@Test(expected = HotelException.class)
 	public void nullArrival() {
-		new Booking(this.hotel, null, this.departure, this.type, this.BuyerNIF, this.BuyerIBAN , this.PRICE);
+		new Booking(this.hotel, null, this.departure, this.BuyerNIF, this.BuyerIBAN , this.PRICE);
 	}
 
 	@Test(expected = HotelException.class)
 	public void nullDeparture() {
-		new Booking(this.hotel, this.arrival, null, this.type,this.BuyerNIF,this.BuyerIBAN , this.PRICE);
+		new Booking(this.hotel, this.arrival, null,this.BuyerNIF,this.BuyerIBAN , this.PRICE);
 	}
 
 	@Test(expected = HotelException.class)
 	public void departureBeforeArrival() {
-		new Booking(this.hotel, this.arrival, this.arrival.minusDays(1), this.type, this.BuyerNIF,this.BuyerIBAN , this.PRICE);
+		new Booking(this.hotel, this.arrival, this.arrival.minusDays(1), this.BuyerNIF,this.BuyerIBAN , this.PRICE);
 	}
 
 	@Test
 	public void arrivalEqualDeparture() {
-		new Booking(this.hotel, this.arrival, this.arrival, this.type, this.BuyerNIF , this.BuyerIBAN , this.PRICE);
+		new Booking(this.hotel, this.arrival, this.arrival,  this.BuyerNIF , this.BuyerIBAN , this.PRICE);
 	}
 	
-	@Test(expected = HotelException.class)
-	public void nullType() {
-		new Booking(this.hotel, this.arrival, this.departure, null, this.BuyerNIF , this.BuyerIBAN , this.PRICE);
-	}
 	
 	@Test(expected = HotelException.class)
 	public void nullBuyerNif() {
-		new Booking(this.hotel, this.arrival, this.departure, this.type, null , this.BuyerIBAN , this.PRICE);
+		new Booking(this.hotel, this.arrival, this.departure, null , this.BuyerIBAN , this.PRICE);
 	}
 	
 	@Test(expected = HotelException.class)
 	public void badBuyerNif() {
-		new Booking(this.hotel, this.arrival, this.departure, this.type, "" , this.BuyerIBAN , this.PRICE);
+		new Booking(this.hotel, this.arrival, this.departure, "" , this.BuyerIBAN , this.PRICE);
 	}
 	
 	@Test(expected = HotelException.class)
 	public void nullBuyerIban() {
-		new Booking(this.hotel, this.arrival, this.departure, this.type,this.BuyerNIF, null  , this.PRICE);
+		new Booking(this.hotel, this.arrival, this.departure, this.BuyerNIF, null  , this.PRICE);
 	}
 	
 	@Test(expected = HotelException.class)
 	public void badBuyerIban() {
-		new Booking(this.hotel, this.arrival, this.departure, this.type,this.BuyerNIF, "" , this.PRICE);
+		new Booking(this.hotel, this.arrival, this.departure, this.BuyerNIF, "" , this.PRICE);
 	}
 	
 	@Test(expected = HotelException.class)
 	public void negPrice() {
-		new Booking(this.hotel, this.arrival, this.departure, this.type,this.BuyerNIF, this.BuyerIBAN , -10);
+		new Booking(this.hotel, this.arrival, this.departure, this.BuyerNIF, this.BuyerIBAN , -10);
 	}
 	
 	@Test(expected = HotelException.class)
 	public void zeroPrice() {
-		new Booking(this.hotel, this.arrival, this.departure, this.type,this.BuyerNIF, this.BuyerIBAN , 0);
+		new Booking(this.hotel, this.arrival, this.departure, this.BuyerNIF, this.BuyerIBAN , 0);
 	}
 	
 	@After

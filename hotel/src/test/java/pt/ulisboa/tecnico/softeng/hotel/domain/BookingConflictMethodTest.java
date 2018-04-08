@@ -27,7 +27,7 @@ public class BookingConflictMethodTest {
 	public void setUp() {
 		Hotel hotel = new Hotel("XPTO123", "Londres", this.NIF, this.IBAN, this.priceSingle, this.priceDouble);
 
-		this.booking = new Booking(hotel, this.arrival, this.departure,this.type, this.buyerNIF,this.buyerIBAN , hotel.getPrice(this.type));
+		this.booking = new Booking(hotel, this.arrival, this.departure, this.buyerNIF,this.buyerIBAN , hotel.getPrice(this.type));
 	}
 
 	@Test

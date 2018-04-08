@@ -33,7 +33,7 @@ public class Processor {
 					} 
 				} 
 				 
-				InvoiceData invoiceData = new InvoiceData( booking.getProviderNif(), booking.getBuyerNif(), booking.getType().name(),
+				InvoiceData invoiceData = new InvoiceData( booking.getProviderNif(), booking.getBuyerNif(), booking.getType(),
 						booking.getPrice(), booking.getArrival());
 				try {
 					booking.setInvoiceReference(TaxInterface.submitInvoice(invoiceData));
