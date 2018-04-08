@@ -29,10 +29,8 @@ public class ReserveActivityStateProcessMethodTest {
 	private static final LocalDate begin = new LocalDate(2016, 12, 19);
 	private static final LocalDate end = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
-	private  Client client;
-
-	@Injectable
-	private Broker broker;
+	private Broker broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
+	private Client client;
 
 	@Before
 	public void setUp() {

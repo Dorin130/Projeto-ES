@@ -54,6 +54,15 @@ public class SellerToPayTest {
 
 		assertEquals(0.0d, value, 0.00d);
 	}
+	
+	@Test
+	public void cancelledInvoices() {
+		new Invoice(100, this.date, this.itemType, this.seller, this.buyer);
+		Invoice i = new Invoice(100, this.date, this.itemType, this.seller, this.buyer);
+		i.cancel();
+
+		assertEquals(10.0f, this.seller.toPay(2018), 0.00f);
+	}
 
 	@Test(expected = TaxException.class)
 	public void before1970() {

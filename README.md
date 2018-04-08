@@ -17,8 +17,15 @@ To see the coverage reports, go to module_name/target/site/jacoco/index.html.
 
 Sub-group Hotel & Car & Tax:
  - (83504) Manuel Vidigueira (SemperDarky):
- 	* 
-	
+ 	* Class IRS, TaxPayer, Buyer, Seller, Invoice (Modified)
+ 	* Class InvoiceCancelTest
+ 	* Class IRSCancelInvoiceByReferenceTest
+ 	* Class IRSGetInvoiceByReferenceTest
+ 	* Class TaxPayerGetInvoiceByReference (Modified)
+ 	* Class BuyerToReturnTest (Modified)
+ 	* Class SellerToPayTest (Modified)
+ 	* Curated code globally
+ 		
  - (83534) Nádia Fernandes (NadiaSofia):
  	* Class Processor
 	* Class RentACarCancelRentingMethodTest

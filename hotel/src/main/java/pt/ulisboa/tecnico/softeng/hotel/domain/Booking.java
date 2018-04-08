@@ -2,19 +2,18 @@ package pt.ulisboa.tecnico.softeng.hotel.domain;
 
 import org.joda.time.LocalDate;
 
-import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Booking {
 	private static int counter = 0;
 					
+	private static final String type = "HOUSING";
 	private final Hotel hotel;
 	private final String reference;
 	private String cancellation;
 	private LocalDate cancellationDate;
 	private final LocalDate arrival;
 	private final LocalDate departure;
-	private final Type type;
 	private final String providerNif;
 	private final String buyerNif;
 	private final String buyerIban;
@@ -25,14 +24,13 @@ public class Booking {
 	private String cancelledPaymentReference = null;
 		
 
-	Booking(Hotel hotel, LocalDate arrival, LocalDate departure, Type type, String buyerNif, String buyerIban, int price) {
-		checkArguments(hotel, arrival, departure, type, buyerNif, buyerIban, price);
+	Booking(Hotel hotel, LocalDate arrival, LocalDate departure, String buyerNif, String buyerIban, int price) {
+		checkArguments(hotel, arrival, departure, buyerNif, buyerIban, price);
 
 		this.hotel = hotel;
 		this.reference = hotel.getCode() + Integer.toString(++Booking.counter);
 		this.arrival = arrival;
 		this.departure = departure;
-		this.type = type;
 		this.providerNif = this.hotel.getNif();
 		this.buyerNif = buyerNif;
 		this.buyerIban = buyerIban;
@@ -40,7 +38,7 @@ public class Booking {
 		
 	}
 
-	private void checkArguments(Hotel hotel, LocalDate arrival, LocalDate departure, Type type, String buyerNif, String buyerIban, int price) {
+	private void checkArguments(Hotel hotel, LocalDate arrival, LocalDate departure, String buyerNif, String buyerIban, int price) {
 		if (hotel == null || arrival == null || departure == null|| type == null|| buyerNif == null || buyerNif.trim().length() == 0||buyerIban == null || buyerIban.trim().length() == 0 || price <=0) {
 			throw new HotelException();
 		}
@@ -70,7 +68,7 @@ public class Booking {
 		return this.cancellationDate;
 	}
 	
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 	

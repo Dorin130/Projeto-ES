@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,11 +41,14 @@ public class AdventureSequenceTest {
 	private static final String sellerNIF = "987654321";
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
+	private Broker broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
+	private Client client;
 
-	@Injectable
-	private Broker broker;
-
-	private final Client client = new Client(broker, IBAN, buyerNIF, DRIVING_LICENSE,AGE);
+	@Before
+	public void setUp() {
+		client = new Client(broker, IBAN, buyerNIF, DRIVING_LICENSE, AGE);
+	}
+	
 	@Test
 	public void successSequenceOne(@Mocked final BankInterface bankInterface,
 			@Mocked final ActivityInterface activityInterface, @Mocked final HotelInterface roomInterface, @Mocked CarInterface carInterface) {

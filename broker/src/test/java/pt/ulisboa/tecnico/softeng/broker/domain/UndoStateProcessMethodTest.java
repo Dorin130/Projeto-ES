@@ -38,13 +38,12 @@ public class UndoStateProcessMethodTest {
 	private static final LocalDate arrival = new LocalDate(2016, 12, 19);
 	private static final LocalDate departure = new LocalDate(2016, 12, 21);
 	private Adventure adventure;
+	private Broker broker = new Broker("BR01", "WeExplore", "123456789", "987654321");
+	private Client client;
 
-	@Injectable
-	private Broker broker;
-
-	private  Client client = new Client(broker, IBAN,NIF,DRIVING_LICENSE, AGE);
 	@Before
 	public void setUp() {
+		client = new Client(broker, IBAN,NIF,DRIVING_LICENSE, AGE);
 		this.adventure = new Adventure(this.broker, arrival, departure, client, AMOUNT, true);
 		this.adventure.setState(State.UNDO);
 	}
