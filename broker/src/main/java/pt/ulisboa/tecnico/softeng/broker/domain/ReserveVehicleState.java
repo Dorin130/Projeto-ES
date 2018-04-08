@@ -22,6 +22,7 @@ public class ReserveVehicleState extends AdventureState{
             String drivingLicense = adventure.getClient().getDRIVINGLICENSE();
             adventure.setVehicleConfirmation(
                     CarInterface.processVehicleRenting(drivingLicense, adventure.getBegin(), adventure.getEnd(),nif, iban));
+            System.out.println(adventure.getVehicleConfirmation());
         } catch (CarException ce) {
             adventure.setState(State.UNDO);
             return;

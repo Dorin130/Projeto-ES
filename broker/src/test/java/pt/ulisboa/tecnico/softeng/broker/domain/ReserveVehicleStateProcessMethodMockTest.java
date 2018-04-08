@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 
+import com.sun.org.glassfish.gmbal.ManagedObject;
 import mockit.Delegate;
 import mockit.Expectations;
 import mockit.Injectable;
@@ -12,7 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pt.ulisboa.tecnico.softeng.broker.exception.RemoteAccessException;
+import pt.ulisboa.tecnico.softeng.broker.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.broker.interfaces.CarInterface;
+import pt.ulisboa.tecnico.softeng.broker.interfaces.TaxInterface;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
 
@@ -20,10 +23,7 @@ import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 @RunWith(JMockit.class)
 public class ReserveVehicleStateProcessMethodMockTest {
     private static final int MAXTRIES = 5;
-    private static final String ACTIVITY_REFERENCE = "activityReference";
-    private static final String HOTEL_REFERENCE = "hotelReference";
     private static final String VEHICLE_REFERENCE = "vehicleReference";
-    private static final String PAYMENT_CONFIRMATION = "paymentConfirmation";
     private final LocalDate BEGINADVENTURE = new LocalDate(2016, 12, 19);
     private final LocalDate ENDADVENTURE = new LocalDate(2016, 12, 21);
     private  Client client;
@@ -49,7 +49,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void processWithNoExceptions(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = VEHICLE_REFERENCE;
 
             }
@@ -57,20 +57,20 @@ public class ReserveVehicleStateProcessMethodMockTest {
         this.adventure.process();
 
         Assert.assertEquals(VEHICLE_REFERENCE, this.adventure.getVehicleConfirmation());
-        Assert.assertEquals(Adventure.State.CONFIRMED, this.adventure.getState());
+        Assert.assertEquals(Adventure.State.PROCESS_PAYMENT, this.adventure.getState());
     }
 
     @Test
     public void carException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new CarException();
             }
         };
 
         this.adventure.process();
-        Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
+        Assert.assertEquals(Adventure.State.UNDO, this.adventure.getState());
     }
 
 
@@ -78,7 +78,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void singleCarRemoteAccessException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
             }
         };
@@ -90,35 +90,35 @@ public class ReserveVehicleStateProcessMethodMockTest {
     public void maxCarRemoteAccessException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
             }
         };
-        for(int i=0; i < MAXTRIES+1; i++) {
+        for(int i=0; i < MAXTRIES; i++) {
             this.adventure.process();
         }
-        Assert.assertEquals(Adventure.State.CANCELLED, adventure.getState());
+        Assert.assertEquals(Adventure.State.UNDO, adventure.getState());
     }
 
     @Test
     public void maxMinusOneCarRemoteAccessException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new RemoteAccessException();
 
             }
         };
-        for(int i=0; i < MAXTRIES; i++) {
+        for(int i=0; i < MAXTRIES-1; i++) {
             this.adventure.process();
         }
-        Assert.assertEquals(Adventure.State.CONFIRMED, adventure.getState());
+        Assert.assertEquals(Adventure.State.RESERVE_VEHICLE, adventure.getState());
     }
     @Test
     public void fourCarRemoteAccessExceptionOneSuccess(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
                 this.result = new Delegate() {
                     int i = 0;
 
@@ -137,14 +137,14 @@ public class ReserveVehicleStateProcessMethodMockTest {
         for(int i=0; i < MAXTRIES; i++) {
             this.adventure.process();
         }
-        Assert.assertEquals(Adventure.State.CONFIRMED, adventure.getState());
+        Assert.assertEquals(Adventure.State.PROCESS_PAYMENT, adventure.getState());
     }
 
     @Test
     public void oneRemoteAccessExceptionOneCarException(@Mocked final CarInterface carInterface) {
         new Expectations() {
             {
-                CarInterface.processVehicleRenting(LICENSE1, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
+                CarInterface.processVehicleRenting(DRIVING_LICENSE, BEGINADVENTURE, ENDADVENTURE, NIF, IBAN);
 
                 this.result = new Delegate() {
                     int i = 0;
@@ -166,7 +166,7 @@ public class ReserveVehicleStateProcessMethodMockTest {
         this.adventure.process();
         this.adventure.process();
 
-        Assert.assertEquals(Adventure.State.CANCELLED, this.adventure.getState());
+        Assert.assertEquals(Adventure.State.UNDO, this.adventure.getState());
     }
 
 }
