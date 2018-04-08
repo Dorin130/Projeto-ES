@@ -54,4 +54,7 @@ Sub-group Broker:
  	* All previously existing Tests in broker module (Modified)
 	
  - (83475) Hugo Guerreiro (Hugo Guerrreiro):
- 	* 
+ 	* Class ReserveVehicleState, 
+	* Class ReserveVehicleStateProcess
+	* Class Client
+	* Refactor tests
