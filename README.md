@@ -27,12 +27,12 @@ Sub-group Hotel & Car & Tax:
  	* Curated code globally
  		
  - (83534) Nádia Fernandes (NadiaSofia):
- 	* Class Processor
+ 	* Class Processor - Car module
 	* Class RentACarCancelRentingMethodTest
 	* Class RentACarRentVehicleMethodTest
-	* Class InvoiceProcessorSubmitRentingMethodTest
-	* Class RemoteAcsessException
-	* Class Vehicle, Car, Motorcycle, Renting (Modified)
+	* Class InvoiceProcessorSubmitRentingMethodTest - Car module
+	* Class RemoteAcsessException - Car module
+	* Class Vehicle, Car, Motorcycle, Renting, RentingData (Modified)
 	* All previously existing Tests in the car module (Modified)
  
 - (83487) João Sousa (JoaoPBSousa):
