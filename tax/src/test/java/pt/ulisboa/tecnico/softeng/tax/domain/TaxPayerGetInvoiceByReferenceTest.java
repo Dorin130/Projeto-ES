@@ -36,6 +36,13 @@ public class TaxPayerGetInvoiceByReferenceTest {
 	public void success() {
 		assertEquals(this.invoice, this.seller.getInvoiceByReference(this.invoice.getReference()));
 	}
+	
+	@Test
+	public void getCancelledInvoice() {
+		Invoice second = new Invoice(VALUE, this.date, this.itemType, this.seller, this.buyer);
+		
+		assertEquals(second, this.seller.getInvoiceByReference(second.cancel()));
+	}
 
 	@Test(expected = TaxException.class)
 	public void nullReference() {
