@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public class TaxPayerGetInvoiceByReferenceTest extends RollbackTestAbstractClass {
+public class TaxPayerGetInvoiceByReferenceTest {
 	private static final String SELLER_NIF = "123456789";
 	private static final String BUYER_NIF = "987654321";
 	private static final String FOOD = "FOOD";
@@ -23,8 +23,8 @@ public class TaxPayerGetInvoiceByReferenceTest extends RollbackTestAbstractClass
 	private ItemType itemType;
 	private Invoice invoice;
 
-	@Override
-	public void populate4Test() {
+	@Before
+	public void setUp() {
 		IRS irs = IRS.getIRS();
 		this.seller = new Seller(irs, SELLER_NIF, "José Vendido", "Somewhere");
 		this.buyer = new Buyer(irs, BUYER_NIF, "Manuel Comprado", "Anywhere");

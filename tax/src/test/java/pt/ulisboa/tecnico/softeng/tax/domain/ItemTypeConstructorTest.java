@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public class ItemTypeConstructorTest extends RollbackTestAbstractClass {
+public class ItemTypeConstructorTest {
 	private static final String CAR = "CAR";
 	private static final int TAX = 23;
 
@@ -21,8 +21,8 @@ public class ItemTypeConstructorTest extends RollbackTestAbstractClass {
 		this.irs = IRS.getIRS();
 	}
 
-	@Override
-	public void populate4Test() {
+	@Test
+	public void success() {
 		IRS irs = IRS.getIRS();
 
 		ItemType itemType = new ItemType(irs, CAR, TAX);

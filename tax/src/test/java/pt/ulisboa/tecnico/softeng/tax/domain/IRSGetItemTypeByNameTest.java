@@ -8,14 +8,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class IRSGetItemTypeByNameTest extends RollbackTestAbstractClass {
+public class IRSGetItemTypeByNameTest {
 	private static final String FOOD = "FOOD";
 	private static final int VALUE = 16;
 
 	private IRS irs;
 
-	@Override
-	public void populate4Test() {
+	@Before
+	public void setUp() {
 		this.irs = IRS.getIRS();
 		new ItemType(this.irs, FOOD, VALUE);
 	}
