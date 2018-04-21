@@ -12,8 +12,7 @@ public class Adventure extends Adventure_Base {
 	public enum State {
 		PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
 	}
-
-	private final Client client;
+	
 	private final double margin;
 	private final boolean rentVehicle;
 	private double currentAmount;
@@ -35,7 +34,8 @@ public class Adventure extends Adventure_Base {
 		setBegin(begin);
 		setEnd(end);
 
-		this.client = client;
+		setClient(client);
+
 		this.margin = margin;
 		this.rentVehicle = rentVehicle;
 		this.currentAmount = 0.0;
@@ -49,6 +49,7 @@ public class Adventure extends Adventure_Base {
 
 	public void delete() {
 		setBroker(null);
+		setClient(null);
 
 		getState().delete();
 
@@ -74,15 +75,11 @@ public class Adventure extends Adventure_Base {
 	}
 
 	public int getAge() {
-		return this.client.getAge();
+		return getClient().getAge();
 	}
 
 	public String getIBAN() {
-		return this.client.getIBAN();
-	}
-
-	public Client getClient() {
-		return this.client;
+		return getClient().getIban();
 	}
 
 	public double getMargin() {

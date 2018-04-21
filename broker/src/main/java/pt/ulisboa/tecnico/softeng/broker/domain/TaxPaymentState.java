@@ -18,7 +18,7 @@ public class TaxPaymentState extends TaxPaymentState_Base {
 	public void process() {
 		try {
 			InvoiceData invoiceData = new InvoiceData(getAdventure().getBroker().getNifAsSeller(),
-					getAdventure().getClient().getNIF(), "ADVENTURE", getAdventure().getAmount(),
+					getAdventure().getClient().getNif(), "ADVENTURE", getAdventure().getAmount(),
 					getAdventure().getBegin());
 			getAdventure().setInvoiceReference(TaxInterface.submitInvoice(invoiceData));
 		} catch (TaxException be) {
