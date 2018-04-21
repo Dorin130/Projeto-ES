@@ -25,6 +25,7 @@ public class ActivityPersistenceTest {
 	private static final String BUYER_IBAN = "IBAN2";
 	private static final String BUYER_NIF = "NIF2";
 	private static final int CAPACITY = 25;
+	private static final int PRICE = 30;
 
 	private final LocalDate begin = new LocalDate(2017, 04, 01);
 	private final LocalDate end = new LocalDate(2017, 04, 15);
@@ -41,7 +42,7 @@ public class ActivityPersistenceTest {
 
 		Activity activity = new Activity(activityProvider, ACTIVITY_NAME, 18, 65, CAPACITY);
 
-		ActivityOffer activityOffer = new ActivityOffer(activity, this.begin, this.end, 30);
+		ActivityOffer activityOffer = new ActivityOffer(activity, this.begin, this.end, PRICE);
 
 		new Booking(activityProvider, activityOffer, BUYER_NIF, BUYER_IBAN);
 	}
@@ -75,6 +76,7 @@ public class ActivityPersistenceTest {
 		assertEquals(this.begin, offer.getBegin());
 		assertEquals(this.end, offer.getEnd());
 		assertEquals(CAPACITY, offer.getCapacity());
+		assertEquals(PRICE, offer.getPrice());
 		assertEquals(1, offer.getBookingSet().size());
 
 		List<Booking> bookings = new ArrayList<>(offer.getBookingSet());
