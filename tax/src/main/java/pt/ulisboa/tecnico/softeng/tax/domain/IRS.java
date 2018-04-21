@@ -3,23 +3,28 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public class IRS {
+public class IRS extends IRS_Base {
 	private final Set<TaxPayer> taxPayers = new HashSet<>();
 	private final Set<ItemType> itemTypes = new HashSet<>();
 
-	private static IRS instance;
-
 	public static IRS getIRS() {
-		if (instance == null) {
-			instance = new IRS();
+		if (FenixFramework.getDomainRoot().getIrs() == null) {
+			return new IRS();
 		}
-		return instance;
+		return FenixFramework.getDomainRoot().getIrs();
 	}
 
 	private IRS() {
+		FenixFramework.getDomainRoot().setIrs(this);
+	}
+
+	void delete() {
+		setRoot(null);
+		deleteDomainObject();
 	}
 
 	void addTaxPayer(TaxPayer taxPayer) {

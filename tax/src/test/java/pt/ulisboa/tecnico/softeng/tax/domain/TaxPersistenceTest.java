@@ -4,12 +4,7 @@ import org.junit.After;
 import org.junit.Test;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.ist.fenixframework.FenixFramework;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertNotNull;
 
 public class TaxPersistenceTest {
 	/*private static final String BANK_NAME = "Money";
@@ -24,18 +19,18 @@ public class TaxPersistenceTest {
 
 	@Atomic(mode = TxMode.WRITE)
 	public void atomicProcess() {
-
+		IRS.getIRS();
 	}
 
 	@Atomic(mode = TxMode.READ)
 	public void atomicAssert() {
-
+		IRS.getIRS();
 	}
 
 	@After
 	@Atomic(mode = TxMode.WRITE)
 	public void tearDown() {
-		//FenixFramework.getDomainRoot().getIRS().clearAll();
+		IRS.getIRS().delete();
 	}
 
 }

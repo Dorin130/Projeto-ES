@@ -1,1 +1,14 @@
-package pt.ulisboa.tecnico.softeng.bank.domain;
+package pt.ulisboa.tecnico.softeng.tax.domain;
+
+class IRS {
+
+}
+
+relation DomainRootHasIRS {
+	.pt.ist.fenixframework.DomainRoot playsRole root {
+		multiplicity 1..1;
+	}
+	IRS playsRole irs {
+		multiplicity 1..1;
+	}
+}
