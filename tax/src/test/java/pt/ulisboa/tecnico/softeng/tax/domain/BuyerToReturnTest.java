@@ -3,8 +3,6 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 import static org.junit.Assert.assertEquals;
 
 import org.joda.time.LocalDate;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
@@ -22,7 +20,6 @@ public class BuyerToReturnTest extends RollbackTestAbstractClass {
 
 	@Override
 	public void populate4Test() {
-		IRS.getIRS().clearAll();
 		IRS irs = IRS.getIRS();
 		this.seller = new Seller(irs, SELLER_NIF, "José Vendido", "Somewhere");
 		this.buyer = new Buyer(irs, BUYER_NIF, "Manuel Comprado", "Anywhere");

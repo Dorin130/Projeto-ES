@@ -5,23 +5,32 @@ import java.util.Set;
 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public abstract class TaxPayer {
+public abstract class TaxPayer extends TaxPayer_Base{
 	protected final Set<Invoice> invoices = new HashSet<>();
 
-	private final String NIF;
-	private final String name;
-	private final String address;
-
-	public TaxPayer(IRS irs, String NIF, String name, String address) {
+	public void init(IRS irs, String NIF, String name, String address) {
 		checkArguments(irs, NIF, name, address);
 
-		this.NIF = NIF;
-		this.name = name;
-		this.address = address;
-
-		irs.addTaxPayer(this);
+		setIrs(irs);
+		setNIF(NIF);
+		setName(name);
+		setAddress(address);
 	}
-
+	
+	public void delete() {
+		setIrs(null);
+		setNIF(null);
+		setName(null);
+		setAddress(null);
+		
+		//for (Invoice invoices : getInvoiceSet()) {
+		//	invoice.delete();
+		//}
+		this.invoices.clear();
+		
+		deleteDomainObject();
+	}
+	
 	private void checkArguments(IRS irs, String NIF, String name, String address) {
 		if (NIF == null || NIF.length() != 9) {
 			throw new TaxException();
@@ -41,10 +50,6 @@ public abstract class TaxPayer {
 
 	}
 
-	public void addInvoice(Invoice invoice) {
-		this.invoices.add(invoice);
-	}
-
 	public Invoice getInvoiceByReference(String invoiceReference) {
 		if (invoiceReference == null || invoiceReference.isEmpty()) {
 			throw new TaxException();
@@ -58,16 +63,7 @@ public abstract class TaxPayer {
 		return null;
 	}
 
-	public String getNIF() {
-		return this.NIF;
+	public void addInvoice(Invoice invoice) {
+		invoices.add(invoice);
 	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public String getAddress() {
-		return this.address;
-	}
-
 }
