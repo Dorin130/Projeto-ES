@@ -15,7 +15,7 @@ import pt.ulisboa.tecnico.softeng.car.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.car.interfaces.TaxInterface;
 
 @RunWith(JMockit.class)
-public class RentingCheckoutTest {
+public class RentingCheckoutTest extends RollbackTestAbstractClass{
 	private static final String NAME1 = "eartz";
 	private static final String PLATE_CAR1 = "aa-00-11";
 	private static final String DRIVING_LICENSE = "br123";
@@ -32,8 +32,11 @@ public class RentingCheckoutTest {
     private TaxInterface taxInterface;
 
 
-    @Before
-	public void setUp() {
+    @Override
+	public void populate4Test() {
+    	RentACar.rentACars.clear();
+		Vehicle.plates.clear();
+		
 		RentACar rentACar1 = new RentACar(NAME1, NIF, IBAN);
 		this.car = new Car(PLATE_CAR1, 10, 10, rentACar1);
 	}
@@ -49,11 +52,5 @@ public class RentingCheckoutTest {
 	public void failCheckout() {
 		Renting renting = car.rent(DRIVING_LICENSE, date1, date2, NIF, IBAN_BUYER);
 		renting.checkout(-10);
-	}
-
-	@After
-	public void tearDown() {
-		RentACar.rentACars.clear();
-		Vehicle.plates.clear();
 	}
 }
