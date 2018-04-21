@@ -3,6 +3,8 @@ package pt.ulisboa.tecnico.softeng.activity.domain;
 class ActivityProvider {
 	String name;
 	String code;
+	String nif;
+	String iban;
 	int counter;
 } 
 

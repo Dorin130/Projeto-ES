@@ -55,6 +55,8 @@ public class ActivityPersistenceTest {
 
 		assertEquals(PROVIDER_CODE, provider.getCode());
 		assertEquals(PROVIDER_NAME, provider.getName());
+		assertEquals(NIF, provider.getNif());
+		assertEquals(IBAN, provider.getIban());
 		assertEquals(1, provider.getActivitySet().size());
 
 		List<Activity> activities = new ArrayList<>(provider.getActivitySet());
