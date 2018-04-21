@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.car.dataobjects.RentingData;
 import pt.ulisboa.tecnico.softeng.car.domain.Vehicle;
+import pt.ulisboa.tecnico.softeng.car.domain.RentACar;
 
 public class CarInterface {
 	public static String rentCar(Class<? extends Vehicle> vehicleType, String drivingLicense, String nif, String iban,
