@@ -1,0 +1,18 @@
+package pt.ulisboa.tecnico.softeng.car.domain;
+
+class RentACar {
+    String name;
+    String code;
+    String nif;
+    String iban;
+    int counter;
+}
+
+relation DomainRootHasRentAcar {
+	.pt.ist.fenixframework.DomainRoot playsRole root {
+		multiplicity 1..1;
+	}
+	RentACar playsRole rentAcar {
+		multiplicity 0..*;
+	}
+}

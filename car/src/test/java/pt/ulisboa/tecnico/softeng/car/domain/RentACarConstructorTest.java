@@ -14,7 +14,7 @@ public class RentACarConstructorTest extends RollbackTestAbstractClass{
 
 	@Override
 	public void populate4Test() {
-		RentACar.rentACars.clear();
+
 	}
 	
 	@Test

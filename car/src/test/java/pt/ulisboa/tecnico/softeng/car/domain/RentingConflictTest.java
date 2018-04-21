@@ -36,7 +36,7 @@ public class RentingConflictTest extends RollbackTestAbstractClass{
 
 	@Override
 	public void populate4Test() {
-		RentACar.rentACars.clear();
+
 		Vehicle.plates.clear();
 		
 		RentACar rentACar = new RentACar(RENT_A_CAR_NAME, NIF, IBAN);

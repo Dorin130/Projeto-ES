@@ -41,7 +41,7 @@ public class RentACarGetAllAvailableVehiclesTest extends RollbackTestAbstractCla
 
 	@Override
 	public void populate4Test() {
-		RentACar.rentACars.clear();
+
 		Vehicle.plates.clear();
 		
 		this.rentACar1 = new RentACar(NAME1, NIF, IBAN);

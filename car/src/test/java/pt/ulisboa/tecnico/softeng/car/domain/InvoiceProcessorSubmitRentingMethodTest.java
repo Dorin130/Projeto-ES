@@ -43,7 +43,6 @@ public class InvoiceProcessorSubmitRentingMethodTest extends RollbackTestAbstrac
 
 	@Override
 	public void populate4Test() {
-		RentACar.rentACars.clear();
 		Vehicle.plates.clear();
 		 
 	    rentACar = new RentACar(RENT_A_CAR_NAME, NIF, IBAN);

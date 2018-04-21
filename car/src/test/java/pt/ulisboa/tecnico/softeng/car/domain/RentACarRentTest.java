@@ -35,7 +35,6 @@ public class RentACarRentTest extends RollbackTestAbstractClass{
 
 	@Override
 	public void populate4Test() {
-		RentACar.rentACars.clear();
 		Vehicle.plates.clear();
 		
 		rentACar = new RentACar(RENT_A_CAR_NAME, NIF, IBAN);
@@ -57,7 +56,9 @@ public class RentACarRentTest extends RollbackTestAbstractClass{
 
 	@Test(expected = CarException.class)
 	public void noRentACars() {
-		RentACar.rentACars.clear();
+		for( RentACar rentACar : RentACar.getRentACars()) {
+			rentACar.delete();
+		}
 		RentACar.rent(Car.class, DRIVING_LICENSE, NIF, IBAN_BUYER, BEGIN, END);
 	}
 
