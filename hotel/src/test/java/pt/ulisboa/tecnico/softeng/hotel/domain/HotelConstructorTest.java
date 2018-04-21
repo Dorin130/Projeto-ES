@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.hotel.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,6 +31,8 @@ public class HotelConstructorTest extends RollbackTestAbstractClass {
 		Assert.assertTrue(hotel.getCode().length() == Hotel.CODE_SIZE);
 		Assert.assertEquals(0, hotel.getRoomSet().size());
 		Assert.assertEquals(1, FenixFramework.getDomainRoot().getHotelSet().size());
+		Assert.assertEquals(NIF, hotel.getNif());
+		Assert.assertEquals(IBAN, hotel.getIban());
 		Assert.assertEquals(PRICE_SINGLE, hotel.getPrice(Room.Type.SINGLE), 0.0d);
 		Assert.assertEquals(PRICE_DOUBLE, hotel.getPrice(Room.Type.DOUBLE), 0.0d);
 	}

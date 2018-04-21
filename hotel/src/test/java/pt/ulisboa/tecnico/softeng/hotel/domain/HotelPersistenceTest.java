@@ -16,6 +16,10 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.hotel.domain.Room.Type;
 
 public class HotelPersistenceTest {
+	private static final double HOTEL_PRICE_DOUBLE = 20.0;
+	private static final double HOTEL_PRICE_SINGLE = 10.0;
+	private static final String HOTEL_IBAN = "IBAN";
+	private static final String HOTEL_NIF = "123456789";
 	private static final String HOTEL_NAME = "Berlin Plaza";
 	private final static String HOTEL_CODE = "H123456";
 	private static final String ROOM_NUMBER = "01";
@@ -31,11 +35,11 @@ public class HotelPersistenceTest {
 
 	@Atomic(mode = TxMode.WRITE)
 	public void atomicProcess() {
-		Hotel hotel = new Hotel(HOTEL_CODE, HOTEL_NAME, "123456789", "IBAN", 10.0, 20.0);
+		Hotel hotel = new Hotel(HOTEL_CODE, HOTEL_NAME, HOTEL_NIF, HOTEL_IBAN, HOTEL_PRICE_SINGLE, HOTEL_PRICE_DOUBLE);
 
 		Room room = new Room(hotel, ROOM_NUMBER, Type.DOUBLE);
 
-		room.reserve(Type.DOUBLE, this.arrival, this.departure, "123456789", "IBAN");
+		room.reserve(Type.DOUBLE, this.arrival, this.departure, HOTEL_NIF, HOTEL_IBAN);
 
 	}
 
@@ -45,6 +49,10 @@ public class HotelPersistenceTest {
 
 		assertEquals(HOTEL_NAME, hotel.getName());
 		assertEquals(HOTEL_CODE, hotel.getCode());
+		assertEquals(HOTEL_NIF, hotel.getNif());
+		assertEquals(HOTEL_IBAN, hotel.getIban());
+		assertEquals(HOTEL_PRICE_SINGLE, hotel.getPriceSingle(), 0.0);
+		assertEquals(HOTEL_PRICE_DOUBLE, hotel.getPriceDouble(), 0.0);
 		assertEquals(1, hotel.getRoomSet().size());
 
 		List<Room> hotels = new ArrayList<>(hotel.getRoomSet());
