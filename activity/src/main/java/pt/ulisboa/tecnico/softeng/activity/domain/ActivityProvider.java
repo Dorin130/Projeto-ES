@@ -12,8 +12,6 @@ import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 public class ActivityProvider extends ActivityProvider_Base {
 	static final int CODE_SIZE = 6;
 
-	private final Processor processor = new Processor();
-
 	@Override
 	public int getCounter() {
 		int counter = super.getCounter() + 1;
@@ -23,7 +21,9 @@ public class ActivityProvider extends ActivityProvider_Base {
 
 	public ActivityProvider(String code, String name, String nif, String iban) {
 		checkArguments(code, name, nif, iban);
-
+		
+		setProcessor(new Processor(this));
+		
 		setCode(code);
 		setName(name);
 		setNif(nif);
@@ -38,6 +38,8 @@ public class ActivityProvider extends ActivityProvider_Base {
 		for (Activity activity : getActivitySet()) {
 			activity.delete();
 		}
+		
+		getProcessor().delete();
 
 		deleteDomainObject();
 	}
@@ -64,11 +66,7 @@ public class ActivityProvider extends ActivityProvider_Base {
 			}
 		}
 	}
-	
 
-	public Processor getProcessor() {
-		return this.processor;
-	}
 
 	public List<ActivityOffer> findOffer(LocalDate begin, LocalDate end, int age) {
 		List<ActivityOffer> result = new ArrayList<>();

@@ -25,6 +25,8 @@ public class Booking extends Booking_Base {
 		setReference(offer.getActivity().getActivityProvider().getCode() + Integer.toString(++Booking.counter));
 
 		setActivityOffer(offer);
+		
+		setProcessor(provider.getProcessor());
 
 		this.providerNif = provider.getNif();
 		this.nif = buyerNif;
@@ -48,6 +50,7 @@ public class Booking extends Booking_Base {
 
 	public void delete() {
 		setActivityOffer(null);
+		setProcessor(null);
 
 		deleteDomainObject();
 	}
