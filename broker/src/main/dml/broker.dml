@@ -19,6 +19,13 @@ class Adventure {
 	String ID;
 	LocalDate begin;
 	LocalDate end;
+	double margin; 
+	boolean rentVehicle; 
+	double currentAmount;
+	String invoiceReference;
+	boolean invoiceCancelled;
+	String rentingConfirmation;
+	String rentingCancellation;
 	String paymentConfirmation;
 	String paymentCancellation;
 	String roomConfirmation;
