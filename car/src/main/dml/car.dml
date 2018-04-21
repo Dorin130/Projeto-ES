@@ -8,11 +8,31 @@ class RentACar {
     int counter;
 }
 
-relation DomainRootHasRentAcar {
+
+relation DomainRootHasRentACar {
 	.pt.ist.fenixframework.DomainRoot playsRole root {
 		multiplicity 1..1;
 	}
-	RentACar playsRole rentAcar {
+	RentACar playsRole rentACar {
 		multiplicity 0..*;
 	}
+}
+
+class Vehicle {
+    String plate;
+    int kilometers;
+    double price;
+}
+
+class Car extends Vehicle {}
+class Motorcycle extends Vehicle {}
+
+relation RentAcarHasVehicle {
+    RentACar playsRole rentACar {
+        multiplicity 1..1;
+    }
+
+    Vehicle playsRole vehicle {
+        multiplicity 0..*;
+    }
 }

@@ -8,53 +8,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
-public abstract class Vehicle {
+public abstract class Vehicle extends Vehicle_Base {
 	private static Logger logger = LoggerFactory.getLogger(Vehicle.class);
-
 	private static String plateFormat = "..-..-..";
-	static Set<String> plates = new HashSet<>();
 
-	private final String plate;
-	private int kilometers;
-	private double price;
-	private final RentACar rentACar;
 	public final Set<Renting> rentings = new HashSet<>();
 
-	public Vehicle(String plate, int kilometers, double price, RentACar rentACar) {
+	public void init(String plate, int kilometers, double price, RentACar rentACar) {
 		logger.debug("Vehicle plate: {}", plate);
 		checkArguments(plate, kilometers, rentACar);
 
-		this.plate = plate;
-		this.kilometers = kilometers;
-		this.price = price;
-		this.rentACar = rentACar;
+		setPlate(plate.toUpperCase());
+		setKilometers(kilometers);
+		setPrice(price);
+		setRentACar(rentACar);
 
-		plates.add(plate.toUpperCase());
 		rentACar.addVehicle(this);
+
 	}
 
+
+
 	private void checkArguments(String plate, int kilometers, RentACar rentACar) {
-		if (plate == null || !plate.matches(plateFormat) || plates.contains(plate.toUpperCase())) {
+		if (rentACar == null) {
+			throw new CarException();
+		} else if (plate == null || !plate.matches(plateFormat) || rentACar.hasVehicle(plate)) {
 			throw new CarException();
 		} else if (kilometers < 0) {
-			throw new CarException();
-		} else if (rentACar == null) {
 			throw new CarException();
 		}
 	}
 
-	/**
-	 * @return the plate
-	 */
-	public String getPlate() {
-		return this.plate;
-	}
+	public void delete() {
+		setRentACar(null);
 
-	/**
-	 * @return the kilometers
-	 */
-	public int getKilometers() {
-		return this.kilometers;
+		//TODO delete rentings
+
+		deleteDomainObject();
 	}
 
 	/**
@@ -65,19 +55,13 @@ public abstract class Vehicle {
 		if (kilometers < 0) {
 			throw new CarException();
 		}
-		this.kilometers += kilometers;
+		setKilometers(this.getKilometers() + kilometers);
 	}
 
-	public double getPrice() {
-		return this.price;
-	}
 
 	/**
 	 * @return the rentACar
 	 */
-	public RentACar getRentACar() {
-		return this.rentACar;
-	}
 
 	public boolean isFree(LocalDate begin, LocalDate end) {
 		if (begin == null || end == null) {

@@ -1,8 +1,6 @@
 package pt.ulisboa.tecnico.softeng.car.domain;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
@@ -20,9 +18,6 @@ public class RentACar extends RentACar_Base{
         return counter;
     }
 
-
-    private final Map<String, Vehicle> vehicles = new HashMap<>();
-
     private final Processor processor = new Processor();
 
     public RentACar(String name, String nif, String iban) {
@@ -35,11 +30,11 @@ public class RentACar extends RentACar_Base{
         setCounter(0);
         setCode(nif + Integer.toString(getNextCounter()));
 
-        FenixFramework.getDomainRoot().addRentAcar(this);
+        FenixFramework.getDomainRoot().addRentACar(this);
 
     }
     public static Set<RentACar> getRentACars() {
-        return FenixFramework.getDomainRoot().getRentAcarSet();
+        return FenixFramework.getDomainRoot().getRentACarSet();
     }
 
     private void checkArguments(String name, String nif, String iban) {
@@ -55,17 +50,18 @@ public class RentACar extends RentACar_Base{
         }
     }
 
-    void addVehicle(Vehicle vehicle) {
-        this.vehicles.put(vehicle.getPlate(), vehicle);
-    }
-
     public boolean hasVehicle(String plate) {
-        return this.vehicles.containsKey(plate);
+        for (Vehicle vehicle : getVehicleSet()) {
+            if (vehicle.getPlate().equals(plate)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Set<Vehicle> getAvailableVehicles(Class<?> cls, LocalDate begin, LocalDate end) {
         final Set<Vehicle> availableVehicles = new HashSet<>();
-        for (final Vehicle vehicle : this.vehicles.values()) {
+        for (final Vehicle vehicle : getVehicleSet()) {
             if (cls == vehicle.getClass() && vehicle.isFree(begin, end)) {
                 availableVehicles.add(vehicle);
             }
@@ -121,7 +117,7 @@ public class RentACar extends RentACar_Base{
      */
     protected static Renting getRenting(String reference) {
         for (final RentACar rentACar : getRentACars()) {
-            for (final Vehicle vehicle : rentACar.vehicles.values()) {
+            for (final Vehicle vehicle : rentACar.getVehicleSet()) {
                 final Renting renting = vehicle.getRenting(reference);
                 if (renting != null) {
                     return renting;
@@ -145,8 +141,7 @@ public class RentACar extends RentACar_Base{
 
 
     public static   RentACar findRentACarByCode(String code) {
-        Set<RentACar> rentACars = getRentACars();
-        for(RentACar rentACar : rentACars) {
+        for(RentACar rentACar : getRentACars()) {
             if(rentACar.getCode().equals(code))
                 return rentACar;
         }
@@ -155,6 +150,9 @@ public class RentACar extends RentACar_Base{
 
     public void delete() {
         setRoot(null);
+        for (Vehicle vehicle : getVehicleSet()) {
+            vehicle.delete();
+        }
         deleteDomainObject();
     }
 }
