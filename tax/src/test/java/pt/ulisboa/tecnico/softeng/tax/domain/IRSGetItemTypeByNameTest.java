@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class IRSGetItemTypeByNameTest extends RollbackTestAbstractClass {
@@ -16,7 +14,6 @@ public class IRSGetItemTypeByNameTest extends RollbackTestAbstractClass {
 
 	@Override
 	public void populate4Test() {
-		IRS.getIRS().clearAll();
 		this.irs = IRS.getIRS();
 		new ItemType(this.irs, FOOD, VALUE);
 	}

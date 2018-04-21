@@ -12,3 +12,22 @@ relation DomainRootHasIRS {
 		multiplicity 1..1;
 	}
 }
+
+class TaxPayer {
+	String NIF;
+	String name;
+	String address;
+}
+
+class Buyer extends TaxPayer {}
+class Seller extends TaxPayer {}
+
+relation IRSHasTaxPayer {
+	IRS playsRole irs {
+		multiplicity 1..1;
+	}
+	TaxPayer playsRole taxpayer {
+		multiplicity 0..*;
+	}
+}
+
