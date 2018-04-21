@@ -52,6 +52,10 @@ public class CarPersistenceTest {
 		Assert.assertEquals(NIF, rentACar.getNif());
 		Assert.assertEquals(RENT_A_CAR_NAME, rentACar.getName());
 
+		Processor proc = rentACar.getProcessor();
+		
+		assertNotNull(proc);
+				
 		List<Vehicle> cars = new ArrayList<>(RentACar.getAllAvailableCars(date1, date2));
 		Assert.assertEquals(1, cars.size());
 		Vehicle car = cars.get(0);

@@ -4,7 +4,7 @@ import org.joda.time.LocalDate;
 
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 
-public class Renting {
+public class Renting extends Renting_Base {
 	private static String drivingLicenseFormat = "^[a-zA-Z]+\\d+$";
 	private static final String type = "RENTAL";
 
@@ -37,6 +37,10 @@ public class Renting {
 		this.clientNIF = buyerNIF;
 		this.clientIBAN = buyerIBAN;
 		this.price = vehicle.getPrice() * (end.getDayOfYear() - begin.getDayOfYear());
+	}
+	
+	public void delete() {
+		//TODO
 	}
 
 	private void checkArguments(String drivingLicense, LocalDate begin, LocalDate end, Vehicle vehicle) {

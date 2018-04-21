@@ -18,8 +18,6 @@ public class RentACar extends RentACar_Base{
         return counter;
     }
 
-    private final Processor processor = new Processor();
-
     public RentACar(String name, String nif, String iban) {
         super();
 
@@ -29,6 +27,8 @@ public class RentACar extends RentACar_Base{
         setIban(iban);
         setCounter(0);
         setCode(nif + Integer.toString(getNextCounter()));
+        
+        setProcessor(new Processor(this));
 
         FenixFramework.getDomainRoot().addRentACar(this);
 
@@ -135,10 +135,6 @@ public class RentACar extends RentACar_Base{
         return new RentingData(renting);
     }
 
-    public Processor getProcessor() {
-        return this.processor;
-    }
-
 
     public static   RentACar findRentACarByCode(String code) {
         for(RentACar rentACar : getRentACars()) {
@@ -150,9 +146,13 @@ public class RentACar extends RentACar_Base{
 
     public void delete() {
         setRoot(null);
+
+        getProcessor().delete();
+        
         for (Vehicle vehicle : getVehicleSet()) {
             vehicle.delete();
         }
+
         deleteDomainObject();
     }
 }

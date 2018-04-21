@@ -18,6 +18,29 @@ relation DomainRootHasRentACar {
 	}
 }
 
+
+class Renting {}
+
+class Processor {}
+
+relation RentACarHasProcessor {
+	RentACar playsRole rentACar {
+		multiplicity 1..1;
+	}
+	Processor playsRole processor {
+		multiplicity 1..1;
+	}
+}
+
+relation ProcessorHasRentings {
+	Processor playsRole processor {
+		multiplicity 1..1;
+	}
+	Renting playsRole rentingToProcess {
+		multiplicity 0..*;
+	}
+}
+
 class Vehicle {
     String plate;
     int kilometers;
@@ -36,3 +59,4 @@ relation RentAcarHasVehicle {
         multiplicity 0..*;
     }
 }
+

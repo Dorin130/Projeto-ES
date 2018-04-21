@@ -10,18 +10,31 @@ import pt.ulisboa.tecnico.softeng.car.interfaces.TaxInterface;
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public class Processor {
-
-	private final Set<Renting> rentingToProcess = new HashSet<>();
+public class Processor extends Processor_Base {
+	
+	public Processor(RentACar rentACar) {
+		setRentACar(rentACar);
+	}
+	
+	
+	public void delete() {
+		setRentACar(null);
+		
+		for (Renting renting : getRentingToProcessSet()) {
+			renting.delete();
+		}
+		
+		deleteDomainObject();
+	}
 
 	public void submitRenting(Renting renting) {
-		this.rentingToProcess.add(renting);
+		super.addRentingToProcess(renting);
 		processInvoices();
 	}
 
 	private void processInvoices() {
 		Set<Renting> failedToProcess = new HashSet<>();
-		for (Renting renting : this.rentingToProcess) {
+		for (Renting renting : super.getRentingToProcessSet()) {
 			if (!renting.isCancelled()) {
 				if (renting.getPaymentReference() == null) {
 					try {
@@ -55,13 +68,22 @@ public class Processor {
 			}
 		}
 
-		this.rentingToProcess.clear();
-		this.rentingToProcess.addAll(failedToProcess);
+		this.clean();
+		this.addAll(failedToProcess);
 
+	}
+	
+	//Add rentingSet to rentingToProcess Set
+	public void addAll(Set<Renting> rentingSet) {
+		for (Renting renting : rentingSet) {
+			super.addRentingToProcess(renting);
+		}
 	}
 
 	public void clean() {
-		this.rentingToProcess.clear();
+		for(Renting renting : super.getRentingToProcessSet()) {
+			super.removeRentingToProcess(renting);
+		}
 	}
 
 }
