@@ -23,8 +23,6 @@ public abstract class Vehicle extends Vehicle_Base {
 
 	}
 
-
-
 	private void checkArguments(String plate, int kilometers, RentACar rentACar) {
 		if (rentACar == null) {
 			throw new CarException();

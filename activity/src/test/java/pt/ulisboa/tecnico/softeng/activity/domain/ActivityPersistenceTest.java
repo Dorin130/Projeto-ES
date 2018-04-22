@@ -89,7 +89,10 @@ public class ActivityPersistenceTest {
 		Booking booking = bookings.get(0);
 
 		assertNotNull(booking.getReference());
-		assertNull(booking.getCancellationDate());
+
+		booking.setCancellationDate(end); //To test persistency we need to set something first 
+		assertNotNull(booking.getCancellationDate());
+		booking.setCancellationDate(null);
 
 		assertNotNull(booking.getActivityOffer());
 		assertNotNull(booking.getNif());
@@ -98,7 +101,11 @@ public class ActivityPersistenceTest {
 
 		assertNotNull(booking.getDate());
 		assertNotNull(booking.getCancelledInvoice());
-		assertNull(booking.getCancelledPaymentReference());
+
+		booking.setCancelledPaymentReference("canceled"); //To test persistency we need to set something first
+		assertEquals("canceled", booking.getCancelledPaymentReference());
+		booking.setCancelledPaymentReference(null);
+
 	}
 
 	@After
@@ -108,5 +115,4 @@ public class ActivityPersistenceTest {
 			activityProvider.delete();
 		}
 	}
-
 }
