@@ -47,6 +47,7 @@ public class TaxPersistenceTest {
 		ItemType itemtype = new ItemType(irs, ITEMTYPE_NAME, ITEMTYPE_TAX);
 	
 		new Invoice(VALUE, DATE, itemtype, seller, buyer);
+		
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -72,6 +73,7 @@ public class TaxPersistenceTest {
 		
 		assertEquals(ITEMTYPE_NAME, irs.getItemTypeByName(ITEMTYPE_NAME).getName());
 		assertEquals(ITEMTYPE_TAX, irs.getItemTypeByName(ITEMTYPE_NAME).getTax());
+		assertEquals(1, irs.getItemTypeByName(ITEMTYPE_NAME).getInvoiceSet().size());
 			
 	}
 	
