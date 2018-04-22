@@ -102,7 +102,6 @@ public class CarPersistenceTest {
 		Assert.assertNotNull(renting.getPrice());
 
 		Assert.assertNotNull(renting.getProcessor());
-		System.out.println(proc.getRentingToProcessSet().size());
 
 		Assert.assertEquals(TESTSTRING , renting.getCancellationReference());
 		Assert.assertEquals(TESTSTRING , renting.getPaymentReference());

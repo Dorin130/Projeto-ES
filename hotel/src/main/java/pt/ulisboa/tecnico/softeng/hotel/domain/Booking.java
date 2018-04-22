@@ -21,12 +21,13 @@ public class Booking extends Booking_Base {
 		setNif(buyerNIF);
 		setCancelledInvoice(false);
 		setCancelledPaymentReference(null);
-
+		setProcessor(room.getHotel().getProcessor());
 		setRoom(room);
 	}
 
 	public void delete() {
 		setRoom(null);
+		setProcessor(null);
 
 		deleteDomainObject();
 	}

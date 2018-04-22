@@ -21,6 +21,8 @@ public class Renting extends Renting_Base {
 		setCancelledInvoice(false);
 		setVehicle(vehicle);
 
+		setProcessor(vehicle.getRentACar().getProcessor());
+
 		setClientNIF(buyerNIF);
 		setClientIBAN(buyerIBAN);
 		setPrice(vehicle.getPrice() * (end.getDayOfYear() - begin.getDayOfYear()));
