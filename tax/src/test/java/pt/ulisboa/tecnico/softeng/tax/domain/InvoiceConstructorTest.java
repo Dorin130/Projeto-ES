@@ -37,8 +37,6 @@ public class InvoiceConstructorTest extends RollbackTestAbstractClass {
 		assertEquals(VALUE, invoice.getValue(), 0.0f);
 		assertEquals(this.date, invoice.getDate());
 		assertEquals(this.itemType, invoice.getItemType());
-		assertEquals(this.seller, invoice.getSeller());
-		assertEquals(this.buyer, invoice.getBuyer());
 		assertEquals(VALUE * TAX / 100.0, invoice.getIva(), 0.00001f);
 		assertFalse(invoice.isCancelled());
 

@@ -1,14 +1,9 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public abstract class TaxPayer extends TaxPayer_Base{
-	protected final Set<Invoice> invoices = new HashSet<>();
-
-	public void init(IRS irs, String NIF, String name, String address) {
+		public void init(IRS irs, String NIF, String name, String address) {
 		checkArguments(irs, NIF, name, address);
 
 		setIrs(irs);
@@ -20,10 +15,9 @@ public abstract class TaxPayer extends TaxPayer_Base{
 	public void delete() {
 		setIrs(null);
 		
-		//for (Invoice invoices : getInvoiceSet()) {
-		//	invoice.delete();
-		//}
-		this.invoices.clear();
+		for (Invoice invoice : getInvoiceSet()) {
+			invoice.delete();
+		}
 		
 		deleteDomainObject();
 	}
@@ -52,15 +46,11 @@ public abstract class TaxPayer extends TaxPayer_Base{
 			throw new TaxException();
 		}
 
-		for (Invoice invoice : this.invoices) {
+		for (Invoice invoice : getInvoiceSet()) {
 			if (invoice.getReference().equals(invoiceReference)) {
 				return invoice;
 			}
 		}
 		return null;
-	}
-
-	public void addInvoice(Invoice invoice) {
-		invoices.add(invoice);
 	}
 }
