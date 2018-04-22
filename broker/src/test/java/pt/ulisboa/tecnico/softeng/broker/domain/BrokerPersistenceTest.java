@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.softeng.broker.domain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
 public class BrokerPersistenceTest extends BaseTest {
+	private static final String TESTSTRING = "PERSISTENCETEST";
+	private static final double TESTDOUBLE = 1.2;
+	
 	@Test
 	public void success() {
 		atomicProcess();
@@ -25,11 +29,27 @@ public class BrokerPersistenceTest extends BaseTest {
 	public void atomicProcess() {
 		Broker broker = new Broker(BROKER_CODE, BROKER_NAME, BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN);
 		Client client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE);
-		new Adventure(broker, this.begin, this.end, client, MARGIN);
+		Adventure adventure1 = new Adventure(broker, this.begin, this.end, client, MARGIN);
 
 		BulkRoomBooking bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, this.begin, this.end, NIF_AS_BUYER, CLIENT_IBAN);
 
 		new Reference(bulk, REF_ONE);
+		
+		/* Using setters to test persistence */
+		adventure1.setMargin(TESTDOUBLE);
+		adventure1.setRentVehicle(true);
+		adventure1.setCurrentAmount(TESTDOUBLE);
+		adventure1.setInvoiceCancelled(true);
+		adventure1.setInvoiceReference(TESTSTRING);
+		adventure1.setRentingConfirmation(TESTSTRING);
+		adventure1.setRentingCancellation(TESTSTRING);
+		adventure1.setPaymentConfirmation(TESTSTRING);
+		adventure1.setPaymentCancellation(TESTSTRING);
+		adventure1.setRoomConfirmation(TESTSTRING);
+		adventure1.setRoomCancellation(TESTSTRING);
+		adventure1.setActivityConfirmation(TESTSTRING);
+		adventure1.setActivityCancellation(TESTSTRING);
+		
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -49,7 +69,21 @@ public class BrokerPersistenceTest extends BaseTest {
 
 		List<Adventure> adventures = new ArrayList<>(broker.getAdventureSet());
 		Adventure adventure = adventures.get(0);
-
+		assertEquals(TESTDOUBLE, adventure.getMargin(), 0.0f);
+		assertTrue(adventure.getRentVehicle());
+		assertEquals(TESTDOUBLE, adventure.getCurrentAmount(), 0.0f);
+		assertTrue(adventure.getInvoiceCancelled());
+		assertEquals(TESTSTRING, adventure.getInvoiceReference());
+		assertEquals(TESTSTRING, adventure.getRentingConfirmation());
+		assertEquals(TESTSTRING, adventure.getRentingCancellation());
+		assertEquals(TESTSTRING, adventure.getPaymentConfirmation());
+		assertEquals(TESTSTRING, adventure.getPaymentCancellation());
+		assertEquals(TESTSTRING, adventure.getPaymentConfirmation());
+		assertEquals(TESTSTRING, adventure.getPaymentCancellation());
+		assertEquals(TESTSTRING, adventure.getRoomCancellation());
+		assertEquals(TESTSTRING, adventure.getRoomConfirmation());
+		assertEquals(TESTSTRING, adventure.getActivityCancellation());
+		assertEquals(TESTSTRING, adventure.getActivityConfirmation());
 		assertNotNull(adventure.getID());
 		assertEquals(broker, adventure.getBroker());
 		assertEquals(this.begin, adventure.getBegin());
