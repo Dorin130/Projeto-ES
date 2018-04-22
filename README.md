@@ -8,7 +8,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |   Number   |          Name           |                Email               |   GitHub Username  | Group |
 | ---------- | ----------------------- | ---------------------------------- | -------------------| ----- |
 | 83448      |  Dorin Gujuman          | dorin.gujuman@tecnico.ulisboa.pt   |  Dorin130          |   1   |
-|            |                         |                                    |                    |   1   |
+| 83509      |  Marco Silva            | marcofsilva@tecnico.ulisboa.pt     |  MarcofSilva       |   1   |
 |            |                         |                                    |                    |   1   |
 |            |                         |                                    |                    |   2   |
 |            |                         |                                    |                    |   2   |
@@ -23,5 +23,11 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
  	* class AdventureProcessMethodTest (complete);
  	* Complete Peristence Tests in CarPersistenceTest;
  	* Checked & Approved Pull Requests.
+ 	
+ - (83509) Marco Silva	(MarcofSilva):
+ 	* Class CarPersistenceTest (create base);
+ 	* Add Persistence in  Processor (Activity and Car);
+ 	* Complete Persistence Tests in ActivityPersistenceTest and CarPersistenceTest;
+ 	* Complete Persistence in Hotel (Hotel);
 
 **Group 2:**
