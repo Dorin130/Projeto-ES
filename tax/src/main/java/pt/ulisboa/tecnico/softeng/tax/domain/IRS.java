@@ -1,8 +1,5 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
@@ -23,12 +20,12 @@ public class IRS extends IRS_Base {
 	void delete() {
 		setRoot(null);
 		
-		for (ItemType itemtype : getItemtypeSet()) {
-			itemtype.delete();
-		}
-		
 		for (TaxPayer taxPayer : getTaxpayerSet()) {
 			taxPayer.delete();
+		}
+		
+		for (ItemType itemtype : getItemtypeSet()) {
+			itemtype.delete();
 		}
 		
 		deleteDomainObject();
@@ -76,7 +73,7 @@ public class IRS extends IRS_Base {
 			throw new TaxException();
 		}
 
-		invoice.cancel();
+		invoice.setCancelled(true);
 	}
 
 	private Invoice getInvoiceByReference(String reference) {

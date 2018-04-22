@@ -33,8 +33,6 @@ public class IRSSubmitInvoiceTest extends RollbackTestAbstractClass {
 		Invoice invoice = this.irs.getTaxPayerByNIF(SELLER_NIF).getInvoiceByReference(invoiceReference);
 
 		assertEquals(invoiceReference, invoice.getReference());
-		assertEquals(SELLER_NIF, invoice.getSeller().getNIF());
-		assertEquals(BUYER_NIF, invoice.getBuyer().getNIF());
 		assertEquals(FOOD, invoice.getItemType().getName());
 		assertEquals(VALUE, invoice.getValue(), 0.0000);
 		assertEquals(this.date, invoice.getDate());

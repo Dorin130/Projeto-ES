@@ -13,7 +13,7 @@ relation DomainRootHasIRS {
 	}
 }
 
-class ItemType{
+class ItemType {
 	String name;
 	int tax;
 }
@@ -43,5 +43,31 @@ relation IRSHasTaxPayer {
 	}
 	TaxPayer playsRole taxpayer {
 		multiplicity 0..*;
+	}
+}
+
+class Invoice {
+	String reference;
+	Double value;
+	Double iva;
+	LocalDate date;
+	boolean cancelled;
+}
+
+relation TaxPayerHasInvoices{
+	TaxPayer playsRole taxpayer {
+		multiplicity 2..2;
+	}
+	Invoice playsRole invoice {
+		multiplicity 0..*;
+	}
+}
+
+relation InvoiceHasItemType{
+	Invoice playsRole invoice {
+		multiplicity 0..*;
+	}
+	ItemType playsRole itemType {
+		multiplicity 1..1;
 	}
 }

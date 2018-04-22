@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.Atomic.TxMode;
 
 
@@ -40,12 +39,14 @@ public class TaxPersistenceTest {
 	public void atomicProcess() {
 		IRS irs = IRS.getIRS();
 
-		ItemType itemtype = new ItemType(irs, ITEMTYPE_NAME, ITEMTYPE_TAX);
+		Seller seller = new Seller(irs, NIF_SELLER, NAME_SELLER, ADDRESS_SELLER);
+		taxPayersAdded.add(seller);
+		Buyer buyer = new Buyer(irs, NIF_BUYER, NAME_BUYER, ADDRESS_BUYER);
+		taxPayersAdded.add(buyer);
 		
-		taxPayersAdded.add(new Seller(irs, NIF_SELLER, NAME_SELLER, ADDRESS_SELLER));
-		taxPayersAdded.add(new Buyer(irs, NIF_BUYER, NAME_BUYER, ADDRESS_BUYER));
+		ItemType itemtype = new ItemType(irs, ITEMTYPE_NAME, ITEMTYPE_TAX);
 	
-		//Invoice invoice = new Invoice(VALUE, DATE, itemType, seller, buyer);
+		new Invoice(VALUE, DATE, itemtype, seller, buyer);
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -56,17 +57,19 @@ public class TaxPersistenceTest {
 		assertEquals(2, taxPayers.size());
 		assertEquals(taxPayersAdded, taxPayers);
 		
-		//ciclo for?
-		//Set<Invoice> invoices = new HashSet<>(irs.getTaxpayerSet());
-		//assertEquals(1, invoices.size());
-		//assertEquals(VALUE, invoices.iterator().next().getValue());
-		//Fazer para os restantes atributos
+		for(TaxPayer taxPayer : irs.getTaxpayerSet()) {
+			Set<Invoice> invoices = taxPayer.getInvoiceSet();
+			assertEquals(1, invoices.size());
+			assertEquals(VALUE, invoices.iterator().next().getValue());
+			assertEquals(DATE, invoices.iterator().next().getDate());
+			assertEquals(false, invoices.iterator().next().getCancelled());
+			
+			ItemType itemType = invoices.iterator().next().getItemType();
+			
+			assertEquals(ITEMTYPE_NAME, itemType.getName());
+			assertEquals(ITEMTYPE_TAX, itemType.getTax());
+		}
 		
-		//Set<Invoice> itemTypes = new HashSet<>(irs.getTaxpayerSet());
-		//assertEquals(1, invoices.size());
-		//assertEquals(VALUE, invoices.iterator().next().getValue());
-		//Fazer para os restantes atributos
-
 		assertEquals(ITEMTYPE_NAME, irs.getItemTypeByName(ITEMTYPE_NAME).getName());
 		assertEquals(ITEMTYPE_TAX, irs.getItemTypeByName(ITEMTYPE_NAME).getTax());
 			

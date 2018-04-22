@@ -16,7 +16,6 @@ public class BuyerConstructorTest extends RollbackTestAbstractClass {
 
 	@Override
 	public void populate4Test() {
-		//IRS.getIRS().cleanAll();
 		this.irs = IRS.getIRS();
 	}
 
