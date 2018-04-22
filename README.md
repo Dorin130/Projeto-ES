@@ -9,7 +9,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 | ---------- | ----------------------- | ----------------------------------   | -------------------| ----- |
 | 83448      |  Dorin Gujuman          | dorin.gujuman@tecnico.ulisboa.pt     |  Dorin130          |   1   |
 | 83509      |  Marco Silva            | marcofsilva@tecnico.ulisboa.pt       |  MarcofSilva       |   1   |
-|            |                         |                                      |                    |   1   |
+| 83475      |  Hugo Guerreiro         | hugo.guerreiro@tecnico.ulisboa.pt    |  hugosilvaguerreiro|   1   |
 | 83504      |  Manuel Vidigueira      | manuel.vidigueira@tecnico.ulisboa.pt |  SemperDarky       |   2   |
 | 83534      |  Nádia Fernandes        | nadia.sofia@tecnico.ulisboa.pt       |  NadiaSofia        |   2   |
 |            |                         |                                      |                    |   2   |
@@ -29,6 +29,13 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
  	* Add Persistence in  Processor (Activity and Car);
  	* Complete Persistence Tests in ActivityPersistenceTest and CarPersistenceTest;
  	* Complete Persistence in Hotel (Hotel);
+	
+ - (83475) Hugo Guerreiro (hugosilvaguerreiro):
+ 	* Class persistent: RentACar (Car);
+	* Completed Persitence Tests in Car;
+ 	* Complete Persistence in Activity (ActivityOffer);
+ 	* Complete Persistence in Activity (Booking);
+	* Completed Persitence Tests in Activity;
 
 **Group 2: Tax, Broker, Hotel**
  - (83504) Manuel Vidigueira (SemperDarky)
