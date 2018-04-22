@@ -32,10 +32,10 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 	
  - (83475) Hugo Guerreiro (hugosilvaguerreiro):
  	* Class persistent: RentACar (Car);
-	* Completed Persitence Tests in Car;
+	* Completed Persistence Tests in Car;
  	* Complete Persistence in Activity (ActivityOffer);
  	* Complete Persistence in Activity (Booking);
-	* Completed Persitence Tests in Activity;
+	* Completed Persistence Tests in Activity;
 
 **Group 2: Tax, Broker, Hotel**
  - (83504) Manuel Vidigueira (SemperDarky)
