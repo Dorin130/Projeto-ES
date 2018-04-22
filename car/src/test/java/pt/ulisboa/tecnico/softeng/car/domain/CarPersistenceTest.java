@@ -62,6 +62,14 @@ public class CarPersistenceTest {
 
 		Processor proc = rentACar.getProcessor();
 		Assert.assertNotNull(proc);
+		List<Renting> procRentings = new ArrayList<>(proc.getRentingToProcessSet());
+		Assert.assertEquals(1, procRentings.size());
+		Renting procRenting = procRentings.get(0);
+		Assert.assertEquals(DRIVING_LICENSE , procRenting.getDrivingLicense());
+		Assert.assertEquals(date1 , procRenting.getBegin());
+		Assert.assertEquals(date2 , procRenting.getEnd());
+		Assert.assertEquals(NIF_BUYER , procRenting.getClientNIF());
+		Assert.assertEquals(IBAN_BUYER , procRenting.getClientIBAN());
 				
 		List<Vehicle> cars = new ArrayList<>(RentACar.getAllAvailableCars(date1, date2));
 		Assert.assertEquals(1, cars.size());
@@ -92,6 +100,9 @@ public class CarPersistenceTest {
 		Assert.assertNotNull(renting.getKilometers());
 		Assert.assertNotNull(renting.getReference());
 		Assert.assertNotNull(renting.getPrice());
+
+		Assert.assertNotNull(renting.getProcessor());
+		System.out.println(proc.getRentingToProcessSet().size());
 
 		Assert.assertEquals(TESTSTRING , renting.getCancellationReference());
 		Assert.assertEquals(TESTSTRING , renting.getPaymentReference());
