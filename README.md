@@ -60,6 +60,6 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 	* Make class persistent:Booking (Hotel);
 	* Make class persistent:Adventure (Broker);
 	* Make class persistent:BulkRoomBooking (Broker);
-	* Make class persistent:Adventure (ItemType);
+	* Make class persistent:ItemType (Tax);
 	* Completed Persistence Tests in Hotel;
 	* Completed Persistence Tests in Broker;
