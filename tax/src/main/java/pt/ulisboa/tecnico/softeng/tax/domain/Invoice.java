@@ -5,12 +5,18 @@ import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class Invoice extends Invoice_Base{
-	private static int counter = 0;
-
+	
+	@Override
+	public int getCounter() {
+		int counter = super.getCounter() + 1;
+		setCounter(counter);
+		return counter;
+	}
+	
 	Invoice(double value, LocalDate date, ItemType itemType, Seller seller, Buyer buyer) {
 		checkArguments(value, date, itemType, seller, buyer);
 
-		setReference(Integer.toString(++Invoice.counter));
+		setReference(Integer.toString(getCounter()));
 		setValue(value);
 		setDate(date);
 		setItemType(itemType);

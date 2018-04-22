@@ -1,7 +1,7 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,11 +60,18 @@ public class TaxPersistenceTest {
 
 		
 		for(TaxPayer taxPayer : irs.getTaxpayerSet()) {
+			assertNotNull(taxPayer.getIrs());
+			assertNotNull(taxPayer.getAddress());
+			assertNotNull(taxPayer.getNIF());
+			assertNotNull(taxPayer.getName());
+			
 			Set<Invoice> invoices = taxPayer.getInvoiceSet();
 			assertEquals(1, invoices.size());
 			assertEquals(VALUE, invoices.iterator().next().getValue());
 			assertEquals(DATE, invoices.iterator().next().getDate());
 			assertEquals(false, invoices.iterator().next().getCancelled());
+			assertNotNull(invoices.iterator().next().getIva());
+			assertNotNull(invoices.iterator().next().getReference());
 			
 			ItemType itemType = invoices.iterator().next().getItemType();
 			

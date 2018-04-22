@@ -112,7 +112,9 @@ public class BrokerPersistenceTest extends BaseTest {
 		assertEquals(0, bulk.getNumberOfHotelExceptions());
 		assertEquals(0, bulk.getNumberOfRemoteErrors());
 		assertEquals(1, bulk.getReferenceSet().size());
-
+		assertEquals(NIF_AS_BUYER, bulk.getBuyerNif());
+		assertEquals(CLIENT_IBAN,bulk.getBuyerIban());
+		
 		List<Reference> references = new ArrayList<>(bulk.getReferenceSet());
 		Reference reference = references.get(0);
 
