@@ -88,5 +88,25 @@ public class Invoice {
 	public boolean isCancelled() {
 		return this.cancelled;
 	}
+	
+	/*
+class Invoice {
+	String reference;
+	Double value;
+	Double iva;
+	LocalDate date;
+	ItemType itemType;
+	Seller seller;
+	Buyer buyer;
+}
+
+relation TaxPayerHasInvoice {
+	TaxPayer playsRole taxpayer {
+		multiplicity 2..2;
+	}
+	Invoice playsRole invoice {
+		multiplicity 0..*;
+	}
+}*/
 
 }

@@ -1,8 +1,5 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +9,6 @@ import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 
 public class Broker extends Broker_Base {
 	private static Logger logger = LoggerFactory.getLogger(Broker.class);
-
-	private final String nifAsSeller;
-	private final String nifAsBuyer;
-	private final String iban;
 
 	@Override
 	public int getCounter() {
@@ -29,10 +22,9 @@ public class Broker extends Broker_Base {
 
 		setCode(code);
 		setName(name);
-
-		this.nifAsSeller = nifAsSeller;
-		this.nifAsBuyer = nifAsBuyer;
-		this.iban = iban;
+		setNifAsSeller(nifAsSeller);
+		setNifAsBuyer(nifAsBuyer);
+		setIban(iban);
 
 		FenixFramework.getDomainRoot().addBroker(this);
 	}
@@ -81,18 +73,6 @@ public class Broker extends Broker_Base {
 
 	}
 
-	public String getNifAsSeller() {
-		return this.nifAsSeller;
-	}
-
-	public String getNifAsBuyer() {
-		return this.nifAsBuyer;
-	}
-
-	public String getIBAN() {
-		return this.iban;
-	}
-
 	public Client getClientByNIF(String NIF) {
 		for (Client client : getClientSet()) {
 			if (client.getNif().equals(NIF)) {
@@ -107,7 +87,7 @@ public class Broker extends Broker_Base {
 	}
 
 	public void bulkBooking(int number, LocalDate arrival, LocalDate departure) {
-		BulkRoomBooking bulkBooking = new BulkRoomBooking(this, number, arrival, departure, this.nifAsBuyer, this.iban);
+		BulkRoomBooking bulkBooking = new BulkRoomBooking(this, number, arrival, departure,getNifAsBuyer(), getIban());
 		bulkBooking.processBooking();
 	}
 }

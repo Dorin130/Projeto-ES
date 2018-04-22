@@ -41,6 +41,9 @@ public class BrokerPersistenceTest extends BaseTest {
 
 		assertEquals(BROKER_CODE, broker.getCode());
 		assertEquals(BROKER_NAME, broker.getName());
+		assertEquals(BROKER_NIF_AS_SELLER, broker.getNifAsSeller());
+		assertEquals(NIF_AS_BUYER, broker.getNifAsBuyer());
+		assertEquals(BROKER_IBAN, broker.getIban());
 		assertEquals(1, broker.getAdventureSet().size());
 		assertEquals(1, broker.getRoomBulkBookingSet().size());
 
