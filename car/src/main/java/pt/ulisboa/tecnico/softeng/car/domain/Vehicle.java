@@ -12,8 +12,6 @@ public abstract class Vehicle extends Vehicle_Base {
 	private static Logger logger = LoggerFactory.getLogger(Vehicle.class);
 	private static String plateFormat = "..-..-..";
 
-	public final Set<Renting> rentings = new HashSet<>();
-
 	public void init(String plate, int kilometers, double price, RentACar rentACar) {
 		logger.debug("Vehicle plate: {}", plate);
 		checkArguments(plate, kilometers, rentACar);
@@ -22,8 +20,6 @@ public abstract class Vehicle extends Vehicle_Base {
 		setKilometers(kilometers);
 		setPrice(price);
 		setRentACar(rentACar);
-
-		rentACar.addVehicle(this);
 
 	}
 
@@ -42,7 +38,9 @@ public abstract class Vehicle extends Vehicle_Base {
 	public void delete() {
 		setRentACar(null);
 
-		//TODO delete rentings
+		for(Renting renting: getRentingSet()) {
+			renting.delete();
+		}
 
 		deleteDomainObject();
 	}
@@ -67,22 +65,12 @@ public abstract class Vehicle extends Vehicle_Base {
 		if (begin == null || end == null) {
 			throw new CarException();
 		}
-		for (Renting renting : this.rentings) {
+		for (Renting renting : getRentingSet()) {
 			if (renting.conflict(begin, end)) {
 				return false;
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Add a <code>Renting</code> object to the vehicle. Use with caution --- no
-	 * validation is being made.
-	 *
-	 * @param renting
-	 */
-	private void addRenting(Renting renting) {
-		this.rentings.add(renting);
 	}
 
 	/**
@@ -92,7 +80,7 @@ public abstract class Vehicle extends Vehicle_Base {
 	 * @return Renting with the given reference
 	 */
 	public Renting getRenting(String reference) {
-		return this.rentings
+		return getRentingSet()
 				.stream()
 				.filter(renting -> renting.getReference().equals(reference)
                         || renting.isCancelled() && renting.getCancellationReference().equals(reference))
@@ -112,7 +100,6 @@ public abstract class Vehicle extends Vehicle_Base {
 		}
 
 		Renting renting = new Renting(drivingLicense, begin, end, this, buyerNIF, buyerIBAN);
-		this.addRenting(renting);
 
         this.getRentACar().getProcessor().submitRenting(renting);
 
