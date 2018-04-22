@@ -1,4 +1,4 @@
-# Adventure Builder
+﻿# Adventure Builder
 
 To run tests execute: mvn clean install
 
@@ -12,7 +12,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 | 83475      |  Hugo Guerreiro         | hugo.guerreiro@tecnico.ulisboa.pt    |  hugosilvaguerreiro|   1   |
 | 83504      |  Manuel Vidigueira      | manuel.vidigueira@tecnico.ulisboa.pt |  SemperDarky       |   2   |
 | 83534      |  Nádia Fernandes        | nadia.sofia@tecnico.ulisboa.pt       |  NadiaSofia        |   2   |
-|            |                         |                                      |                    |   2   |
+| 83487      |  João Sousa             | Joao.Sousa9397@gmail.com             |  JoaoPBSousa       |   2   |
 
 **Group 1: Car, Activity, Hotel**
  - (83448) Dorin Gujuman (Dorin130):
@@ -54,3 +54,12 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 	* Update TaxPersistenceTest with TaxPayer persistence (Tax)
 	* Add Persistence in Invoice (Tax)
 	* Update TaxPersistenceTest with Invoice persistence (Tax)
+
+ - (83487) João Sousa (JoaoPBSousa)
+	* Make class persistent:Processor (Hotel);
+	* Make class persistent:Booking (Hotel);
+	* Make class persistent:Adventure (Broker);
+	* Make class persistent:BulkRoomBooking (Broker);
+	* Make class persistent:Adventure (ItemType);
+	* Completed Persistence Tests in Hotel;
+	* Completed Persistence Tests in Broker;
