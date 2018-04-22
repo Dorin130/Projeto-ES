@@ -19,7 +19,7 @@ public class Processor extends Processor_Base {
 	
 	public void delete() {
 		setRentACar(null);
-		
+
 		for (Renting renting : getRentingToProcessSet()) {
 			renting.delete();
 		}
