@@ -90,6 +90,7 @@ public class Invoice {
 	}
 	
 	/*
+
 class Invoice {
 	String reference;
 	Double value;
@@ -98,15 +99,25 @@ class Invoice {
 	ItemType itemType;
 	Seller seller;
 	Buyer buyer;
+	boolean cancelled;
 }
 
-relation TaxPayerHasInvoice {
+relation TaxPayerHasInvoices{
 	TaxPayer playsRole taxpayer {
 		multiplicity 2..2;
 	}
 	Invoice playsRole invoice {
 		multiplicity 0..*;
 	}
-}*/
+}
+
+relation InvoiceHasItemType{
+	Invoice playsRole invoice {
+		multiplicity 0..*;
+	}
+	ItemType playsRole itemtype {
+		multiplicity 1..1;
+	}
+} */
 
 }
