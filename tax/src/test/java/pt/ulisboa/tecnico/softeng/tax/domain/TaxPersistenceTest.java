@@ -57,6 +57,7 @@ public class TaxPersistenceTest {
 		Set<TaxPayer> taxPayers = new HashSet<>(irs.getTaxpayerSet());
 		assertEquals(2, taxPayers.size());
 		assertEquals(taxPayersAdded, taxPayers);
+
 		
 		for(TaxPayer taxPayer : irs.getTaxpayerSet()) {
 			Set<Invoice> invoices = taxPayer.getInvoiceSet();

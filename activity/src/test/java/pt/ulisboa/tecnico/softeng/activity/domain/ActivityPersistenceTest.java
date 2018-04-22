@@ -26,6 +26,7 @@ public class ActivityPersistenceTest {
 	private static final String BUYER_NIF = "NIF2";
 	private static final int CAPACITY = 25;
 	private static final int PRICE = 30;
+	private static final String TESTSTRING = "PERSISTENCETEST";
 
 	private final LocalDate begin = new LocalDate(2017, 04, 01);
 	private final LocalDate end = new LocalDate(2017, 04, 15);
@@ -48,7 +49,9 @@ public class ActivityPersistenceTest {
 
 		Booking book  = new Booking(activityProvider, activityOffer, BUYER_NIF, BUYER_IBAN);
 		book.setCancellationDate(cancelDate);
-		book.setCancelledPaymentReference("canceled");//To test persistency we need to set something first
+		book.setPaymentReference(TESTSTRING);
+		book.setCancelledPaymentReference(TESTSTRING);
+		book.setInvoiceReference(TESTSTRING);
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -92,19 +95,19 @@ public class ActivityPersistenceTest {
 		List<Booking> bookings = new ArrayList<>(offer.getBookingSet());
 		Booking booking = bookings.get(0);
 
+		assertEquals(NIF, booking.getProviderNif());
+		assertEquals(false, booking.getCancelledInvoice());
+		assertEquals(BUYER_NIF, booking.getNif());
+		assertEquals(BUYER_IBAN, booking.getIban());
+		assertEquals(PRICE, booking.getAmount(), 0.0f);
+		assertEquals(cancelDate, booking.getCancellationDate());
 		assertNotNull(booking.getReference());
-
-		assertNotNull(booking.getCancellationDate());
-
 		assertNotNull(booking.getActivityOffer());
-		assertNotNull(booking.getNif());
-		assertNotNull(booking.getIban());
-		assertNotNull(booking.getAmount());
-
 		assertNotNull(booking.getDate());
 		assertNotNull(booking.getCancelledInvoice());
-
-		assertEquals("canceled", booking.getCancelledPaymentReference());
+		assertEquals(TESTSTRING, booking.getCancelledPaymentReference());
+		assertEquals(TESTSTRING , booking.getPaymentReference());
+		assertEquals(TESTSTRING , booking.getInvoiceReference());
 
 	}
 

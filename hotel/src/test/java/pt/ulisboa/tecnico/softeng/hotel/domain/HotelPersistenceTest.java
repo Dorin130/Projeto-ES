@@ -84,7 +84,7 @@ public class HotelPersistenceTest {
 		Booking booking = bookings.get(0);
 		
 		assertEquals(HOTEL_NIF, booking.getProviderNif());
-		assertEquals(false, booking.getCancelledInvoice());
+		assertEquals(false, booking.isCancelledInvoice());
 		assertEquals(HOTEL_NIF, booking.getNif());
 		assertEquals(HOTEL_IBAN, booking.getBuyerIban());
 		assertEquals(this.arrival, booking.getArrival());
