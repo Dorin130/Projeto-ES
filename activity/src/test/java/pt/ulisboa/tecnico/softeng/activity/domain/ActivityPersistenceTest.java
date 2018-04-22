@@ -29,6 +29,8 @@ public class ActivityPersistenceTest {
 
 	private final LocalDate begin = new LocalDate(2017, 04, 01);
 	private final LocalDate end = new LocalDate(2017, 04, 15);
+	private final LocalDate cancelDate = new LocalDate(2017, 04, 13);
+
 
 	@Test
 	public void success() {
@@ -44,7 +46,9 @@ public class ActivityPersistenceTest {
 
 		ActivityOffer activityOffer = new ActivityOffer(activity, this.begin, this.end, PRICE);
 
-		new Booking(activityProvider, activityOffer, BUYER_NIF, BUYER_IBAN);
+		Booking book  = new Booking(activityProvider, activityOffer, BUYER_NIF, BUYER_IBAN);
+		book.setCancellationDate(cancelDate);
+		book.setCancelledPaymentReference("canceled");//To test persistency we need to set something first
 	}
 
 	@Atomic(mode = TxMode.READ)
@@ -90,9 +94,7 @@ public class ActivityPersistenceTest {
 
 		assertNotNull(booking.getReference());
 
-		booking.setCancellationDate(end); //To test persistency we need to set something first 
 		assertNotNull(booking.getCancellationDate());
-		booking.setCancellationDate(null);
 
 		assertNotNull(booking.getActivityOffer());
 		assertNotNull(booking.getNif());
@@ -102,9 +104,7 @@ public class ActivityPersistenceTest {
 		assertNotNull(booking.getDate());
 		assertNotNull(booking.getCancelledInvoice());
 
-		booking.setCancelledPaymentReference("canceled"); //To test persistency we need to set something first
 		assertEquals("canceled", booking.getCancelledPaymentReference());
-		booking.setCancelledPaymentReference(null);
 
 	}
 
