@@ -2,18 +2,21 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
-public class ItemType {
-	public final String name;
-	public int tax;
+public class ItemType extends ItemType_Base{
 
 	public ItemType(IRS irs, String name, int tax) {
 		checkArguments(irs, name, tax);
-		this.name = name;
-		this.tax = tax;
+		setName(name);
+		setTax(tax);
 
-		irs.addItemType(this);
+		setIrs(irs);
 	}
 
+	public void delete() {
+		setIrs(null);
+		deleteDomainObject();
+	}
+	
 	private void checkArguments(IRS irs, String name, int tax) {
 		if (name == null || name.isEmpty()) {
 			throw new TaxException();
@@ -26,14 +29,6 @@ public class ItemType {
 		if (tax < 0) {
 			throw new TaxException();
 		}
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public int getTax() {
-		return this.tax;
 	}
 
 }

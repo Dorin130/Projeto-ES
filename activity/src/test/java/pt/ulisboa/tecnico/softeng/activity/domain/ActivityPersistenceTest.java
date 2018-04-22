@@ -82,14 +82,23 @@ public class ActivityPersistenceTest {
 		assertEquals(this.end, offer.getEnd());
 		assertEquals(CAPACITY, offer.getCapacity());
 		assertEquals(PRICE, offer.getPrice());
+
 		assertEquals(1, offer.getBookingSet().size());
 
 		List<Booking> bookings = new ArrayList<>(offer.getBookingSet());
 		Booking booking = bookings.get(0);
 
 		assertNotNull(booking.getReference());
-		assertNull(booking.getCancel());
 		assertNull(booking.getCancellationDate());
+
+		assertNotNull(booking.getActivityOffer());
+		assertNotNull(booking.getNif());
+		assertNotNull(booking.getIban());
+		assertNotNull(booking.getAmount());
+
+		assertNotNull(booking.getDate());
+		assertNotNull(booking.getCancelledInvoice());
+		assertNull(booking.getCancelledPaymentReference());
 	}
 
 	@After

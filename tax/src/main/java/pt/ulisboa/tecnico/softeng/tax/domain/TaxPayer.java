@@ -19,9 +19,6 @@ public abstract class TaxPayer extends TaxPayer_Base{
 	
 	public void delete() {
 		setIrs(null);
-		setNIF(null);
-		setName(null);
-		setAddress(null);
 		
 		//for (Invoice invoices : getInvoiceSet()) {
 		//	invoice.delete();

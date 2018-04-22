@@ -3,21 +3,19 @@ package pt.ulisboa.tecnico.softeng.activity.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.activity.exception.RemoteAccessException;
 import pt.ulisboa.tecnico.softeng.activity.interfaces.BankInterface;
 import pt.ulisboa.tecnico.softeng.activity.interfaces.TaxInterface;
-import pt.ulisboa.tecnico.softeng.bank.domain.Operation;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class Processor extends Processor_Base {
-	
+
 	public Processor(ActivityProvider activityProvider) {
 		setActivityProvider(activityProvider);
 	}
-	
+
 	public void delete() {
 		setActivityProvider(null);
 
@@ -72,7 +70,7 @@ public class Processor extends Processor_Base {
 		this.addAll(failedToProcess);
 
 	}
-	
+
 	// Add bookingSet to bookingToProcess Set
 	public void addAll(Set<Booking> bookingSet) {
 		for (Booking booking : bookingSet) {

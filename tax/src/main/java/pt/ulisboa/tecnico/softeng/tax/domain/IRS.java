@@ -8,7 +8,6 @@ import pt.ulisboa.tecnico.softeng.tax.dataobjects.InvoiceData;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
 public class IRS extends IRS_Base {
-	private final Set<ItemType> itemTypes = new HashSet<>();
 
 	public static IRS getIRS() {
 		if (FenixFramework.getDomainRoot().getIrs() == null) {
@@ -24,10 +23,14 @@ public class IRS extends IRS_Base {
 	void delete() {
 		setRoot(null);
 		
+		for (ItemType itemtype : getItemtypeSet()) {
+			itemtype.delete();
+		}
+		
 		for (TaxPayer taxPayer : getTaxpayerSet()) {
 			taxPayer.delete();
 		}
-		removeItemTypes();
+		
 		deleteDomainObject();
 	}
 	
@@ -43,12 +46,8 @@ public class IRS extends IRS_Base {
 		return null;
 	}
 
-	void addItemType(ItemType itemType) {
-		this.itemTypes.add(itemType);
-	}
-
 	public ItemType getItemTypeByName(String name) {
-		for (ItemType itemType : this.itemTypes) {
+		for (ItemType itemType : getItemtypeSet()) {
 			if (itemType.getName().equals(name)) {
 				return itemType;
 			}
@@ -64,10 +63,6 @@ public class IRS extends IRS_Base {
 		Invoice invoice = new Invoice(invoiceData.getValue(), invoiceData.getDate(), itemType, seller, buyer);
 
 		return invoice.getReference();
-	}
-
-	public void removeItemTypes() {
-		this.itemTypes.clear();
 	}
 
 	public static void cancelInvoice(String reference) {
