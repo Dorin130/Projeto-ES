@@ -32,7 +32,7 @@ public class IRSCancelInvoiceMethodTest extends RollbackTestAbstractClass {
 	public void success() {
 		IRS.cancelInvoice(this.reference);
 
-		assertTrue(this.invoice.getCancelled());
+		assertTrue(this.invoice.isCancelled());
 	}
 
 	@Test(expected = TaxException.class)

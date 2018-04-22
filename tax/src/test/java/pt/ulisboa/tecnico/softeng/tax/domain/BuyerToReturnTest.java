@@ -76,7 +76,7 @@ public class BuyerToReturnTest extends RollbackTestAbstractClass {
 		Invoice invoice = new Invoice(100, this.date, this.itemType, this.seller, this.buyer);
 		new Invoice(50, this.date, this.itemType, this.seller, this.buyer);
 
-		invoice.setCancelled(true);
+		invoice.cancel();
 
 		double value = this.buyer.taxReturn(2018);
 

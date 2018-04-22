@@ -73,7 +73,7 @@ public class IRS extends IRS_Base {
 			throw new TaxException();
 		}
 
-		invoice.setCancelled(true);
+		invoice.cancel();
 	}
 
 	private Invoice getInvoiceByReference(String reference) {

@@ -79,7 +79,7 @@ public class SellerToPayTest extends RollbackTestAbstractClass {
 		Invoice invoice = new Invoice(100, this.date, this.itemType, this.seller, this.buyer);
 		new Invoice(50, this.date, this.itemType, this.seller, this.buyer);
 
-		invoice.setCancelled(true);
+		invoice.cancel();
 
 		double value = this.seller.toPay(2018);
 

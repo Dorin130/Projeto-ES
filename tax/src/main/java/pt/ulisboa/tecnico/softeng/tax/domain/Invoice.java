@@ -42,6 +42,14 @@ public class Invoice extends Invoice_Base{
 			throw new TaxException();
 		}
 	}
+	
+	public void cancel() {
+		setCancelled(true);
+	}
+	
+	public boolean isCancelled() {
+		return getCancelled();
+	}
 
 	public void delete() {
 		for(TaxPayer taxPayer : getTaxpayerSet()) {

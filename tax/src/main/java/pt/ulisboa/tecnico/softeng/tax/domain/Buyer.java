@@ -17,7 +17,7 @@ public class Buyer extends Buyer_Base {
 
 		double result = 0;
 		for (Invoice invoice : getInvoiceSet()) {
-			if (!invoice.getCancelled() && invoice.getDate().getYear() == year) {
+			if (!invoice.isCancelled() && invoice.getDate().getYear() == year) {
 				result = result + invoice.getIva() * PERCENTAGE / 100;
 			}
 		}
