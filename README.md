@@ -32,7 +32,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 **Group 2:**
  - (83504) Manuel Vidigueira (SemperDarky)
-	* Class TaxPersistenceTest (create base);
+	* Class TaxPersistenceTest (create base)
 	* Class RollbackTestAbstractClass (Tax)
 	* Change tests to extend from RollbackClass (Tax)
 	* Add Persistence in IRS (Tax)
