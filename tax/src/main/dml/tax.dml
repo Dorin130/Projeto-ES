@@ -52,6 +52,7 @@ class Invoice {
 	Double iva;
 	LocalDate date;
 	boolean cancelled;
+	int counter;
 }
 
 relation TaxPayerHasInvoices{
