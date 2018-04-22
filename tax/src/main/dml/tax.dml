@@ -13,6 +13,21 @@ relation DomainRootHasIRS {
 	}
 }
 
+class ItemType{
+	String name;
+	int tax;
+}
+
+
+relation IRSHasItemType {
+	IRS playsRole irs {
+		multiplicity 1..1;
+	}
+	ItemType playsRole itemtype {
+		multiplicity 0..*;
+	}
+}
+
 class TaxPayer {
 	String NIF;
 	String name;
@@ -30,4 +45,3 @@ relation IRSHasTaxPayer {
 		multiplicity 0..*;
 	}
 }
-
