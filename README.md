@@ -14,7 +14,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |            |                         |                                    |                    |   2   |
 |            |                         |                                    |                    |   2   |
 
-- **Group 1:**
+**Group 1:**
  - (83448) Dorin Gujuman (Dorin130):
        * Complete Persistence in ActivityProvider (Activity);
        * Add Persistence in Vehicle (Car);
@@ -23,4 +23,4 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
        * Complete Peristence Tests in CarPersistenceTest;
        * Checked & Approved Pull Requests.
 
-- **Group 2:**
+**Group 2:**
