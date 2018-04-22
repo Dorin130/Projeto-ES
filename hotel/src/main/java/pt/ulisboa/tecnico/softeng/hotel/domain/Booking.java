@@ -7,15 +7,7 @@ import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 
 public class Booking extends Booking_Base {
 	private static final String HOUSING_TYPE = "HOUSING";
-	private final double price;
-	private final String nif;
-	private final String providerNif;
-	private String paymentReference;
-	private String invoiceReference;
-	private boolean cancelledInvoice = false;
-	private String cancelledPaymentReference = null;
-	private final String buyerIban;
-
+	
 	public Booking(Room room, LocalDate arrival, LocalDate departure, String buyerNIF, String buyerIban) {
 		checkArguments(room, arrival, departure, buyerNIF, buyerIban);
 
@@ -23,16 +15,19 @@ public class Booking extends Booking_Base {
 		setArrival(arrival);
 		setDeparture(departure);
 
-		this.price = room.getHotel().getPrice(room.getType()) * Days.daysBetween(arrival, departure).getDays();
-		this.nif = buyerNIF;
-		this.buyerIban = buyerIban;
-		this.providerNif = room.getHotel().getNif();
-
+		setPrice(room.getHotel().getPrice(room.getType()) * Days.daysBetween(arrival, departure).getDays());
+		setBuyerIban(buyerIban);
+		setProviderNif(room.getHotel().getNif());
+		setNif(buyerNIF);
+		setCancelledInvoice(false);
+		setCancelledPaymentReference(null);
+		setProcessor(room.getHotel().getProcessor());
 		setRoom(room);
 	}
 
 	public void delete() {
 		setRoom(null);
+		setProcessor(null);
 
 		deleteDomainObject();
 	}
@@ -48,21 +43,11 @@ public class Booking extends Booking_Base {
 		}
 	}
 
-	public double getPrice() {
-		return this.price;
-	}
-
-	public String getNif() {
-		return this.nif;
-	}
 
 	public static String getType() {
 		return HOUSING_TYPE;
 	}
 
-	public String getProviderNif() {
-		return this.providerNif;
-	}
 
 	boolean conflict(LocalDate arrival, LocalDate departure) {
 		if (isCancelled()) {
@@ -94,20 +79,9 @@ public class Booking extends Booking_Base {
 	}
 
 	public boolean isCancelledInvoice() {
-		return this.cancelledInvoice;
+		return getCancelledInvoice();
 	}
 
-	public void setCancelledInvoice(boolean cancelledInvoice) {
-		this.cancelledInvoice = cancelledInvoice;
-	}
-
-	public String getCancelledPaymentReference() {
-		return this.cancelledPaymentReference;
-	}
-
-	public void setCancelledPaymentReference(String cancelledPaymentReference) {
-		this.cancelledPaymentReference = cancelledPaymentReference;
-	}
 
 	public String cancel() {
 		setCancellation(getReference() + "CANCEL");
@@ -121,24 +95,8 @@ public class Booking extends Booking_Base {
 	public boolean isCancelled() {
 		return getCancellation() != null;
 	}
-
-	public String getPaymentReference() {
-		return this.paymentReference;
-	}
-
-	public void setPaymentReference(String paymentReference) {
-		this.paymentReference = paymentReference;
-	}
-
-	public String getInvoiceReference() {
-		return this.invoiceReference;
-	}
-
-	public void setInvoiceReference(String invoiceReference) {
-		this.invoiceReference = invoiceReference;
-	}
-
+	
 	public String getIban() {
-		return this.buyerIban;
+		return getBuyerIban();
 	}
 }

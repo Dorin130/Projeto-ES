@@ -2,12 +2,14 @@ package pt.ulisboa.tecnico.softeng.hotel.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 
 import pt.ist.fenixframework.Atomic;
@@ -23,9 +25,11 @@ public class HotelPersistenceTest {
 	private static final String HOTEL_NAME = "Berlin Plaza";
 	private final static String HOTEL_CODE = "H123456";
 	private static final String ROOM_NUMBER = "01";
+	private static final String TESTSTRING = "PERSISTENCETEST";
 
 	private final LocalDate arrival = new LocalDate(2017, 12, 15);
 	private final LocalDate departure = new LocalDate(2017, 12, 19);
+	private static final LocalDate canceldate = LocalDate.parse("2018-03-06");
 
 	@Test
 	public void success() {
@@ -39,7 +43,14 @@ public class HotelPersistenceTest {
 
 		Room room = new Room(hotel, ROOM_NUMBER, Type.DOUBLE);
 
-		room.reserve(Type.DOUBLE, this.arrival, this.departure, HOTEL_NIF, HOTEL_IBAN);
+		Booking booking1 = room.reserve(Type.DOUBLE, this.arrival, this.departure, HOTEL_NIF, HOTEL_IBAN);
+		
+        /* Using setters to test persistence */
+		booking1.setCancellation(TESTSTRING);
+		booking1.setPaymentReference(TESTSTRING);
+		booking1.setCancelledPaymentReference(TESTSTRING);
+		booking1.setCancellationDate(canceldate);
+		booking1.setInvoiceReference(TESTSTRING);
 
 	}
 
@@ -55,6 +66,13 @@ public class HotelPersistenceTest {
 		assertEquals(HOTEL_PRICE_DOUBLE, hotel.getPriceDouble(), 0.0);
 		assertEquals(1, hotel.getRoomSet().size());
 
+		Processor proc = hotel.getProcessor();
+		Assert.assertNotNull(proc);
+		List<Booking> procBookings = new ArrayList<>(proc.getBookingSet());
+		Assert.assertEquals(1, procBookings.size());
+		Booking procBooking = procBookings.get(0);
+		assertNotNull(procBooking);
+		
 		List<Room> hotels = new ArrayList<>(hotel.getRoomSet());
 		Room room = hotels.get(0);
 
@@ -64,10 +82,19 @@ public class HotelPersistenceTest {
 
 		List<Booking> bookings = new ArrayList<>(room.getBookingSet());
 		Booking booking = bookings.get(0);
-
+		
+		assertEquals(HOTEL_NIF, booking.getProviderNif());
+		assertEquals(false, booking.getCancelledInvoice());
+		assertEquals(HOTEL_NIF, booking.getNif());
+		assertEquals(HOTEL_IBAN, booking.getBuyerIban());
 		assertEquals(this.arrival, booking.getArrival());
 		assertEquals(this.departure, booking.getDeparture());
-		assertNotNull(booking.getReference());
+		assertNotNull(booking.getReference());	
+		assertEquals(TESTSTRING , booking.getCancellation());
+		assertEquals(TESTSTRING , booking.getPaymentReference());
+		assertEquals(TESTSTRING , booking.getCancelledPaymentReference());
+		assertEquals(TESTSTRING , booking.getInvoiceReference());
+		assertEquals(canceldate , booking.getCancellationDate());
 	}
 
 	@After
