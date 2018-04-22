@@ -49,7 +49,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
  - (83534) Nádia Fernandes (NadiaSofia)
 	* Complete Persistence in Broker (Broker);
-	* Complete Peristence Tests in BrokerPersistenceTest (Broker);
+	* Complete Persistence Tests in BrokerPersistenceTest (Broker);
 	* Add Persistence in TaxPayer (Tax)
 	* Update TaxPersistenceTest with TaxPayer persistence (Tax)
 	* Add Persistence in Invoice (Tax)
