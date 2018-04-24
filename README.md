@@ -1,5 +1,4 @@
-# Adventure Builder [![Build Status](https://travis-ci.com/tecnico-softeng/es18al_15-project.svg?token=5FaChxQjpMkkzdVVADUP&branch=develop)](https://travis-ci.com/tecnico-softeng/es18LL_NN-project) [![codecov](https://codecov.io/gh/tecnico-softeng/es18LL_NN-project/branch/master/graph/badge.svg?token=COPY_FROM_CODECOV)](https://codecov.io/gh/tecnico-softeng/es18LL_NN-project)
-
+# Adventure Builder [![Build Status](https://travis-ci.com/tecnico-softeng/es18al_15-project.svg?token=5FaChxQjpMkkzdVVADUP&branch=develop)](https://travis-ci.com/tecnico-softeng/es18al_15-project) [![codecov](https://codecov.io/gh/tecnico-softeng/es18LL_NN-project/branch/master/graph/badge.svg?token=7RY2x2UONX)](https://codecov.io/gh/tecnico-softeng/es18al_15-project)
 To run tests execute: mvn clean install
 
 To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
