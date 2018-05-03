@@ -17,6 +17,7 @@ public class RentACarData {
 	}
 
 	public RentACarData(RentACar rentacar) {
+		this.code = rentacar.getCode();
 		this.name = rentacar.getName();
 		this.nif = rentacar.getNif();
 		this.iban = rentacar.getIban();
