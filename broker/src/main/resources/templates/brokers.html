@@ -18,7 +18,10 @@
 		<p class="text-danger" th:text="${error}">Error</p>
 		<form class="form-inline" th:action="@{/brokers}" th:object="${broker}" method="post">
 			<label>Name: </label> <input class="form-control" type="text" th:field="*{name}" /> 
-			<label>Code: </label> <input class="form-control" type="text" th:field="*{code}" /> 
+			<label>Code: </label> <input class="form-control" type="text" th:field="*{code}" />
+			<label>NifAsSeller: </label> <input class="form-control" type="text" th:field="*{nifAsSeller}" />
+			<label>NifAsBuyer: </label> <input class="form-control" type="text" th:field="*{nifAsBuyer}" />
+			<label>Iban: </label> <input class="form-control" type="text" th:field="*{iban}" />
 			<input class="btn btn-primary" type="submit" value="Submit" />
 		</form>
 		<br/>
@@ -28,6 +31,9 @@
 				<tr>
 					<th>Name</th>
 					<th>Code</th>
+					<th>NifAsSeller</th>
+					<th>NifAsBuyer</th>
+					<th>Iban</th>
 					<th>Adventures</th>
 					<th>Bulks</th>
 				</tr>
@@ -35,7 +41,11 @@
 			<tbody>
 				<tr th:each="broker: ${brokers}">
 					<td th:text="${broker.name}">Name</td>
-					<td th:text="${broker.code}">Code</td>
+					<td><a
+							th:href="@{/brokers/{code}(code=${broker.code})}">Link</a></td>
+					<td th:text="${broker.nifAsSeller}">NifAsSeller</td>
+					<td th:text="${broker.nifAsBuyer}">NifAsBuyer</td>
+					<td th:text="${broker.iban}">Iban</td>
 					<td><a
 						th:href="@{/brokers/{code}/adventures(code=${broker.code})}">Link</a></td>
 					<td><a
