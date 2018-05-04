@@ -6,6 +6,7 @@ import pt.ulisboa.tecnico.softeng.car.domain.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RentACarData {
 	private String code;
@@ -23,11 +24,11 @@ public class RentACarData {
 		this.name = rentacar.getName();
 		this.nif = rentacar.getNif();
 		this.iban = rentacar.getIban();
-
+		
 		this.vehicles = rentacar.getVehicleSet().stream().map(v -> {
-			if(v instanceof Car) { return new VehicleData(v, "Car")} 
-			else {return new VehicleData(v, "Motorcycle") }
-			}).collect(Collectors.toList());
+			if(v instanceof Car) { return new VehicleData(v, "Car");} 
+			else {return new VehicleData(v, "Motorcycle"); }}
+		).collect(Collectors.toList());
 
 
 		/*this.setActivities(provider.getActivitySet().stream().sorted((a1, a2) -> a1.getName().compareTo(a2.getName()))
