@@ -5,11 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 import pt.ulisboa.tecnico.softeng.car.services.local.CarInterface;
 import pt.ulisboa.tecnico.softeng.car.services.local.dataobjects.RentACarData;
+import pt.ulisboa.tecnico.softeng.car.services.local.dataobjects.VehicleData;
 
 
 @Controller
@@ -40,6 +43,16 @@ public class RentACarController {
 		}
 
 		return "redirect:/rentacars";
+	}
+	
+	@RequestMapping(value = "/{code}", method = RequestMethod.GET)
+	public String showVehicles(Model model, @PathVariable String code) {
+		logger.info("showRentACar code:{}", code);
+		RentACarData rentacar = CarInterface.getRentACarDataByCode(code);
+		model.addAttribute("rentacar", rentacar);
+		model.addAttribute("vehicles", rentacar.getVehicleSet() );
+		model.addAttribute("vehicle", new VehicleData());
+		return "carView";
 	}
 
 }

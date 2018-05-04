@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import pt.ulisboa.tecnico.softeng.broker.domain.Broker;
+import pt.ulisboa.tecnico.softeng.broker.domain.Client;
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.local.BrokerInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData;
+import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.ClientData;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/brokers")
@@ -27,7 +32,7 @@ public class BrokerController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String brokerSubmit(Model model, @ModelAttribute BrokerData brokerData) {
-		logger.info("brokerSubmit name:{}, code:{}", brokerData.getName(), brokerData.getCode());
+		logger.info("brokerSubmit name:{}, code:{}, iban:{}", brokerData.getName(), brokerData.getCode(), brokerData.getIban());
 
 		try {
 			BrokerInterface.createBroker(brokerData);
@@ -39,5 +44,18 @@ public class BrokerController {
 		}
 
 		return "redirect:/brokers";
+	}
+	@RequestMapping(value="/{code}", method = RequestMethod.GET)
+	public String brokerClientGet(Model model, @ModelAttribute BrokerData brokerData) {
+		logger.info("brokerGet code:{}", brokerData.getCode());
+
+		BrokerData broker = BrokerInterface.getBrokerDataByCode(brokerData.getCode(), BrokerData.CopyDepth.CLIENTS);
+		List<ClientData> clients = broker.getClients();
+
+		model.addAttribute("client", new ClientData());
+		model.addAttribute("broker", broker);
+		model.addAttribute("clients", clients);
+
+		return "broker";
 	}
 }

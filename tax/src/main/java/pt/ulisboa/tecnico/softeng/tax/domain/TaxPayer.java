@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.softeng.tax.domain;
 
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
 
+import java.util.Map;
+
 public abstract class TaxPayer extends TaxPayer_Base {
 	protected TaxPayer() {
 		// this is a FenixFramework artifact; if not present, compilation fails.
@@ -47,5 +49,8 @@ public abstract class TaxPayer extends TaxPayer_Base {
 
 	}
 
+
 	public abstract Invoice getInvoiceByReference(String invoiceReference);
+
+	public abstract Map<Integer, Double> computeInvoices();
 }
