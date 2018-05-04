@@ -23,16 +23,13 @@ public class RentACarData {
 		this.name = rentacar.getName();
 		this.nif = rentacar.getNif();
 		this.iban = rentacar.getIban();
-		
-		for(Vehicle vehicle : rentacar.getVehicleSet()) {
-			if(vehicle instanceof Car ) {
-				this.vehicles.add(new VehicleData(vehicle, "Car"));
-			}else{
-				this.vehicles.add(new VehicleData(vehicle, "Motorcycle"));
-			}
-			
-		}
-		
+
+		this.vehicles = rentacar.getVehicleSet().stream().map(v -> {
+			if(v instanceof Car) { return new VehicleData(v, "Car")} 
+			else {return new VehicleData(v, "Motorcycle") }
+			}).collect(Collectors.toList());
+
+
 		/*this.setActivities(provider.getActivitySet().stream().sorted((a1, a2) -> a1.getName().compareTo(a2.getName()))
 				.map(a -> new ActivityData(a)).collect(Collectors.toList()));*/
 	}

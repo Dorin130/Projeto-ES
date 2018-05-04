@@ -37,9 +37,12 @@ public class VehicleController {
 		try {
 			CarInterface.createVehicle(vehicledata , code);
 		} catch (CarException be) {
-			model.addAttribute("error", "Error: it was not possible to create the rent-a-car");
+      
+			RentACarData rentacar = CarInterface.getRentACarDataByCode(code);
+			model.addAttribute("rentacar", rentacar);
+			model.addAttribute("error", "Error: it was not possible to create the vehicle");
 			model.addAttribute("vehicle", new VehicleData());
-			// IS IT MISSING SOMETHING HERE ( QUESTION )
+			model.addAttribute("vehicles", rentacar.getVehicleSet());
 			return "carView";
 		}
 

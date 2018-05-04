@@ -67,17 +67,15 @@ public class CarInterface {
 		return RentACar.cancelRenting(reference);
 	}
 
+	@Atomic(mode = TxMode.READ)
 	private static RentingData getRentingDataByReference(String reference) {
 		return RentACar.getRentingData(reference);
 	}
 	
 	@Atomic(mode = TxMode.READ)
-	private static RentACar getRentACarByCode(String code) {		 
-		 for (RentACar rentacar : FenixFramework.getDomainRoot().getRentACarSet()) {
-				if (rentacar.getCode().equals(code)) {
-					return rentacar;
-				}
-			}
-		return null;
+
+	public static RentACar getRentACarByCode(String code) {
+		return FenixFramework.getDomainRoot().getRentACarSet().stream().filter(p -> p.getCode().equals(code))
+				.findFirst().orElse(null);
 	}
 }
