@@ -39,7 +39,7 @@
 					<td th:text="${rentacar.nif}">123456</td>
 					<td th:text="${rentacar.iban}">PT50 0123 4567 8900</td>
 				 	<td><a
-						th:href="@{/rentacars/{code}/vehicles(code=${rentacar.code})}">Vehicles</a></td>
+						th:href="@{/rentacars/{code}(code=${rentacar.code})}">Vehicles</a></td>
 				</tr>
 			</tbody>
 		</table>
