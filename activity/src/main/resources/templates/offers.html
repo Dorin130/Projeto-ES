@@ -38,7 +38,8 @@
 					<td th:text="${offer.begin}">12/12/2017</td>
  					<td th:text="${offer.end}">12/12/2107</td>
  					<td th:text="${offer.capacity}">20</td>
-				 	<td><p th:each="reservation: ${offer.reservations}"><strong>Reference:</strong><span th:text="${reservation.reference}"></span>, <strong>Cancellation:</strong><span th:text="${reservation.cancellation}"></span>, <strong>Cancellation Date:</strong><span th:text="${reservation.cancellationDate}"></span></p></td>
+				 	<td><a
+						th:href="@{/providers/{codeProvider}/activities/{codeActivity}/offers/{reference}/reservations(codeProvider=${activity.codeProvider},codeActivity=${activity.code}, reference=${offer.reference})}">Reservations</a></td>
 				</tr>
 			</tbody>
 		</table>

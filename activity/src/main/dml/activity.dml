@@ -35,10 +35,12 @@ relation ActivityProviderHasActivities {
 }
 
 class ActivityOffer {
+	String reference;
 	LocalDate begin;
 	LocalDate end;
 	int capacity;
 	double amount;
+	int counter;
 }
 
 relation ActivityHasActivityOffers {

@@ -16,6 +16,10 @@ public class ActivityOfferData {
 	private Integer capacity;
 	private double amount;
 	private List<ActivityReservationData> reservations;
+	private String reference;
+	private String activityName;
+	private String activityCode;
+	private String providerCode;
 
 	public ActivityOfferData() {
 	}
@@ -27,6 +31,10 @@ public class ActivityOfferData {
 		this.amount = offer.getAmount();
 		this.reservations = offer.getBookingSet().stream().map(b -> new ActivityReservationData(b))
 				.collect(Collectors.toList());
+		this.reference = offer.getReference();
+		this.activityName = offer.getActivity().getName();
+		this.setActivityCode(offer.getActivity().getCode());
+		this.setProviderCode(offer.getActivity().getActivityProvider().getCode());
 	}
 
 	public LocalDate getBegin() {
@@ -69,4 +77,35 @@ public class ActivityOfferData {
 		this.amount = amount;
 	}
 
+	public String getReference() {
+		return this.reference;
+	}
+	
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+	
+	public String getActivityName() {
+		return this.activityName;
+	}
+	
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
+	public String getActivityCode() {
+		return this.activityCode;
+	}
+
+	public void setActivityCode(String activityCode) {
+		this.activityCode = activityCode;
+	}
+
+	public String getProviderCode() {
+		return this.providerCode;
+	}
+
+	public void setProviderCode(String providerCode) {
+		this.providerCode = providerCode;
+	}
 }

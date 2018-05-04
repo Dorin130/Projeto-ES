@@ -9,6 +9,7 @@ public class ActivityOffer extends ActivityOffer_Base {
 	public ActivityOffer(Activity activity, LocalDate begin, LocalDate end, double amount) {
 		checkArguments(activity, begin, end, amount);
 
+		setReference(Integer.toString(this.getCounter()));
 		setBegin(begin);
 		setEnd(end);
 		setCapacity(activity.getCapacity());
@@ -81,4 +82,10 @@ public class ActivityOffer extends ActivityOffer_Base {
 		return null;
 	}
 
+	@Override
+	public int getCounter() {
+		int counter = super.getCounter() + 1;
+		setCounter(counter);
+		return counter;
+	}
 }
