@@ -1,6 +1,10 @@
 package pt.ulisboa.tecnico.softeng.tax.domain;
 
+import org.joda.time.LocalDate;
 import pt.ulisboa.tecnico.softeng.tax.exception.TaxException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Buyer extends Buyer_Base {
 	private final static int PERCENTAGE = 5;
@@ -48,5 +52,15 @@ public class Buyer extends Buyer_Base {
 			}
 		}
 		return null;
+	}
+
+	public Map<Integer, Double> computeInvoices() {
+		Map<Integer, Double> taxReturnByYear = new HashMap<>();
+		for (int i = 1970; i <= new LocalDate().getYear(); i++) {
+			double taxRet = taxReturn(i);
+			if(taxRet != 0)
+				taxReturnByYear.put(i, taxRet);
+		}
+		return taxReturnByYear;
 	}
 }
