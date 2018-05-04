@@ -41,7 +41,7 @@
 			<tbody>
 				<tr th:each="broker: ${brokers}">
 					<td th:text="${broker.name}">Name</td>
-					<td><a
+					<td><a th:text="${broker.code}"
 							th:href="@{/brokers/{code}(code=${broker.code})}">Link</a></td>
 					<td th:text="${broker.nifAsSeller}">NifAsSeller</td>
 					<td th:text="${broker.nifAsBuyer}">NifAsBuyer</td>

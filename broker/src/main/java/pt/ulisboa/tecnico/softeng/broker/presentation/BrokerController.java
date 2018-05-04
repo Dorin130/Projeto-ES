@@ -52,6 +52,7 @@ public class BrokerController {
 		BrokerData broker = BrokerInterface.getBrokerDataByCode(brokerData.getCode(), BrokerData.CopyDepth.CLIENTS);
 		List<ClientData> clients = broker.getClients();
 
+		model.addAttribute("client", new ClientData());
 		model.addAttribute("broker", broker);
 		model.addAttribute("clients", clients);
 
