@@ -14,6 +14,8 @@ import pt.ulisboa.tecnico.softeng.tax.services.local.TaxInterface;
 import pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.InvoiceData;
 import pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.TaxPayerData;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping(value = "/taxpayers/taxpayer/{NIF}")
@@ -37,7 +39,7 @@ public class InvoiceController {
 			return "taxpayers";
 		} 
         else if (!taxPayerData.getType().equals("Seller")) {
-        	model.addAttribute("error", "Error: the nif " + NIF + "does not belong to a Seller");
+        	model.addAttribute("error", "Error: the nif " + NIF + " does not belong to a Seller");
         	model.addAttribute("taxPayer", taxPayerData);
         	model.addAttribute("taxPayers", TaxInterface.getTaxPayers());
         	return "taxpayers";
@@ -58,8 +60,6 @@ public class InvoiceController {
         InvoiceData invoiceData = new InvoiceData();
         
         invoiceData.setBuyerNIF(NIF);
-    	logger.info("InvoiceSubmitGETGETGETGET sellerNif:{}, buyerNif:{}, itemType:{}, value:{}, date:{}", invoiceData.getSellerNIF(),
-                invoiceData.getBuyerNIF(), invoiceData.getItemType(), invoiceData.getValue(), invoiceData.getDate());
         
         if (taxPayerData == null) { 
 			model.addAttribute("error", "Error: it does not exist a TaxPayer with the nif " + NIF);
@@ -68,7 +68,7 @@ public class InvoiceController {
 			return "taxpayers";
 		}
         else if (!taxPayerData.getType().equals("Buyer")) {
-        	model.addAttribute("error", "Error: the nif " + NIF + "does not belong to a Buyer");
+        	model.addAttribute("error", "Error: the nif " + NIF + " does not belong to a Buyer");
         	model.addAttribute("taxPayer", taxPayerData);
         	model.addAttribute("taxPayers", TaxInterface.getTaxPayers());
         	return "taxpayers";
@@ -102,6 +102,7 @@ public class InvoiceController {
             model.addAttribute("error", "Error: it was not possible to create the Invoice");
             model.addAttribute("taxPayer", taxPayerData);
             model.addAttribute("invoice", invoiceData);
+			taxPayerData.setType("Seller");
             model.addAttribute("invoices", TaxInterface.getInvoicesData(taxPayerData));
             return "invoicesSeller";
         }
@@ -130,6 +131,7 @@ public class InvoiceController {
             model.addAttribute("error", "Error: it was not possible to create the Invoice");
             model.addAttribute("taxPayer", taxPayerData);
             model.addAttribute("invoice", invoiceData);
+			taxPayerData.setType("Buyer");
             model.addAttribute("invoices", TaxInterface.getInvoicesData(taxPayerData));
             return "invoicesBuyer";
         }

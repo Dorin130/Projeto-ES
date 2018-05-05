@@ -61,6 +61,7 @@ public class TaxInterface {
     public static Set<ItemTypeData> getItemTypes() {
         return IRS.getIRSInstance().getItemTypeSet().stream().map(it -> new ItemTypeData(it)).collect(Collectors.toSet());
     }
+
     
     @Atomic(mode = Atomic.TxMode.WRITE)
     public static void submitInvoice(InvoiceData invoiceData) {
@@ -71,6 +72,8 @@ public class TaxInterface {
     public static List<InvoiceData> getInvoicesData(TaxPayerData taxPayerData) {
     	String type = taxPayerData.getType();
     	String nif = taxPayerData.getNIF();
+    	System.out.println(nif);
+        System.out.println(type);
     	IRS irs = IRS.getIRSInstance();
     	if(type != null && type.equals("Seller")) {
     		Seller seller = (Seller) irs.getTaxPayerByNIF(nif);

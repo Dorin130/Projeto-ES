@@ -40,8 +40,12 @@ public class TaxPayerController {
             model.addAttribute("years", yearMap.keySet());
             model.addAttribute("yearMap", yearMap);
             return "taxesbyyear";
+        }else {
+            model.addAttribute("error", "Error: inexisting taxPayer with nif " + nif);
+            model.addAttribute("taxPayer", new TaxPayerData());
+            model.addAttribute("taxPayers", TaxInterface.getTaxPayers());
+            return "taxpayers";
         }
-        return "redirect:/taxpayers";
     }
 
 

@@ -18,7 +18,7 @@
 		<h3>Create Invoice</h3>
 		<p class="text-danger" th:text="${error}">Error</p>
 		<form class="form-inline" th:action="@{/taxpayers/taxpayer/{NIF}/invoicesSeller(NIF=${taxPayer.NIF})}" th:object="${invoice}" method="post">
-			<label> Seller Nif: </label> <input class="form-control" type="text" disabled="disabled" th:field="*{sellerNIF}" />
+			<label> Seller Nif: </label> <input class="form-control" type="text" readonly="readonly" th:value="${invoice.sellerNIF}" th:field="*{sellerNIF}"/>
 			<label> Buyer Nif: </label> <input class="form-control" type="text" th:field="*{buyerNIF}" />
 	 		<label>Item Type: </label> <input class="form-control" type="text" th:field="*{itemType}" />
 	 		<label>Value: </label> <input class="form-control" type="number" step="0.1" min="0.0" th:field="*{value}" />
