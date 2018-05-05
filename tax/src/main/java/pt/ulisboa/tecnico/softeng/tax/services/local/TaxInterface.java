@@ -57,7 +57,8 @@ public class TaxInterface {
         new ItemType(IRS.getIRSInstance(), itemTypeData.getName(), itemTypeData.getTax());
     }
 
-    @Atomic(mode = Atomic.TxMode.READ)
+    @Atomic(mode = Atomic.TxMode.WRITE)
+
     public static Set<ItemTypeData> getItemTypes() {
         return IRS.getIRSInstance().getItemTypeSet().stream().map(it -> new ItemTypeData(it)).collect(Collectors.toSet());
     }
@@ -68,7 +69,7 @@ public class TaxInterface {
     	IRS.submitInvoice(invoiceData);
     }
     
-    @Atomic(mode = Atomic.TxMode.READ)
+    @Atomic(mode = Atomic.TxMode.WRITE)
     public static List<InvoiceData> getInvoicesData(TaxPayerData taxPayerData) {
     	String type = taxPayerData.getType();
     	String nif = taxPayerData.getNIF();
