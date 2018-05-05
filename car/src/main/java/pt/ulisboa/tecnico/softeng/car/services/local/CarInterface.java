@@ -92,13 +92,13 @@ public class CarInterface {
 	}
 	
 	@Atomic(mode = TxMode.WRITE)
-	public static Renting rentingCheckout(String code, String plate, String reference, RentingData rentingData) {
+	public static Renting rentingCheckout(String code, String plate, String reference, int kilometers) {
 		Renting renting = getRentingByReference(code, plate, reference);
 		
 		if(renting == null) {
 			throw new CarException();
 		}
-		renting.checkout(rentingData.getKilometers());
+		renting.checkout(kilometers);
 		return renting;
 	}
 	

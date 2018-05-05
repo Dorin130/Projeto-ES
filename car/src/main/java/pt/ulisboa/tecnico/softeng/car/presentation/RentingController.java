@@ -82,7 +82,7 @@ public class RentingController {
         logger.info("checkoutSubmit rentacarCode:{}, vehiclePlate:{}, rentingReference:{}, kilometers:{}", code, plate, reference, renting.getKilometers());
 
         try {
-			CarInterface.rentingCheckout(code, plate, reference, renting);
+			CarInterface.rentingCheckout(code, plate, reference, renting.getKilometers());
 		} catch (CarException be) {
 			model.addAttribute("error", "Error: it was not possible to checkout the renting");
 			model.addAttribute("renting", renting);
