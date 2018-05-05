@@ -55,7 +55,7 @@ public class CarInterface {
 	}
 
 	@Atomic(mode = TxMode.READ)
-	public static VehicleData getVehicleDataDataByPlate(String code, String plate) {
+	public static VehicleData getVehicleDataByPlate(String code, String plate) {
 		Vehicle vehicle = getVehicleByPlate(code, plate);
 		if (vehicle == null) {
 			return null;

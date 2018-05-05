@@ -24,11 +24,11 @@ public class RentingController {
 	public String rentingForm(Model model, @PathVariable String code, @PathVariable String plate) {
 		logger.info("rentingForm rentacarCode:{}, vehiclePlate:{}", code, plate);
 
-		VehicleData vehicleData = CarInterface.getVehicleDataDataByPlate(code, plate);
+		VehicleData vehicleData = CarInterface.getVehicleDataByPlate(code, plate);
 
 		if (vehicleData == null) {
 			model.addAttribute("error",
-					"Error: it does not exist a vehicle with plate " + plate + " in rentacar with code " + code);
+					"Error: There is no vehicle with plate " + plate + " in rentacar with code " + code);
 			model.addAttribute("rentacar", new RentACarData());
 			model.addAttribute("rentacars", CarInterface.getRentACars());
 			return "rentacars";
@@ -50,7 +50,7 @@ public class RentingController {
 		} catch (CarException be) {
 			model.addAttribute("error", "Error: it was not possible to rent the vehicle");
 			model.addAttribute("renting", renting);
-			model.addAttribute("vehicle", CarInterface.getVehicleDataDataByPlate(code, plate));
+			model.addAttribute("vehicle", CarInterface.getVehicleDataByPlate(code, plate));
 			return "rentings";
 		}
 
@@ -86,7 +86,7 @@ public class RentingController {
 		} catch (CarException be) {
 			model.addAttribute("error", "Error: it was not possible to checkout the renting");
 			model.addAttribute("renting", renting);
-			model.addAttribute("vehicle", CarInterface.getVehicleDataDataByPlate(code, plate));
+			model.addAttribute("vehicle", CarInterface.getVehicleDataByPlate(code, plate));
 			return "rentings";
 		}
         return "redirect:/rentacars/" + code + "/vehicles/" + plate + "/rentings";
