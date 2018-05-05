@@ -9,10 +9,13 @@ import pt.ulisboa.tecnico.softeng.tax.domain.ItemType;
 import pt.ulisboa.tecnico.softeng.tax.domain.Seller;
 import pt.ulisboa.tecnico.softeng.tax.domain.TaxPayer;
 import pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.InvoiceData;
+import pt.ulisboa.tecnico.softeng.tax.domain.*;
+import pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.ItemTypeData;
 import pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.TaxPayerData;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TaxInterface {
@@ -46,6 +49,17 @@ public class TaxInterface {
         TaxPayer taxPayer = IRS.getIRSInstance().getTaxPayerByNIF(nif);
         if(taxPayer == null) return null;
         return new TaxPayerData(taxPayer, taxPayer.getClass().getSimpleName());
+    }
+
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public static void createItemType(ItemTypeData itemTypeData) {
+        new ItemType(IRS.getIRSInstance(), itemTypeData.getName(), itemTypeData.getTax());
+    }
+
+    @Atomic(mode = Atomic.TxMode.READ)
+    public static Set<ItemTypeData> getItemTypes() {
+        return IRS.getIRSInstance().getItemTypeSet().stream().map(it -> new ItemTypeData(it)).collect(Collectors.toSet());
     }
     
     @Atomic(mode = Atomic.TxMode.WRITE)
