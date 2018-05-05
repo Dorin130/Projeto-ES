@@ -65,7 +65,7 @@ public class RentingController {
 
 		if (rentingData == null) {
 			model.addAttribute("error",
-					"Error: it does not exist a renting with reference " + reference);
+					"Error: There is no renting with reference " + reference);
 			model.addAttribute("rentacar", new RentACarData());
 			model.addAttribute("rentacars", CarInterface.getRentACars());
 			return "rentacars";
