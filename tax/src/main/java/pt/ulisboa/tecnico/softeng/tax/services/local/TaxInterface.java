@@ -36,11 +36,14 @@ public class TaxInterface {
     }
     @Atomic(mode = Atomic.TxMode.WRITE)
     public static Map<Integer, Double> getTaxMap(String nif) {
-        return IRS.getIRSInstance().getTaxPayerByNIF(nif).computeInvoices();
+        TaxPayer taxPayer = IRS.getIRSInstance().getTaxPayerByNIF(nif);
+        if(taxPayer == null) return null;
+        return taxPayer.computeInvoices();
     }
     @Atomic(mode = Atomic.TxMode.WRITE)
     public static TaxPayerData getTaxPayer(String nif) {
         TaxPayer taxPayer = IRS.getIRSInstance().getTaxPayerByNIF(nif);
+        if(taxPayer == null) return null;
         return new TaxPayerData(taxPayer, taxPayer.getClass().getSimpleName());
     }
 }

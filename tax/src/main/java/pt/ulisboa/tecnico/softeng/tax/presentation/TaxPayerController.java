@@ -28,27 +28,21 @@ public class TaxPayerController {
         return "taxpayers";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/taxpayer/{nif}/taxSeller" )
-    public String taxToPay(Model model, @PathVariable String nif) {
-        logger.info("taxSeller");
-        model.addAttribute("taxPayer", TaxInterface.getTaxPayer(nif));
-        model.addAttribute("taxType", "toPay");
-        Map<Integer, Double> yearMap = TaxInterface.getTaxMap(nif);
-        model.addAttribute("years", yearMap.keySet());
-        model.addAttribute("yearMap", yearMap);
-        return "taxesbyyear";
+    @RequestMapping(method = RequestMethod.GET, value = "/taxpayer/{nif}/taxes" )
+    public String taxByYear(Model model, @PathVariable String nif) {
+        logger.info("taxByYear");
+        TaxPayerData taxPayer = TaxInterface.getTaxPayer(nif);
+
+        if(taxPayer != null) {
+            model.addAttribute("taxPayer", taxPayer);
+            Map<Integer, Double> yearMap = TaxInterface.getTaxMap(nif);
+            model.addAttribute("years", yearMap.keySet());
+            model.addAttribute("yearMap", yearMap);
+            return "taxesbyyear";
+        }
+        return "redirect:/taxpayers";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/taxpayer/{nif}/taxBuyer" )
-    public String taxReturn(Model model, @PathVariable String nif) {
-        logger.info("taxBuyer");
-        model.addAttribute("taxPayer", TaxInterface.getTaxPayer(nif));
-        model.addAttribute("taxType", "taxReturn");
-        Map<Integer, Double> yearMap = TaxInterface.getTaxMap(nif);
-        model.addAttribute("years", yearMap.keySet());
-        model.addAttribute("yearMap", yearMap);
-        return "taxesbyyear";
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String taxPayerSubmit(Model model, @ModelAttribute TaxPayerData taxPayer) {

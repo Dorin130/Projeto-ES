@@ -13,20 +13,22 @@
 		<h2>
 			TaxPayer
 		</h2>
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<label>Type: </label> <span th:text="${taxPayer.type}"> type </span>
-				<label>NIF: </label> <span th:text="${taxPayer.NIF}"> NIF </span>
-				<label>Name: </label> <span th:text="${taxPayer.name}"> name </span>
-				<label>Address: </label> <span th:text="${taxPayer.address}"> address</span>
-			</div>
-		</div>
+		<a class="btn btn-default pull-right" th:href="@{/taxpayers}">TaxPayers</a>
+
+		<label>Type: </label> <span th:text="${taxPayer.type}"> type </span>
+		<label>NIF: </label> <span th:text="${taxPayer.NIF}"> NIF </span>
+		<label>Name: </label> <span th:text="${taxPayer.name}"> name </span>
+		<label>Address: </label> <span th:text="${taxPayer.address}"> address</span>
+
 		<h3 th:text="${taxType}">tax</h3>
 		<table class="table table-striped">
 			<thead>
 			<tr>
 				<th>Year</th>
-				<th th:text="${taxType}">tax</th>
+				<th>
+					<span th:if="${taxPayer.type} == 'Buyer'"> taxReturn </span>
+					<span th:if="${taxPayer.type} == 'Seller'"> toPay </span>
+				</th>
 			</tr>
 			</thead>
 			<tbody>
