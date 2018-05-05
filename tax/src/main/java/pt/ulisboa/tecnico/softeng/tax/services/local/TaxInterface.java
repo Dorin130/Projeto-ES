@@ -72,8 +72,6 @@ public class TaxInterface {
     public static List<InvoiceData> getInvoicesData(TaxPayerData taxPayerData) {
     	String type = taxPayerData.getType();
     	String nif = taxPayerData.getNIF();
-    	System.out.println(nif);
-        System.out.println(type);
     	IRS irs = IRS.getIRSInstance();
     	if(type != null && type.equals("Seller")) {
     		Seller seller = (Seller) irs.getTaxPayerByNIF(nif);
