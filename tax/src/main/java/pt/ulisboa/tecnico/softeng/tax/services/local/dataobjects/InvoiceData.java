@@ -1,12 +1,14 @@
 package pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects;
 
 import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class InvoiceData {
 	private String sellerNIF;
 	private String buyerNIF;
 	private String itemType;
 	private double value;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
 	public InvoiceData() {
@@ -48,7 +50,7 @@ public class InvoiceData {
 		return this.value;
 	}
 
-	public void setValue(float value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

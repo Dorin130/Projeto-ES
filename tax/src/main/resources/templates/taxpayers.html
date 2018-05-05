@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Activities</title>
+<title>TaxPayers</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
@@ -44,7 +44,7 @@
  					<td th:text="${taxPayer.NIF}">nif</td>
  					<td th:text="${taxPayer.name}">Name</td>
  					<td th:text="${taxPayer.address}">Address</td>
-					<td><a th:href="@{/taxpayers/taxpayer/{NIF}/invoices(NIF=${taxPayer.NIF})}">View</a></td>
+					<td><a th:href="@{/taxpayers/taxpayer/{NIF}/invoices{TYPE}(NIF=${taxPayer.NIF}, TYPE=${taxPayer.type})}">View</a></td>
 					<td><a th:href="@{/taxpayers/taxpayer/{NIF}/taxes(NIF=${taxPayer.NIF})}">View</a></td>
 				</tr>
 			</tbody>
