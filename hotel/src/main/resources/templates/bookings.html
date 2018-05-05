@@ -20,6 +20,8 @@
 		<form class="form-inline" th:action="@{/hotels/{code}/rooms/{number}/bookings(code=${room.hotelCode},number=${room.number})}" th:object="${booking}" method="post">
 			<label>Arrival: </label> <input class="form-control" type="date" th:field="*{arrival}" /> 
 			<label>Departure: </label> <input class="form-control" type="date" th:field="*{departure}" /> 
+			<label>BuyerNif: </label> <input class="form-control" type="text" th:field="*{buyerNif}" /> 
+			<label>BuyerIban: </label> <input class="form-control" type="text" th:field="*{buyerIban}" /> 
 			<input class="btn btn-primary" type="submit" value="Submit" />
 		</form>
 		<br/>
@@ -30,6 +32,8 @@
 					<th>Arrival</th>
  					<th>Departure</th>
 					<th>Reference</th>
+					<th>Buyer Nif</th>
+					<th>Buyer Iban</th>
 					<th>Cancellation</th>
 					<th>Cancellation Date</th>					
 				</tr>
@@ -39,6 +43,8 @@
 					<td th:text="${booking.arrival}">12/12/2016</td>
 					<td th:text="${booking.departure}">21/12/2016</td>
 					<td th:text="${booking.reference}">xpto3456</td>
+					<td th:text="${booking.buyerNif}">NIF</td>
+					<td th:text="${booking.buyerIban}">IBAN</td>
 					<td th:text="${booking.cancellation}">xpto3456CANCEL</td>
 					<td th:text="${booking.cancellationDate}">07/12/2016</td>
 				</tr>

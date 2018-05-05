@@ -7,6 +7,8 @@ import pt.ulisboa.tecnico.softeng.hotel.domain.Booking;
 
 public class RoomBookingData {
 	private String reference;
+	private String buyerNif;
+	private String buyerIban;
 	private String cancellation;
 	private String hotelName;
 	private String hotelCode;
@@ -21,14 +23,14 @@ public class RoomBookingData {
 	private double price;
 	private String paymentReference;
 	private String invoiceReference;
-	private String buyerNif;
-	private String buyerIban;
 
 	public RoomBookingData() {
 	}
 
 	public RoomBookingData(Booking booking) {
 		this.reference = booking.getReference();
+		this.buyerNif = booking.getBuyerNif();
+		this.buyerIban = booking.getBuyerIban();
 		this.cancellation = booking.getCancellation();
 		this.hotelName = booking.getRoom().getHotel().getName();
 		this.hotelCode = booking.getRoom().getHotel().getCode();
@@ -44,6 +46,22 @@ public class RoomBookingData {
 
 	public String getReference() {
 		return this.reference;
+	}
+	
+	public String getBuyerNif() {
+		return this.buyerNif;
+	}
+
+	public void setBuyerNif(String buyerNif) {
+		this.buyerNif = buyerNif;
+	}
+
+	public String getBuyerIban() {
+		return this.buyerIban;
+	}
+
+	public void setBuyerIban(String buyerIban) {
+		this.buyerIban = buyerIban;
 	}
 
 	public String getCancellation() {
@@ -90,20 +108,52 @@ public class RoomBookingData {
 		return this.invoiceReference;
 	}
 
-	public String getBuyerNif() {
-		return this.buyerNif;
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 
-	public void setBuyerNif(String buyerNif) {
-		this.buyerNif = buyerNif;
+	public void setCancellation(String cancellation) {
+		this.cancellation = cancellation;
 	}
 
-	public String getBuyerIban() {
-		return this.buyerIban;
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
 	}
 
-	public void setBuyerIban(String buyerIban) {
-		this.buyerIban = buyerIban;
+	public void setHotelCode(String hotelCode) {
+		this.hotelCode = hotelCode;
 	}
 
+	public void setRoomNumber(String roomNumber) {
+		this.roomNumber = roomNumber;
+	}
+
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
+	}
+
+	public void setArrival(LocalDate arrival) {
+		this.arrival = arrival;
+	}
+
+	public void setDeparture(LocalDate departure) {
+		this.departure = departure;
+	}
+
+	public void setCancellationDate(LocalDate cancellationDate) {
+		this.cancellationDate = cancellationDate;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setPaymentReference(String paymentReference) {
+		this.paymentReference = paymentReference;
+	}
+
+	public void setInvoiceReference(String invoiceReference) {
+		this.invoiceReference = invoiceReference;
+	}
+	
 }
