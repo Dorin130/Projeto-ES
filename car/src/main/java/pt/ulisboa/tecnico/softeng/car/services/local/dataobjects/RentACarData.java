@@ -2,7 +2,6 @@ package pt.ulisboa.tecnico.softeng.car.services.local.dataobjects;
 
 import pt.ulisboa.tecnico.softeng.car.domain.Car;
 import pt.ulisboa.tecnico.softeng.car.domain.RentACar;
-import pt.ulisboa.tecnico.softeng.car.domain.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ public class RentACarData {
 	private String nif;
 	private String iban;
 	private List<VehicleData> vehicles = new ArrayList<>();
-	//TODO: FIX THIS
 
 	public RentACarData() {
 	}
@@ -30,9 +28,6 @@ public class RentACarData {
 			else {return new VehicleData(v, "Motorcycle"); }}
 		).collect(Collectors.toList());
 
-
-		/*this.setActivities(provider.getActivitySet().stream().sorted((a1, a2) -> a1.getName().compareTo(a2.getName()))
-				.map(a -> new ActivityData(a)).collect(Collectors.toList()));*/
 	}
 
 	public String getCode() {
@@ -70,13 +65,5 @@ public class RentACarData {
 	public List<VehicleData> getVehicleSet() {
 		return vehicles;
 	}
-/*
-	public List<ActivityData> getActivities() {
-		return this.activities;
-	}
-
-	public void setActivities(List<ActivityData> activities) {
-		this.activities = activities;
-	}
-*/
+	
 }

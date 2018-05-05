@@ -7,7 +7,9 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ulisboa.tecnico.softeng.car.domain.Car;
 import pt.ulisboa.tecnico.softeng.car.domain.Motorcycle;
 import pt.ulisboa.tecnico.softeng.car.domain.RentACar;
+import pt.ulisboa.tecnico.softeng.car.domain.Renting;
 import pt.ulisboa.tecnico.softeng.car.domain.Vehicle;
+import pt.ulisboa.tecnico.softeng.car.exception.CarException;
 import pt.ulisboa.tecnico.softeng.car.services.local.dataobjects.RentACarData;
 import pt.ulisboa.tecnico.softeng.car.services.local.dataobjects.RentingData;
 import pt.ulisboa.tecnico.softeng.car.services.local.dataobjects.VehicleData;
@@ -52,9 +54,26 @@ public class CarInterface {
 		return new RentACarData(rentACar);
 	}
 
-	/* missing create car/motorcycle/vehicle */
-	/* missing getVehicleDataByPlate */
+	@Atomic(mode = TxMode.READ)
+	public static VehicleData getVehicleDataDataByPlate(String code, String plate) {
+		Vehicle vehicle = getVehicleByPlate(code, plate);
+		if (vehicle == null) {
+			return null;
+		}
 
+		return new VehicleData(vehicle, vehicle.getClass().getSimpleName());
+	}
+
+	@Atomic(mode = TxMode.WRITE)
+	public static void createRenting(String code, String plate, RentingData renting) {
+		Vehicle vehicle = getVehicleByPlate(code, plate);
+		if (vehicle == null) {
+			throw new CarException();
+		}
+
+		new Renting(renting.getDrivingLicense(), renting.getBegin(), renting.getEnd(), vehicle, renting.getBuyerNif(), renting.getBuyerIban());
+	}
+	
 	@Atomic(mode = TxMode.WRITE)
 	public static String rent(Class<? extends Vehicle> vehicleType, String drivingLicense, String buyerNIF,
 							  String buyerIBAN, LocalDate begin, LocalDate end) {
@@ -68,14 +87,43 @@ public class CarInterface {
 	}
 
 	@Atomic(mode = TxMode.READ)
-	private static RentingData getRentingDataByReference(String reference) {
+	public static RentingData getRentingDataByReference(String reference) {
 		return RentACar.getRentingData(reference);
 	}
 	
-	@Atomic(mode = TxMode.READ)
-
-	public static RentACar getRentACarByCode(String code) {
+	@Atomic(mode = TxMode.WRITE)
+	public static Renting rentingCheckout(String code, String plate, String reference, RentingData rentingData) {
+		Renting renting = getRentingByReference(code, plate, reference);
+		
+		if(renting == null) {
+			throw new CarException();
+		}
+		renting.checkout(rentingData.getKilometers());
+		return renting;
+	}
+	
+	private static RentACar getRentACarByCode(String code) {
 		return FenixFramework.getDomainRoot().getRentACarSet().stream().filter(p -> p.getCode().equals(code))
 				.findFirst().orElse(null);
 	}
+	
+	private static Vehicle getVehicleByPlate(String code, String plate) {
+		RentACar rentacar = getRentACarByCode(code);
+		
+		if(rentacar == null) {
+			return null;
+		}
+
+		return rentacar.getVehicleSet().stream().filter(v -> v.getPlate().equals(plate)).findFirst().orElse(null);
+	}
+
+	private static Renting getRentingByReference(String code, String plate, String reference) {
+		Vehicle vehicle = getVehicleByPlate(code, plate);
+		
+		if(vehicle == null) {
+			return null;
+		}
+		return vehicle.getRentingSet().stream().filter(r -> r.getReference().equals(reference)).findFirst().orElse(null);
+	}
+	
 }
