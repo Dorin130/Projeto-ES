@@ -71,6 +71,28 @@ public class ActivityInterface {
 
 		new ActivityOffer(activity, offer.getBegin(), offer.getEnd(), offer.getAmount());
 	}
+	
+	@Atomic(mode = TxMode.WRITE)
+	public static ActivityOfferData getActivityOfferDataByReference(String codeProvider, String codeActivity, String reference) {
+		ActivityOffer activityOffer = getActivityOfferByReference(codeProvider, codeActivity, reference);
+		if (activityOffer == null) {
+			return null;
+		}
+
+		return new ActivityOfferData(activityOffer);
+	}
+	
+	@Atomic(mode = TxMode.WRITE)
+	public static void createActivityReservation(String codeProvider, String codeActivity, String reference, ActivityReservationData reservation) {
+		ActivityProvider provider = getProviderByCode(codeProvider);
+		
+		ActivityOffer activityOffer = getActivityOfferByReference(codeProvider, codeActivity, reference);
+		if (activityOffer == null) {
+			throw new ActivityException();
+		}
+
+		new Booking(provider, activityOffer, reservation.getBuyerNif(), reservation.getBuyerIban());
+	}
 
 	@Atomic(mode = TxMode.WRITE)
 	public static String reserveActivity(LocalDate begin, LocalDate end, int age, String nif, String iban) {
@@ -131,5 +153,14 @@ public class ActivityInterface {
 
 		return provider.getActivitySet().stream().filter(a -> a.getCode().equals(codeActivity)).findFirst()
 				.orElse(null);
+	}
+	
+	private static ActivityOffer getActivityOfferByReference(String codeProvider, String codeActivity, String reference) {
+		Activity activity = getActivityByCode(codeProvider, codeActivity);
+		if (activity == null) {
+			return null;
+		}
+
+		return activity.getActivityOfferSet().stream().filter(o -> o.getReference().equals(reference)).findFirst().orElse(null);
 	}
 }

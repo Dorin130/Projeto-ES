@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bookings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<h2>
+			Reservations of ActivityOffer <span th:text="${offer.reference}">123</span> in Activity <span th:text="${offer.activityName}">Ski</span>
+		</h2>
+		<a class="btn btn-default pull-right" th:href="@{/providers/{codeProvider}/activities/{codeActivity}/offers(codeProvider=${offer.providerCode},codeActivity=${offer.activityCode})}">Offers</a>
+		<br/>
+		<h3>Create Reservation</h3>
+		<p class="text-danger" th:text="${error}">Error</p>
+		<form class="form-inline" th:action="@{/providers/{codeProvider}/activities/{codeActivity}/offers/{reference}/reservations(codeProvider=${offer.providerCode},codeActivity=${offer.activityCode},reference=${offer.reference})}" th:object="${reservation}" method="post">
+			<label>BuyerNif: </label> <input class="form-control" type="text" th:field="*{buyerNif}" /> 
+			<label>BuyerIban: </label> <input class="form-control" type="text" th:field="*{buyerIban}" /> 
+			<input class="btn btn-primary" type="submit" value="Submit" />
+		</form>
+		<br/>
+		<h3>List of Reservations</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Begin</th>
+ 					<th>End</th>
+					<th>Reference</th>
+					<th>Cancellation</th>
+					<th>Cancellation Date</th>	
+					<th>Price</th>
+					<th>Buyer Nif</th>	
+					<th>Buyer Iban</th>				
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="reservation : ${offer.reservations}">
+					<td th:text="${reservation.begin}">12/12/2016</td>
+					<td th:text="${reservation.end}">21/12/2016</td>
+					<td th:text="${reservation.reference}">xpto3456</td>
+					<td th:text="${reservation.cancellation}">xpto3456CANCEL</td>
+					<td th:text="${reservation.cancellationDate}">07/12/2016</td>
+					<td th:text="${reservation.price}">250</td>
+					<td th:text="${reservation.buyerNif}">123456789</td>
+					<td th:text="${reservation.buyerIban}">IBAN</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
