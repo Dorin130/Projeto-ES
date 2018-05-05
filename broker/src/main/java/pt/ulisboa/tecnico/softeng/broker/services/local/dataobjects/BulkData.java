@@ -15,6 +15,8 @@ public class BulkData {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate departure;
 	private int actualNumber;
+	private String buyerNif;
+	private String buyerIban;
 	private boolean cancelled;
 	private List<String> references;
 
@@ -27,6 +29,8 @@ public class BulkData {
 		this.departure = bulkRoomBooking.getDeparture();
 		this.actualNumber = bulkRoomBooking.getReferenceSet().size();
 		this.cancelled = bulkRoomBooking.getCancelled();
+		this.buyerNif = bulkRoomBooking.getBuyerNif();
+		this.buyerIban = bulkRoomBooking.getBuyerIban();
 
 		this.references = bulkRoomBooking.getReferenceSet().stream().map(r -> r.getValue())
 				.collect(Collectors.toList());
@@ -83,4 +87,19 @@ public class BulkData {
 		this.references = references;
 	}
 
+	public String getBuyerNif() {
+		return buyerNif;
+	}
+
+	public void setBuyerNif(String nif) {
+		this.buyerNif = nif;
+	}
+
+	public String getBuyerIban() {
+		return buyerIban;
+	}
+
+	public void setBuyerIban(String iban) {
+		this.buyerIban = iban;
+	}
 }
