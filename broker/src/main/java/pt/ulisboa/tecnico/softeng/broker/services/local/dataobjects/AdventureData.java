@@ -15,6 +15,8 @@ public class AdventureData {
 	private Integer age;
 	private String iban;
 	private Double amount;
+	private Double margin;
+	private Boolean rentVehicle;
 	private ClientData clientData;
 	private Adventure.State state;
 
@@ -35,6 +37,9 @@ public class AdventureData {
 		this.age = adventure.getAge();
 		this.iban = adventure.getIban();
 		this.amount = adventure.getAmount();
+		this.margin = adventure.getMargin();
+		this.rentVehicle = adventure.getRentVehicle();
+
 		this.state = adventure.getState().getValue();
 
 		this.paymentConfirmation = adventure.getPaymentConfirmation();
@@ -74,20 +79,13 @@ public class AdventureData {
 	}
 
 	public Integer getAge() {
-		return this.age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
+		return this.clientData.getAge();
 	}
 
 	public String getIban() {
-		return this.iban;
+		return this.clientData.getIban();
 	}
 
-	public void setIban(String iban) {
-		this.iban = iban;
-	}
 
 	public Double getAmount() {
 		return this.amount;
@@ -152,5 +150,20 @@ public class AdventureData {
 	public void setActivityCancellation(String activityCancellation) {
 		this.activityCancellation = activityCancellation;
 	}
+
+	public Double getMargin() {	return margin;}
+
+	public void setMargin(Double margin) {	this.margin = margin;}
+
+	public Boolean getRentVehicle() {return rentVehicle;	}
+
+	public void setRentVehicle(Boolean rentVehicle) {this.rentVehicle = rentVehicle;}
+
+
+	public ClientData getClientData() { return clientData;}
+
+	public void setClientData(ClientData clientData) {	this.clientData = clientData;}
+
+
 
 }

@@ -1,6 +1,9 @@
 package pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects;
 
+import pt.ulisboa.tecnico.softeng.broker.domain.Adventure;
 import pt.ulisboa.tecnico.softeng.broker.domain.Client;
+
+import java.util.Set;
 
 public class ClientData {
 	private String iban;
@@ -19,6 +22,7 @@ public class ClientData {
 	}
 	public ClientData(Client client) {
 		this(client.getIban(), client.getNif(), client.getDrivingLicense(), client.getAge());
+
 	}
 
 	public String getIban() {
@@ -52,4 +56,5 @@ public class ClientData {
 	public void setAge(int age) {
 		this.age = age;
 	}
+
 }

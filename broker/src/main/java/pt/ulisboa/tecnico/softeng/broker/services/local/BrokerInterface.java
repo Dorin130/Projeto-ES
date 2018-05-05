@@ -2,6 +2,8 @@ package pt.ulisboa.tecnico.softeng.broker.services.local;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -33,6 +35,17 @@ public class BrokerInterface {
 				brokerData.getIban());
 	}
 
+
+	@Atomic(mode = TxMode.READ)
+	public static ClientData getClientDataByNif(String brokerCode, String nif) {
+		Broker broker = getBrokerByCode(brokerCode);
+		Client client = getClientByNif(broker, nif);
+		if(client != null) {
+				return new ClientData(client);
+			}
+		return null;
+	}
+
 	@Atomic(mode = TxMode.READ)
 	public static BrokerData getBrokerDataByCode(String brokerCode, CopyDepth depth) {
 		Broker broker = getBrokerByCode(brokerCode);
@@ -48,11 +61,20 @@ public class BrokerInterface {
 	public static void createClient(String brokerCode, ClientData clientData) {
 		new Client(getBrokerByCode(brokerCode), clientData.getIban(), clientData.getNif(), clientData.getDrivingLicense(), clientData.getAge());
 	}
+	
 
 	@Atomic(mode = TxMode.WRITE)
-	public static void createAdventure(String brokerCode, AdventureData adventureData) {
-		// TODO: receive client and margin
-		new Adventure(getBrokerByCode(brokerCode), adventureData.getBegin(), adventureData.getEnd(), null, 0.1);
+	public static void createAdventure(String brokerCode, String clientNif, AdventureData adventureData) {
+		Broker broker = getBrokerByCode(brokerCode);
+		Client client = getClientByNif(broker, clientNif);
+		new Adventure(broker, adventureData.getBegin(), adventureData.getEnd(), client, adventureData.getMargin(), adventureData.getRentVehicle());
+	}
+
+	@Atomic(mode = TxMode.READ)
+	public static Set<AdventureData> getClientAdventuresByNif(String brokerCode, String nif) {
+		BrokerData brokerData = getBrokerDataByCode(brokerCode, CopyDepth.ADVENTURES);
+		if(brokerData == null) return null;
+		return  brokerData.getAdventures().stream().filter(c -> c.getClientData().getNif().equals(nif)).collect(Collectors.toSet());
 	}
 
 	@Atomic(mode = TxMode.WRITE)
@@ -62,13 +84,18 @@ public class BrokerInterface {
 
 	}
 
+	@Atomic(mode = TxMode.READ)
 	private static Broker getBrokerByCode(String code) {
-		for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
-			if (broker.getCode().equals(code)) {
-				return broker;
-			}
-		}
-		return null;
+			return FenixFramework.getDomainRoot().getBrokerSet().stream().
+					filter(b -> b.getCode().equals(code)).findFirst().orElse(null);
+
+	}
+
+	@Atomic(mode = TxMode.READ)
+	private static Client getClientByNif(Broker broker, String nif) {
+		if(broker == null) return null;
+		return broker.getClientSet().stream().
+				filter(c -> c.getNif().equals(nif)).findFirst().orElse(null);
 	}
 
 }

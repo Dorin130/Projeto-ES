@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.local.BrokerInterface;
+import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.AdventureData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData.CopyDepth;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.ClientData;
@@ -23,7 +24,6 @@ public class ClientController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showClients(Model model, @PathVariable String brokerCode) {
 		logger.info("showClients code:{}", brokerCode);
-
 		BrokerData brokerData = BrokerInterface.getBrokerDataByCode(brokerCode, CopyDepth.CLIENTS);
 
 		if (brokerData == null) {
@@ -56,5 +56,4 @@ public class ClientController {
 
 		return "redirect:/brokers/" + brokerCode + "/clients";
 	}
-
 }

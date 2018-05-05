@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,6 +31,25 @@ public class BrokerController {
 		return "brokers";
 	}
 
+	@RequestMapping(value="/{brokerCode}/adventures", method = RequestMethod.GET)
+	public String showBrokerAdventures(Model model, @PathVariable String brokerCode) {
+		logger.info("showBrokerAdventures code:{}", brokerCode);
+
+		BrokerData brokerData = BrokerInterface.getBrokerDataByCode(brokerCode, BrokerData.CopyDepth.ADVENTURES);
+
+		if (brokerData == null) {
+
+			model.addAttribute("error", "Error: it does not exist a broker with the code " + brokerCode);
+			model.addAttribute("broker", new BrokerData());
+			model.addAttribute("brokers", BrokerInterface.getBrokers());
+			return "brokers";
+		}
+		else {
+			model.addAttribute("broker", brokerData);
+			return "adventures";
+		}
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public String brokerSubmit(Model model, @ModelAttribute BrokerData brokerData) {
 		logger.info("brokerSubmit name:{}, code:{}, iban:{}", brokerData.getName(), brokerData.getCode(), brokerData.getIban());
@@ -45,17 +65,5 @@ public class BrokerController {
 
 		return "redirect:/brokers";
 	}
-	@RequestMapping(value="/{code}", method = RequestMethod.GET)
-	public String brokerClientGet(Model model, @ModelAttribute BrokerData brokerData) {
-		logger.info("brokerGet code:{}", brokerData.getCode());
 
-		BrokerData broker = BrokerInterface.getBrokerDataByCode(brokerData.getCode(), BrokerData.CopyDepth.CLIENTS);
-		List<ClientData> clients = broker.getClients();
-
-		model.addAttribute("client", new ClientData());
-		model.addAttribute("broker", broker);
-		model.addAttribute("clients", clients);
-
-		return "broker";
-	}
 }

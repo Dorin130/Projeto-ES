@@ -39,11 +39,11 @@
 			<tbody>
 				<tr th:each="client: ${broker.clients}">
 					<td th:text="${client.iban}">iban</td>
- 					<td th:text="${client.nif}">nif</td>
+					<td th:text="${client.nif}">Nif</td>
 					<td th:text="${client.drivingLicense}">drivingLicense</td>
 					<td th:text="${client.age}">age</td>
-					<td>
-						<!-- <a th:href="">Link(TODO)</a> -->
+					<td >
+						<a th:href="@{/brokers/{code}/clients/{nif}/adventures(code=${broker.code}, nif=${client.nif})}">Adventures</a>
 					</td>
 				</tr>
 			</tbody>
