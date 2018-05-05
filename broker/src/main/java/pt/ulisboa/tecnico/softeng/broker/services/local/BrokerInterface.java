@@ -67,6 +67,7 @@ public class BrokerInterface {
 	public static void createAdventure(String brokerCode, String clientNif, AdventureData adventureData) {
 		Broker broker = getBrokerByCode(brokerCode);
 		Client client = getClientByNif(broker, clientNif);
+
 		new Adventure(broker, adventureData.getBegin(), adventureData.getEnd(), client, adventureData.getMargin(), adventureData.getRentVehicle());
 	}
 

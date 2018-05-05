@@ -57,11 +57,11 @@ public class AdventureController {
 	public String submitAdventure(Model model, @PathVariable String brokerCode, @PathVariable String clientNif,
 			@ModelAttribute AdventureData adventureData) {
 		logger.info("adventureSubmit brokerCode:{},clientNif:{}, begin:{}, end:{},, amount:{}, margin:{}, rentVehicle:{}", brokerCode, clientNif,
-				adventureData.getBegin(), adventureData.getEnd(), adventureData.getAge(), adventureData.getIban(),
-				adventureData.getAmount(), adventureData.getMargin(), adventureData.getRentVehicle());
+				adventureData.getBegin(), adventureData.getEnd(), adventureData.getAmount(), adventureData.getMargin(), adventureData.getRentVehicle());
 
 		try {
 			BrokerInterface.createAdventure(brokerCode, clientNif, adventureData);
+			adventureData.setClientData(BrokerInterface.getClientDataByNif(brokerCode, clientNif));
 		} catch (BrokerException be) {
 			model.addAttribute("error", "Error: it was not possible to create the adventure");
 			model.addAttribute("adventure", adventureData);
