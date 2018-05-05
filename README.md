@@ -11,7 +11,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |            |                         |                                      |                    |   1   |
 |            |                         |                                      |                    |   1   |
 |  83504     | Manuel Vidigueira       | manuel.vidigueira@tecnico.ulisboa.pt | SemperDarky        |   2   |
-|            |                         |                                      |                    |   2   |
+|  83534     | Nádia Fernandes         | nadia.sofia@tecnico.ulisboa.pt       | NadiaSofia         |   2   |
 |            |                         |                                      |                    |   2   |
 
 - **Group 1: tax, broker, bank
