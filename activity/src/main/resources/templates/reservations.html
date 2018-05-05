@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Bookings</title>
+<title>Reservations</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
@@ -27,26 +27,20 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Begin</th>
- 					<th>End</th>
 					<th>Reference</th>
-					<th>Cancellation</th>
-					<th>Cancellation Date</th>	
-					<th>Price</th>
 					<th>Buyer Nif</th>	
-					<th>Buyer Iban</th>				
+					<th>Buyer Iban</th>	
+					<th>Cancellation</th>
+					<th>Cancellation Date</th>				
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="reservation : ${offer.reservations}">
-					<td th:text="${reservation.begin}">12/12/2016</td>
-					<td th:text="${reservation.end}">21/12/2016</td>
 					<td th:text="${reservation.reference}">xpto3456</td>
-					<td th:text="${reservation.cancellation}">xpto3456CANCEL</td>
-					<td th:text="${reservation.cancellationDate}">07/12/2016</td>
-					<td th:text="${reservation.price}">250</td>
 					<td th:text="${reservation.buyerNif}">123456789</td>
 					<td th:text="${reservation.buyerIban}">IBAN</td>
+					<td th:text="${reservation.cancellation}">xpto3456CANCEL</td>
+					<td th:text="${reservation.cancellationDate}">07/12/2016</td>
 				</tr>
 			</tbody>
 		</table>

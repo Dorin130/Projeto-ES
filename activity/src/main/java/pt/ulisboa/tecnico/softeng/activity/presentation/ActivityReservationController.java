@@ -21,7 +21,7 @@ public class ActivityReservationController {
 	private static Logger logger = LoggerFactory.getLogger(ActivityReservationController.class);
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String bookingForm(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity, @PathVariable String reference) {
+	public String reservationForm(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity, @PathVariable String reference) {
 		logger.info("reservationForm activityProviderCode:{}, activityCode:{}, offerReference:{}", codeProvider, codeActivity, reference);
 
 		ActivityOfferData activityOfferData = ActivityInterface.getActivityOfferDataByReference(codeProvider, codeActivity, reference);
@@ -40,7 +40,7 @@ public class ActivityReservationController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String bookingSubmit(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity, @PathVariable String reference,
+	public String reservationSubmit(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity, @PathVariable String reference,
 			@ModelAttribute ActivityReservationData reservation) {
 		logger.info("reservationSubmit activityProviderCode:{}, activityCode:{}, offerReference:{}, buyerNif:{}, buyerIban:{}", codeProvider, codeActivity, reference,
 				reservation.getBuyerNif(), reservation.getBuyerIban());

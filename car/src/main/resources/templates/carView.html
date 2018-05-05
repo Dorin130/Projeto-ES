@@ -36,6 +36,7 @@
 						<th>Plate</th>
 						<th>Kilometers</th>
 						<th>Price</th>
+						<th>Rentings</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,6 +45,8 @@
 						<td th:text="${vehicle.plate}">Plate</td>
 						<td th:text="${vehicle.kilometers}">Kilometers</td>
 						<td th:text="${vehicle.price}">Price</td>
+						<td><a
+							th:href="@{/rentacars/{code}/vehicles/{plate}/rentings(code=${rentacar.code},plate=${vehicle.plate})}">Rentings</a></td>
 					</tr>
 				</tbody>
 			</table>
