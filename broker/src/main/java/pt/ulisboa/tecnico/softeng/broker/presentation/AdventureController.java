@@ -56,17 +56,18 @@ public class AdventureController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String submitAdventure(Model model, @PathVariable String brokerCode, @PathVariable String clientNif,
 			@ModelAttribute AdventureData adventureData) {
-		logger.info("adventureSubmit brokerCode:{},clientNif:{}, begin:{}, end:{},, amount:{}, margin:{}, rentVehicle:{}", brokerCode, clientNif,
-				adventureData.getBegin(), adventureData.getEnd(), adventureData.getAmount(), adventureData.getMargin(), adventureData.getRentVehicle());
+		logger.info("adventureSubmit brokerCode:{},clientNif:{}, begin:{}, end:{}, margin:{}, rentVehicle:{}", brokerCode, clientNif,
+				adventureData.getBegin(), adventureData.getEnd(),  adventureData.getMargin(), adventureData.getRentVehicle());
 
 		try {
 			BrokerInterface.createAdventure(brokerCode, clientNif, adventureData);
 			adventureData.setClientData(BrokerInterface.getClientDataByNif(brokerCode, clientNif));
 		} catch (BrokerException be) {
 			model.addAttribute("error", "Error: it was not possible to create the adventure");
-			model.addAttribute("adventure", adventureData);
+			model.addAttribute("adventure", new AdventureData());
 			model.addAttribute("broker", BrokerInterface.getBrokerDataByCode(brokerCode, CopyDepth.ADVENTURES));
 			model.addAttribute("client", BrokerInterface.getClientDataByNif(brokerCode, clientNif));
+			model.addAttribute("adventures", BrokerInterface.getClientAdventuresByNif(brokerCode, clientNif));
 			return "client";
 		}
 		return "redirect:/brokers/" + brokerCode + "/clients/"+ clientNif + "/adventures";
