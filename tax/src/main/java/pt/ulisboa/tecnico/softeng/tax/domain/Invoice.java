@@ -35,30 +35,22 @@ public class Invoice extends Invoice_Base {
 
 	private void checkArguments(double value, LocalDate date, ItemType itemType, Seller seller, Buyer buyer) {
 		if (value <= 0.0f) {
-			System.out.println("it was the value");
 			throw new TaxException();
 		}
 
 		if (date == null || date.getYear() < 1970) {
-			System.out.println("it was the date");
 			throw new TaxException();
 		}
 
 		if (itemType == null) {
-			System.out.println("it was the itemType");
-
 			throw new TaxException();
 		}
 
 		if (seller == null) {
-			System.out.println("it was the seller");
-
 			throw new TaxException();
 		}
 
 		if (buyer == null) {
-			System.out.println("it was the buyer");
-
 			throw new TaxException();
 		}
 	}

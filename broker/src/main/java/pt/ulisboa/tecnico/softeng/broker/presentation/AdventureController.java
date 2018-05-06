@@ -60,6 +60,7 @@ public class AdventureController {
 				adventureData.getBegin(), adventureData.getEnd(),  adventureData.getMargin(), adventureData.getRentVehicle());
 
 		try {
+			if(adventureData.getMargin() == null) throw new BrokerException();
 			BrokerInterface.createAdventure(brokerCode, clientNif, adventureData);
 			adventureData.setClientData(BrokerInterface.getClientDataByNif(brokerCode, clientNif));
 		} catch (BrokerException be) {

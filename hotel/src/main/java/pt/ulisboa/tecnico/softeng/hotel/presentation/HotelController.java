@@ -30,6 +30,8 @@ public class HotelController {
 		logger.info("hotelSubmit name:{}, code:{}", hotelData.getName(), hotelData.getCode());
 
 		try {
+			if(hotelData.getPriceDouble() == null || hotelData.getPriceSingle() == null)
+				throw new HotelException();
 			HotelInterface.createHotel(hotelData);
 		} catch (HotelException be) {
 			model.addAttribute("error", "Error: it was not possible to create the hotel");

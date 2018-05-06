@@ -29,7 +29,7 @@ public class ActivityReservationController {
 		if (activityOfferData == null) {
 			model.addAttribute("error",
 					"Error: it does not exist an offer with reference " + reference + " in activity with code " + codeActivity + " in activityProvider with code " + codeProvider);
-			model.addAttribute("activityProvider", new ActivityProviderData());
+			model.addAttribute("provider", new ActivityProviderData());
 			model.addAttribute("providers", ActivityInterface.getProviders());
 			return "providers";
 		} else {

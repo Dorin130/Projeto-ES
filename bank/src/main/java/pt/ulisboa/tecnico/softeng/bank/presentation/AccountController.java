@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import pt.ulisboa.tecnico.softeng.bank.domain.Client;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.bank.services.local.BankInterface;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.AccountData;
@@ -60,12 +61,22 @@ public class AccountController {
 
 		try {
 			AccountData account = BankInterface.getAccountData(iban);
+			ClientData clientData = BankInterface.getClientDataById(code, id);
+			if(clientData==null)throw new BankException();
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", account);
 			return "account";
 		} catch (BankException be) {
 			model.addAttribute("error", "Error: it was not possible to move to do the operations");
-			model.addAttribute("client", BankInterface.getClientDataById(code, id));
+			ClientData clientData =  BankInterface.getClientDataById(code, id);
+			if(clientData == null) {
+				model.addAttribute("error",
+						"Error: it does not exist a client with id " + id + " in bank with code " + code);
+				model.addAttribute("bank", new BankData());
+				model.addAttribute("banks", BankInterface.getBanks());
+				return "banks";
+			}
+			model.addAttribute("client",clientData);
 			return "accounts";
 		}
 
@@ -77,6 +88,7 @@ public class AccountController {
 		logger.info("accountDeposit bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban, account.getAmount());
 
 		try {
+			if(account.getAmount() == null) throw new BankException();
 			BankInterface.deposit(iban, account.getAmount());
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
@@ -85,6 +97,7 @@ public class AccountController {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+
 			return "account";
 		}
 	}
@@ -96,6 +109,7 @@ public class AccountController {
 				account.getAmount());
 
 		try {
+			if(account.getAmount() == null) throw new BankException();
 			BankInterface.withdraw(iban, account.getAmount());
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));

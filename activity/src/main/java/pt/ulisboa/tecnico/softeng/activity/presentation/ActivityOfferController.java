@@ -31,6 +31,7 @@ public class ActivityOfferController {
 					+ " in provider with code " + codeProvider);
 			model.addAttribute("provider", new ActivityProviderData());
 			model.addAttribute("providers", ActivityInterface.getProviders());
+
 			return "providers";
 		} else {
 			model.addAttribute("offer", new ActivityOfferData());
