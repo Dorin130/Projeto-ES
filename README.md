@@ -9,10 +9,10 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 | ---------- | ----------------------- | -------------------------------------| -------------------| ----- |
 |  83509     | Marco Silva             | marcofsilva@tecnico.ulisboa.pt       | MarcofSilva        |   1   |
 |  83475     | Hugo Guerreiro          | hugo.guerreiro@tecnico.ulisboa.pt    | hugosilvaguerreiro |   1   |
-|            |                         |                                      |                    |   1   |
+|  83448     | Dorin Gujuman           | dorin.gujuman@gmail.com              | Dorin130           |   1   |
 |  83504     | Manuel Vidigueira       | manuel.vidigueira@tecnico.ulisboa.pt | SemperDarky        |   2   |
 |  83534     | Nádia Fernandes         | nadia.sofia@tecnico.ulisboa.pt       | NadiaSofia         |   2   |
-|            |                         |                                      |                    |   2   |
+|  83487     | Joao Sousa              | joao.sousa9397@gmail.com             | JoaoPBSousa    	 	 |   2   |
 
 - **Group 1: tax, broker, bank
 - **Group 2: car, hotel, activity
