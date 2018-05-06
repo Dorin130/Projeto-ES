@@ -7,7 +7,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 |   Number   |          Name           |            Email                     |   GitHub Username  | Group |
 | ---------- | ----------------------- | -------------------------------------| -------------------| ----- |
-|            |                         |                                      |                    |   1   |
+|  83509     | Marco Silva             | marcofsilva@tecnico.ulisboa.pt       | MarcofSilva        |   1   |
 |            |                         |                                      |                    |   1   |
 |            |                         |                                      |                    |   1   |
 |  83504     | Manuel Vidigueira       | manuel.vidigueira@tecnico.ulisboa.pt | SemperDarky        |   2   |
