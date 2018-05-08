@@ -7,13 +7,14 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 | ---------- | ----------------------- | ----------------------- | -------------------| ----- |
 |            |                         |                         |                    |   1   |
 |            |                         |                         |                    |   1   |
-|            |                         |                         |                    |   1   |
 |            |                         |                         |                    |   2   |
 |            |                         |                         |                    |   2   |
-|            |                         |                         |                    |   2   |
+|            |                         |                         |                    |   3   |
+|            |                         |                         |                    |   3   |
 
-- **Group 1:**
-- **Group 2:**
+- **Group 1: 30Writes Load Test**
+- **Group 2: 100Writes Load Test**
+- **Group 3: 100Reads Load Test**
 
 ### Infrastructure
 
