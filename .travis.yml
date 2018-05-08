@@ -30,5 +30,6 @@ env:
     # You can fetch this at https://codecov.io/gh/tecnico-softeng/es18XX-YY-project/settings
     - CODECOV_TOKEN=6a13bf54-2855-4023-8b19-aa8146b70c33
 
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
