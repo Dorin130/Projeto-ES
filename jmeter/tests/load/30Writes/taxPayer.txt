@@ -1,0 +1,2 @@
+Hugo Guerreiro,Lisboa,321457689,BUYER
+Joao Sousa,Leiria,124365879,SELLER
