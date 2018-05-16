@@ -9,7 +9,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |            |                         |                                   |                    |   1   |
 | 83475      | Hugo Guerreiro          | hugo.guerreiro@tecnico.ulisboa.pt | hugosilvaguerreiro |   2   |
 |            |                         |                                   |                    |   2   |
-|            |                         |                                   |                    |   3   |
+| 83509      | Marco Silva             | marcofsilva@tecnico.ulisboa.pt    | MarcofSilva        |   3   |
 |            |                         |                                   |                    |   3   |
 
 - **Group 1: 30Writes Load Test**
