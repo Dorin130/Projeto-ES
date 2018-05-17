@@ -5,7 +5,7 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 
 |   Number   |          Name           |            Email                  |   GitHub Username  | Group |
 | ---------- | ----------------------- | --------------------------------- | -------------------| ----- |
-|            |                         |                                   |                    |   1   |
+| 83534      | Nadia Fernandes         | nadia.sofia@tecnico.ulisboa.pt    | NadiaSofia         |   1   |
 |            |                         |                                   |                    |   1   |
 | 83475      | Hugo Guerreiro          | hugo.guerreiro@tecnico.ulisboa.pt | hugosilvaguerreiro |   2   |
 |            |                         |                                   |                    |   2   |
