@@ -6,9 +6,9 @@ To see the coverage reports, go to <module name>/target/site/jacoco/index.html.
 |   Number   |          Name           |            Email                     |   GitHub Username  | Group |
 | ---------- | ----------------------- | ------------------------------------ | -------------------| ----- |
 | 83534      | Nadia Fernandes         | nadia.sofia@tecnico.ulisboa.pt       | NadiaSofia         |   1   |
-|            |                         |                                      |                    |   1   |
+| 83448      | Dorin Gujuman           | dorin.gujuman@tecnico.ulisboa.pt     | Dorin130           |   1   |
 | 83475      | Hugo Guerreiro          | hugo.guerreiro@tecnico.ulisboa.pt    | hugosilvaguerreiro |   2   |
-|            |                         |                                      |                    |   2   |
+| 83487      | João Sousa              | joao.sousa9397@gmail.com             | JoaoPBSousa        |   2   |
 | 83509      | Marco Silva             | marcofsilva@tecnico.ulisboa.pt       | MarcofSilva        |   3   |
 | 83504      | Manuel Vidigueira       | manuel.vidigueira@tecnico.ulisboa.pt | SemperDarky        |   3   |
 
